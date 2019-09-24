@@ -1,0 +1,36 @@
+{
+  "name": "punk",
+  "version": "1.0.0",
+  "description": "Multi-user web debugging proxy based on whistle",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "lint": "eslint *.js lib",
+    "lintfix": "eslint --fix *.js lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imweb/punk.git"
+  },
+  "keywords": [
+    "whistle",
+    "nohost",
+    "users"
+  ],
+  "author": "avwu <avwu@qq.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/imweb/punk/issues"
+  },
+  "homepage": "https://github.com/imweb/punk#readme",
+  "devDependencies": {
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.4.0",
+    "eslint-config-imweb": "^0.2.19"
+  },
+  "dependencies": {
+    "whistle": "^1.16.9"
+  }
+}
