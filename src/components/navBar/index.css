@@ -1,0 +1,75 @@
+.p-nav-bar {
+  background: #1084d4;
+  color: #fff;
+  min-width: 1000px;
+  height: 60px;
+  position: relative;
+}
+
+.p-logo {
+  display: inline-block;
+  line-height: 60px;
+  padding: 0 30px 0 80px;
+  color: #fff;
+  font-size: 20px;
+  background: url(../../img/logo.png) 25px center no-repeat;
+  background-size: 42px;
+}
+
+.p-nav-bar>button, .p-nav-bar .p-logo {
+  vertical-align: middle;
+}
+
+.p-nav-bar>button:hover, .p-nav-bar .p-active {
+  background-color: #1a79b9;
+}
+
+.p-nav-bar .p-logo:hover {
+  color: #fff;
+}
+
+.p-nav-bar button {
+  background-color: transparent;
+  border: 0;
+  line-height: 60px;
+  outline: none;
+  padding: 0 25px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.p-nav-bar .p-help {
+  display: inline-block;
+  line-height: 60px;
+  padding: 0 20px 0 10px;
+  position: absolute;
+  top: 0;
+  right: 20px;
+  font-size: 15px;
+}
+
+.p-nav-bar .p-help a {
+  color: #fff;
+}
+.p-nav-bar .p-help-menu {
+  margin-left: 5px;
+}
+
+.p-nav-bar .p-about {
+  display: none;
+  margin: 0;
+  padding: 0;
+  font-size: 15px;
+  -webkit-box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  color: rgba(0,0,0,0.65);
+  position: absolute;
+  background: #fff;
+  border-radius: 3px;
+  top: 46px;
+  right: 20px;
+  padding: 0;
+  line-height: 36px;
+  width: 100px;
+  text-align: center;
+}

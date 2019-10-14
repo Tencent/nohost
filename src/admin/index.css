@@ -1,0 +1,7 @@
+
+.p-container {
+  overflow: auto;
+  max-width: 1680px;
+  min-width: 1000px;
+  margin: 0 auto;
+}
