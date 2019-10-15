@@ -36,7 +36,7 @@ const data = [
     enable: <Switch checkedChildren="已启用" unCheckedChildren="已禁用" defaultChecked />,
     name: 'John Brown',
     action: (
-      <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
+      <Popconfirm title="Sure to delete?" onConfirm={(record) => this.handleDelete(record.key)}>
         <a><Icon type="delete" />Delete</a>
       </Popconfirm>
     ),
@@ -77,10 +77,10 @@ class Certs extends Component {
     const { hide } = this.props;
     return (
       <div className={`fill vbox p-certs${hide ? ' p-hide' : ''}`}>
-        <div className="p-certs-upload">
+        <div className="p-action-bar">
           <Button type="primary"><Icon type="upload" />上传证书</Button>
         </div>
-        <div className="fill p-certs-list">
+        <div className="fill p-content">
           <Table columns={columns} dataSource={data} pagination={false} />
         </div>
       </div>

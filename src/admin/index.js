@@ -11,6 +11,7 @@ import Certs from './certs';
 import Monitor from './monitor';
 import Settings from './settings';
 
+const { location } = window;
 const query = parse(location.search);
 const TABS = [
   'accounts',

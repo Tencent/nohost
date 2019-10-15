@@ -32,16 +32,28 @@
   font-weight: normal;
 }
 .p-mid-ctn {
-  -webkit-box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
-  box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
-  border-radius: 5px;
+  border-radius: 3px;
+  -webkit-box-shadow: 0 1px 3px rgba(26,26,26,.1);
+  box-shadow: 0 1px 3px rgba(26,26,26,.1);
   border: 1px solid #f0f0f0;
   background: #fff;
 }
 
 .p-left-menu > ul {
-  -webkit-box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
-  box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
   border: none;
   background: transparent;
+}
+
+.p-action-bar {
+  padding: 15px 20px;
+  text-align: right;
+  width: 100%;
+  top: 60px;
+  z-index: 1;
+  background: #f8f9fa;
+  border-bottom: 1px solid #ddd;
+}
+
+.p-content {
+  overflow: auto;
 }

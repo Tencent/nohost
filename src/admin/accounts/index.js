@@ -1,7 +1,7 @@
 import './index.css';
 import React, { Component } from 'react';
 
-import { Table, Switch, Popconfirm, Icon } from 'antd';
+import { Table, Switch, Popconfirm, Button, Icon } from 'antd';
 
 const columns = [
   {
@@ -31,10 +31,9 @@ const data = [
     name: 'John Brown',
     action: (
       <div className="p-accounts-action">
-        <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
+        <Popconfirm title="Sure to delete?" onConfirm={(record) => this.handleDelete(record.key)}>
           <a><Icon type="delete" />Delete</a>
         </Popconfirm>
-        <a><Icon type="user-add" />Add</a>
         <a><Icon type="lock" />Change Password</a>
       </div>
     ),
@@ -74,8 +73,13 @@ class Accounts extends Component {
   render() {
     const { hide } = this.props;
     return (
-      <div className={`p-accounts${hide ? ' p-hide' : ''}`}>
-        <Table columns={columns} dataSource={data} pagination={false} />
+      <div className={`vbox fill p-accounts${hide ? ' p-hide' : ''}`}>
+        <div className="p-action-bar">
+          <Button type="primary"><Icon type="user-add" />添加帐号</Button>
+        </div>
+        <div className="fill p-content">
+          <Table columns={columns} dataSource={data} pagination={false} />
+        </div>
       </div>
     );
   }
