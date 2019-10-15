@@ -11,19 +11,15 @@ class Settings extends Component {
           <Menu>
             <Menu.Item key="1">
               <Icon type="mail" />
-              Navigation One
+              请求状态
             </Menu.Item>
             <Menu.Item key="2">
               <Icon type="mail" />
-              Navigation One
+              机器状态
             </Menu.Item>
             <Menu.Item key="3">
               <Icon type="mail" />
-              Navigation One
-            </Menu.Item>
-            <Menu.Item key="4">
-              <Icon type="mail" />
-              Navigation One
+              插件列表
             </Menu.Item>
           </Menu>
         </div>

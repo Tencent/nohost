@@ -20,7 +20,7 @@ class NavBar extends Component {
   }
 
   onChange = ({ target }) => {
-    if (target.nodeName !== 'BUTTON') {
+    if (target.nodeName !== 'BUTTON' || !target.name) {
       return;
     }
     const { onChange, active } = this.props;
@@ -63,9 +63,9 @@ class NavBar extends Component {
         </button>
         <button
           type="button"
-          name="status"
-          className={active === 'status' ? 'p-active' : undefined}
-        >状态
+          name="monitor"
+          className={active === 'monitor' ? 'p-active' : undefined}
+        >监控
         </button>
         <button
           type="button"

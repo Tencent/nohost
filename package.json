@@ -68,6 +68,6 @@
     "lru-cache": "^5.1.1",
     "parseurl": "^1.3.3",
     "pfork": "^0.3.2",
-    "whistle": "*"
+    "whistle": "^2.1.0"
   }
 }

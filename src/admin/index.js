@@ -8,20 +8,21 @@ import Accounts from './accounts';
 import Rules from './rules';
 import Template from './template';
 import Certs from './certs';
-import Status from './status';
+import Monitor from './monitor';
 import Settings from './settings';
 
-
+const query = parse(location.search);
 const TABS = [
   'accounts',
   'rules',
   'template',
   'certs',
-  'status',
+  'monitor',
   'settings',
 ];
 
 const getActive = (active) => {
+  active = active || query.active || query.name;
   return TABS[active] || TABS[TABS.indexOf(active)] || 'accounts';
 };
 
@@ -30,17 +31,14 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    let { active } = parse(location.hash);
-    const query = parse(location.search);
-    active = getActive(active || query.active || query.name);
+    const active = getActive(location.hash.substring(1));
     this.tabStatus[active] = 1;
     this.state = { active };
   }
 
   componentDidMount() {
     window.addEventListener('hashchange', () => {
-      const { active } = parse(location.hash);
-      this.setState({ active: getActive(active) });
+      this.setState({ active: getActive(location.hash.substring(1)) });
     });
   }
 
@@ -49,7 +47,7 @@ class App extends Component {
     this.setState({
       active,
     });
-    location.hash = `active=${active}`;
+    location.hash = active;
   }
 
   render() {
@@ -58,7 +56,7 @@ class App extends Component {
       rules,
       template,
       certs,
-      status,
+      monitor,
       settings,
     } = this.tabStatus;
     const {
@@ -72,7 +70,7 @@ class App extends Component {
           { rules ? <Rules hide={active !== 'rules'} /> : null }
           { template ? <Template hide={active !== 'template'} /> : null }
           { certs ? <Certs hide={active !== 'certs'} /> : null }
-          { status ? <Status hide={active !== 'status'} /> : null }
+          { monitor ? <Monitor hide={active !== 'monitor'} /> : null }
           { settings ? <Settings hide={active !== 'settings'} /> : null }
         </div>
       </Fragment>

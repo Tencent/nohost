@@ -14,7 +14,7 @@
 
 html, body {
   height: 100%;
-  background: #fff;
+  background: #f8f9fa;
 }
 
 #root {
@@ -26,7 +26,7 @@ html, body {
   display: -moz-box;
   display: box;
 }
-.orient-vertical-box {
+.vbox {
   -moz-box-orient: vertical;
   -webkit-box-orient: vertical;
   box-orient: vertical;
@@ -43,7 +43,7 @@ html, body {
   width: 0;
 }
 /**不加这个滚动会有问题**/
-.orient-vertical-box > .fill {
+.vbox > .fill {
   height: 0;
 }
 

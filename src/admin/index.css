@@ -2,6 +2,46 @@
 .p-container {
   overflow: auto;
   max-width: 1680px;
-  min-width: 1000px;
+  min-width: 1200px;
   margin: 0 auto;
+}
+
+.p-left-menu {
+  width: 250px;
+  padding-top: 10px;
+}
+
+.p-left-menu .ant-menu-item-selected {
+  background-color: transparent!important;
+}
+
+.p-mid {
+  padding-right: 250px;
+  overflow: auto;
+}
+
+.p-mid-con {
+  min-width: 680px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.p-title {
+  margin: 20px 0 15px;
+  font-size: 14px;
+  font-weight: normal;
+}
+.p-mid-ctn {
+  -webkit-box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+  border-radius: 5px;
+  border: 1px solid #f0f0f0;
+  background: #fff;
+}
+
+.p-left-menu > ul {
+  -webkit-box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+  border: none;
+  background: transparent;
 }
