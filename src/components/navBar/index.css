@@ -72,4 +72,5 @@
   line-height: 36px;
   width: 100px;
   text-align: center;
+  z-index: 10;
 }

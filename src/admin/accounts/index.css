@@ -1,0 +1,14 @@
+.p-accounts {
+  max-width: 1680px;
+  margin: 0 auto;
+}
+
+.p-accounts-action {
+  white-space: nowrap;
+}
+.p-accounts-action a {
+  margin-right: 25px;
+}
+.p-accounts-action a i {
+  margin-right: 5px;
+}

@@ -11,19 +11,15 @@ class Settings extends Component {
           <Menu>
             <Menu.Item key="1">
               <Icon type="mail" />
-              Navigation One
+              管理员设置
             </Menu.Item>
             <Menu.Item key="2">
               <Icon type="mail" />
-              Navigation One
+              设置Token
             </Menu.Item>
             <Menu.Item key="3">
               <Icon type="mail" />
-              Navigation One
-            </Menu.Item>
-            <Menu.Item key="4">
-              <Icon type="mail" />
-              Navigation One
+              重启操作
             </Menu.Item>
           </Menu>
         </div>

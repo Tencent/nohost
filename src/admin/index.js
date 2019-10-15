@@ -65,7 +65,7 @@ class App extends Component {
     return (
       <Fragment>
         <NavBar active={active} onChange={this.onTabChange} />
-        <div className="p-container fill">
+        <div className="fill vbox p-container">
           { accounts ? <Accounts hide={active !== 'accounts'} /> : null }
           { rules ? <Rules hide={active !== 'rules'} /> : null }
           { template ? <Template hide={active !== 'template'} /> : null }
