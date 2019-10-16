@@ -11,7 +11,7 @@ class Settings extends Component {
           <Menu>
             <Menu.Item key="1">
               <Icon type="mail" />
-              管理员设置
+              管理员
             </Menu.Item>
             <Menu.Item key="2">
               <Icon type="mail" />

@@ -15,7 +15,7 @@ class Template extends Component {
             </Menu.Item>
             <Menu.Item key="2">
               <Icon type="mail" />
-              模板数据
+              数据对象
             </Menu.Item>
           </Menu>
         </div>
