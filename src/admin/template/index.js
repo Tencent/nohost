@@ -1,6 +1,9 @@
 import './index.css';
 import React, { Component } from 'react';
-import { Menu, Icon } from 'antd';
+import { Menu, Icon, Input, Button } from 'antd';
+import Panel from '../../components/panel';
+
+const { TextArea } = Input;
 
 class Template extends Component {
   render() {
@@ -21,10 +24,18 @@ class Template extends Component {
         </div>
         <div className="fill p-mid">
           <div className="p-mid-con">
-            <h3 className="p-title">XXXXXXXX</h3>
-            <div className="p-mid-ctn">
-              ssssss
-            </div>
+            <Panel title="规则模板">
+              <div className="p-action-bar">
+                <Button type="primary"><Icon type="save" />保存</Button>
+              </div>
+              <TextArea />
+            </Panel>
+            <Panel title="数据对象">
+              <div className="p-action-bar">
+                <Button type="primary"><Icon type="save" />保存</Button>
+              </div>
+              <TextArea />
+            </Panel>
           </div>
         </div>
       </div>

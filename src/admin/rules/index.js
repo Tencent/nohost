@@ -1,6 +1,9 @@
 import './index.css';
-import React, { Component } from 'react';
-import { Menu, Table, Switch, Popconfirm, Button, Icon } from 'antd';
+import React, { Component, Fragment } from 'react';
+import { Menu, Table, Switch, Popconfirm, Button, Icon, Input } from 'antd';
+import Panel from '../../components/panel';
+
+const { TextArea } = Input;
 
 const columns = [
   {
@@ -11,7 +14,7 @@ const columns = [
     render: text => <a>{text}</a>,
   },
   {
-    title: '规则',
+    title: '匹配规则',
     dataIndex: 'name',
     key: 'name',
   },
@@ -68,6 +71,7 @@ const data = [
     age: 32,
   },
 ];
+
 class Rules extends Component {
   render() {
     const { hide } = this.props;
@@ -91,25 +95,30 @@ class Rules extends Component {
         </div>
         <div className="fill p-mid">
           <div className="p-mid-con">
-            <h3 className="p-title">入口配置</h3>
-            <div className="p-mid-ctn">
+            <Panel title="入口配">
               <div className="p-action-bar">
                 <Button type="primary"><Icon type="plus" />添加规则</Button>
               </div>
               <Table columns={columns} dataSource={data} pagination={false} />
-            </div>
-            <h3 className="p-title">全局规则</h3>
-            <div className="p-mid-ctn">
-              master的whistle规则配置
-            </div>
-            <h3 className="p-title">默认规则</h3>
-            <div className="p-mid-ctn">
-            默认规则
-            </div>
-            <h3 className="p-title">专属规则</h3>
-            <div className="p-mid-ctn">
-            专属规则
-            </div>
+            </Panel>
+            <Panel title="全局规则">
+              <div className="p-action-bar">
+                <Button type="primary"><Icon type="save" />保存</Button>
+              </div>
+              <TextArea />
+            </Panel>
+            <Panel title="默认规则">
+              <div className="p-action-bar">
+                <Button type="primary"><Icon type="save" />保存</Button>
+              </div>
+              <TextArea />
+            </Panel>
+            <Panel title="专属规则">
+              <div className="p-action-bar">
+                <Button type="primary"><Icon type="save" />保存</Button>
+              </div>
+              <TextArea />
+            </Panel>
           </div>
         </div>
       </div>
