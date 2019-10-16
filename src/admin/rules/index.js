@@ -105,20 +105,22 @@ class Rules extends Component {
               <div className="p-action-bar">
                 <Button type="primary"><Icon type="save" />保存</Button>
               </div>
-              <TextArea />
+              <TextArea className="p-textarea" />
             </Panel>
-            <Panel title="默认规则">
-              <div className="p-action-bar">
-                <Button type="primary"><Icon type="save" />保存</Button>
-              </div>
-              <TextArea />
-            </Panel>
-            <Panel title="专属规则">
-              <div className="p-action-bar">
-                <Button type="primary"><Icon type="save" />保存</Button>
-              </div>
-              <TextArea />
-            </Panel>
+            <div className="p-accounts-rules">
+              <Panel title="默认规则">
+                <div className="p-action-bar">
+                  <Button type="primary"><Icon type="save" />保存</Button>
+                </div>
+                <TextArea className="p-textarea" />
+              </Panel>
+              <Panel title="专属规则">
+                <div className="p-action-bar">
+                  <Button type="primary"><Icon type="save" />保存</Button>
+                </div>
+                <TextArea className="p-textarea" />
+              </Panel>
+            </div>
           </div>
         </div>
       </div>

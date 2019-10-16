@@ -57,3 +57,7 @@
 .p-content {
   overflow: auto;
 }
+
+.p-textarea.ant-input {
+  height: 360px;
+}

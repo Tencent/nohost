@@ -28,13 +28,13 @@ class Template extends Component {
               <div className="p-action-bar">
                 <Button type="primary"><Icon type="save" />保存</Button>
               </div>
-              <TextArea />
+              <TextArea className="p-textarea" />
             </Panel>
             <Panel title="数据对象">
               <div className="p-action-bar">
                 <Button type="primary"><Icon type="save" />保存</Button>
               </div>
-              <TextArea />
+              <TextArea className="p-textarea" />
             </Panel>
           </div>
         </div>
