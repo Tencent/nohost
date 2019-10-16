@@ -18,7 +18,7 @@ const TABS = [
   'rules',
   'template',
   'certs',
-  'monitor',
+  //'monitor',
   'settings',
 ];
 

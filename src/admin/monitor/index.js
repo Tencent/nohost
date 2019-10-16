@@ -15,7 +15,7 @@ class Settings extends Component {
             </Menu.Item>
             <Menu.Item key="2">
               <Icon type="mail" />
-              机器状态
+              运行状态
             </Menu.Item>
             <Menu.Item key="3">
               <Icon type="mail" />

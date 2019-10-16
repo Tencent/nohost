@@ -61,12 +61,12 @@ class NavBar extends Component {
           className={active === 'certs' ? 'p-active' : undefined}
         >证书
         </button>
-        <button
+        {/* <button
           type="button"
           name="monitor"
           className={active === 'monitor' ? 'p-active' : undefined}
         >监控
-        </button>
+        </button> */}
         <button
           type="button"
           name="settings"
