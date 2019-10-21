@@ -18,12 +18,12 @@ const TABS = [
   'rules',
   'template',
   'certs',
-  //'monitor',
+  // 'monitor',
   'settings',
 ];
 
 const getActive = (active) => {
-  active = active || query.active || query.name;
+  active = active.split('/')[0] || query.active || query.name;
   return TABS[active] || TABS[TABS.indexOf(active)] || 'accounts';
 };
 
@@ -35,12 +35,14 @@ class App extends Component {
     const active = getActive(location.hash.substring(1));
     this.tabStatus[active] = 1;
     this.state = { active };
+    location.hash = active;
   }
 
   componentDidMount() {
-    window.addEventListener('hashchange', () => {
-      this.setState({ active: getActive(location.hash.substring(1)) });
-    });
+    // window.addEventListener('hashchange', () => {
+    //   debugger;
+    //   this.setState({ active: getActive(location.hash.match(/^#(.*)\/.*/)[1]) });
+    // });
   }
 
   onTabChange = (active) => {
@@ -63,6 +65,7 @@ class App extends Component {
     const {
       active,
     } = this.state;
+
     return (
       <Fragment>
         <NavBar active={active} onChange={this.onTabChange} />
