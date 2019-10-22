@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon, Form, Input, Button } from 'antd';
+import { Form, Input, Button } from 'antd';
 
 class TokenSetting extends Component {
   handleSubmit = e => {
@@ -13,14 +13,24 @@ class TokenSetting extends Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
+    const formItemLayout = {
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 8 },
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 16 },
+      },
+    };
+
     return (
-      <Form layout="inline" onSubmit={this.handleSubmit}>
-        <Form.Item label="Token">
-          {getFieldDecorator('Input', {
-            rules: [{ required: true, message: 'Please input your token!' }],
+      <Form {...formItemLayout} onSubmit={this.handleSubmit}>
+        <Form.Item>
+          {getFieldDecorator('token', {
+            rules: [{ required: true, message: '请输入Token!' }],
           })(<Input
-            prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-            placeholder="Username"
+            placeholder="请输入Token"
           />)}
         </Form.Item>
         <Form.Item>
@@ -33,4 +43,4 @@ class TokenSetting extends Component {
   }
 }
 
-export default Form.create({ name: 'horizontal_login' })(TokenSetting);
+export default Form.create({ name: 'token' })(TokenSetting);

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Icon, Form, Input, Button } from 'antd';
 import Panel from '../../../components/panel';
 
-class Administrator extends Component {
+class Domain extends Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -24,25 +24,17 @@ class Administrator extends Component {
         sm: { span: 16 },
       },
     };
+
     return (
-      <Panel title="设置管理员名字和密码">
+      <Panel title="设置域名">
         <div className="p-action-bar">
           <Form {...formItemLayout} onSubmit={this.handleSubmit}>
             <Form.Item>
-              {getFieldDecorator('username', {
-                rules: [{ required: true, message: '请输入用户名!' }],
+              {getFieldDecorator('domain', {
+                rules: [{ required: true, message: '请输入域名!' }],
               })(<Input
-                prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                placeholder="用户名"
-              />)}
-            </Form.Item>
-            <Form.Item>
-              {getFieldDecorator('password', {
-                rules: [{ required: true, message: '请输入密码!' }],
-              })(<Input
-                prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                type="password"
-                placeholder="密码"
+                prefix={<Icon type="global" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                placeholder="请输入域名"
               />)}
             </Form.Item>
             <Form.Item>
@@ -57,4 +49,4 @@ class Administrator extends Component {
   }
 }
 
-export default Form.create({ name: 'administrator' })(Administrator);
+export default Form.create({ name: 'domain' })(Domain);

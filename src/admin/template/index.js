@@ -17,6 +17,16 @@ class Template extends Component {
     this.state = { active };
   }
 
+  componentWillReceiveProps(props) {
+    const subMenu = location.hash.match(/#.*\/(.*)/);
+    const active = subMenu ? subMenu[1] : 'rulesTemplate';
+    if (props.hide === false) {
+      this.setState({
+        active,
+      });
+    }
+  }
+
   handleClick = e => {
     const { key } = e;
     this.setState({

@@ -22,6 +22,14 @@ const TABS = [
   'settings',
 ];
 
+const subMenu = {
+  accounts: 'accounts',
+  rules: 'rules/entrySetting',
+  template: 'template/rulesTemplate',
+  certs: 'certs',
+  settings: 'settings/administrator',
+};
+
 const getActive = (active) => {
   active = active.split('/')[0] || query.active || query.name;
   return TABS[active] || TABS[TABS.indexOf(active)] || 'accounts';
@@ -35,14 +43,6 @@ class App extends Component {
     const active = getActive(location.hash.substring(1));
     this.tabStatus[active] = 1;
     this.state = { active };
-    location.hash = active;
-  }
-
-  componentDidMount() {
-    // window.addEventListener('hashchange', () => {
-    //   debugger;
-    //   this.setState({ active: getActive(location.hash.match(/^#(.*)\/.*/)[1]) });
-    // });
   }
 
   onTabChange = (active) => {
@@ -50,7 +50,7 @@ class App extends Component {
     this.setState({
       active,
     });
-    location.hash = active;
+    location.hash = subMenu[active];
   }
 
   render() {

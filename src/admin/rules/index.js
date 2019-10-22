@@ -84,6 +84,16 @@ class Rules extends Component {
     this.state = { active };
   }
 
+  componentWillReceiveProps(props) {
+    const subMenu = location.hash.match(/#.*\/(.*)/);
+    const active = subMenu ? subMenu[1] : 'entrySetting';
+    if (props.hide === false) {
+      this.setState({
+        active,
+      });
+    }
+  }
+
   handleClick = e => {
     const { key } = e;
     this.setState({
@@ -92,7 +102,6 @@ class Rules extends Component {
     location.hash = location.hash.replace(/(#.*\/).*/, `$1${key}`);
   };
 
-  // eslint-disable-next-line lines-between-class-members
   render() {
     const { hide = false } = this.props;
     const { active } = this.state;
@@ -119,7 +128,6 @@ class Rules extends Component {
           <div className="p-mid-con">
             {/* 入口配置 */}
             <Panel title="入口配置" hide={active !== 'entrySetting'}>
-              {/* <ruleSettingTable /> */}
               <div className="p-action-bar">
                 <Button type="primary"><Icon type="plus" />添加规则</Button>
               </div>
