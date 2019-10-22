@@ -46,15 +46,19 @@ class Settings extends Component {
         <div className="p-left-menu">
           <Menu onClick={this.handleClick} selectedKeys={[active]}>
             <Menu.Item key="administrator">
-              <Icon type="mail" />
+              <Icon type="user" />
               管理员
             </Menu.Item>
+            <Menu.Item key="domain">
+              <Icon type="global" />
+              设置域名
+            </Menu.Item>
             <Menu.Item key="tokenSetting">
-              <Icon type="mail" />
+              <Icon type="setting" />
               设置Token
             </Menu.Item>
             <Menu.Item key="restart">
-              <Icon type="mail" />
+              <Icon type="redo" />
               重启操作
             </Menu.Item>
           </Menu>
@@ -63,6 +67,8 @@ class Settings extends Component {
           <div className="p-mid-con">
             <div className={active !== 'administrator' ? 'p-hide' : ''}>
               <Administrator />
+            </div>
+            <div className={active !== 'domain' ? 'p-hide' : ''}>
               <Domain />
             </div>
             <Panel title="设置Token" hide={active !== 'tokenSetting'}>
@@ -72,7 +78,7 @@ class Settings extends Component {
             </Panel>
             <Panel title="重启操作" hide={active !== 'restart'}>
               <div className="p-action-bar restart-action-bar">
-                <Button type="primary">重启</Button>
+                <Button type="danger">重启</Button>
               </div>
             </Panel>
           </div>

@@ -44,11 +44,11 @@ class Template extends Component {
         <div className="p-left-menu">
           <Menu onClick={this.handleClick} selectedKeys={[active]}>
             <Menu.Item key="rulesTemplate">
-              <Icon type="mail" />
+              <Icon type="book" />
               规则模板
             </Menu.Item>
             <Menu.Item key="dataObj">
-              <Icon type="mail" />
+              <Icon type="book" />
               数据对象
             </Menu.Item>
           </Menu>

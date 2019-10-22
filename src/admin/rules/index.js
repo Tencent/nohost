@@ -111,15 +111,15 @@ class Rules extends Component {
         <div className="p-left-menu">
           <Menu onClick={this.handleClick} selectedKeys={[active]}>
             <Menu.Item key="entrySetting">
-              <Icon type="mail" />
+              <Icon type="bars" />
               入口配置
             </Menu.Item>
             <Menu.Item key="globalRules">
-              <Icon type="mail" />
+              <Icon type="bars" />
               全局规则
             </Menu.Item>
             <Menu.Item key="accountRules">
-              <Icon type="mail" />
+              <Icon type="bars" />
               帐号规则
             </Menu.Item>
           </Menu>
