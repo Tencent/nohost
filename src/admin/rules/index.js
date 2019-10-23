@@ -1,9 +1,10 @@
 import './index.css';
-import React, { Component, Fragment } from 'react';
-import { Menu, Table, Switch, Popconfirm, Button, Icon, Input } from 'antd';
+import React, { Component } from 'react';
+import { Menu, Button, Icon, Input, Table, Switch, Popconfirm } from 'antd';
 import Panel from '../../components/panel';
 
 const { TextArea } = Input;
+const { location } = window;
 
 const columns = [
   {
@@ -73,41 +74,76 @@ const data = [
 ];
 
 class Rules extends Component {
+  constructor(props) {
+    super(props);
+    const tabName = location.hash.split('/')[1];
+    if (!tabName) {
+      location.hash = location.hash.replace(/(#.*)/, '$1/entrySetting');
+    }
+    const active = tabName || 'entrySetting';
+    this.state = { active };
+  }
+
+  componentWillReceiveProps(props) {
+    const subMenu = location.hash.match(/#.*\/(.*)/);
+    const active = subMenu ? subMenu[1] : 'entrySetting';
+    if (props.hide === false) {
+      this.setState({
+        active,
+      });
+    }
+  }
+
+  handleClick = e => {
+    const { key } = e;
+    this.setState({
+      active: key,
+    });
+    location.hash = location.hash.replace(/(#.*\/).*/, `$1${key}`);
+  };
+
   render() {
-    const { hide } = this.props;
+    const { hide = false } = this.props;
+    const { active } = this.state;
+
     return (
       <div className={`box p-rules${hide ? ' p-hide' : ''}`}>
         <div className="p-left-menu">
-          <Menu>
-            <Menu.Item key="0">
-              <Icon type="mail" />
+          <Menu onClick={this.handleClick} selectedKeys={[active]}>
+            <Menu.Item key="entrySetting">
+              <Icon type="bars" />
               入口配置
             </Menu.Item>
-            <Menu.Item key="1">
-              <Icon type="mail" />
+            <Menu.Item key="globalRules">
+              <Icon type="bars" />
               全局规则
             </Menu.Item>
-            <Menu.Item key="2">
-              <Icon type="mail" />
+            <Menu.Item key="accountRules">
+              <Icon type="bars" />
               帐号规则
             </Menu.Item>
           </Menu>
         </div>
         <div className="fill p-mid">
           <div className="p-mid-con">
-            <Panel title="入口配">
+            {/* 入口配置 */}
+            <Panel title="入口配置" hide={active !== 'entrySetting'}>
               <div className="p-action-bar">
                 <Button type="primary"><Icon type="plus" />添加规则</Button>
               </div>
               <Table columns={columns} dataSource={data} pagination={false} />
             </Panel>
-            <Panel title="全局规则">
+
+            {/* 全局规则 */}
+            <Panel title="全局规则" hide={active !== 'globalRules'}>
               <div className="p-action-bar">
                 <Button type="primary"><Icon type="save" />保存</Button>
               </div>
               <TextArea className="p-textarea" />
             </Panel>
-            <div className="p-accounts-rules">
+
+            {/* 帐号规则 */}
+            <div className={active !== 'accountRules' ? 'p-hide' : 'p-accounts-rules'}>
               <Panel title="默认规则">
                 <div className="p-action-bar">
                   <Button type="primary"><Icon type="save" />保存</Button>

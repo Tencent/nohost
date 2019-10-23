@@ -18,12 +18,20 @@ const TABS = [
   'rules',
   'template',
   'certs',
-  //'monitor',
+  // 'monitor',
   'settings',
 ];
 
+const subMenu = {
+  accounts: 'accounts',
+  rules: 'rules/entrySetting',
+  template: 'template/rulesTemplate',
+  certs: 'certs',
+  settings: 'settings/administrator',
+};
+
 const getActive = (active) => {
-  active = active || query.active || query.name;
+  active = active.split('/')[0] || query.active || query.name;
   return TABS[active] || TABS[TABS.indexOf(active)] || 'accounts';
 };
 
@@ -37,18 +45,12 @@ class App extends Component {
     this.state = { active };
   }
 
-  componentDidMount() {
-    window.addEventListener('hashchange', () => {
-      this.setState({ active: getActive(location.hash.substring(1)) });
-    });
-  }
-
   onTabChange = (active) => {
     this.tabStatus[active] = 1;
     this.setState({
       active,
     });
-    location.hash = active;
+    location.hash = subMenu[active];
   }
 
   render() {
@@ -63,6 +65,7 @@ class App extends Component {
     const {
       active,
     } = this.state;
+
     return (
       <Fragment>
         <NavBar active={active} onChange={this.onTabChange} />
