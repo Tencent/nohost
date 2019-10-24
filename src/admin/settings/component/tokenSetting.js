@@ -23,9 +23,7 @@ class TokenSetting extends Component {
             <Form.Item label="Token">
               {getFieldDecorator('token', {
                 rules: [{ required: true, message: '请输入Token!' }],
-              })(<Input
-                placeholder="请输入Token"
-              />)}
+              })(<Input placeholder="请输入Token" autocomplete="off" />)}
             </Form.Item>
             <Form.Item {...SUBMIT_BTN_LAYOUT} style={{ marginBottom: 0 }}>
               <Button type="primary" htmlType="submit">

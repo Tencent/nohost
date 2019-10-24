@@ -23,7 +23,7 @@ class Domain extends Component {
             <Form.Item label="域名">
               {getFieldDecorator('domain', {
                 rules: [{ required: true, message: '请输入域名!' }],
-              })(<Input placeholder="请输入域名，如果有多个域名可用,分开" />)}
+              })(<Input placeholder="请输入域名，如果有多个域名可用,分开" autocomplete="off" />)}
             </Form.Item>
             <Form.Item {...SUBMIT_BTN_LAYOUT} style={{ marginBottom: 0 }}>
               <Button type="primary" htmlType="submit">

@@ -25,7 +25,8 @@ class Administrator extends Component {
                 rules: [{ required: true, message: '请输入用户名!' }],
               })(<Input
                 prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                placeholder="用户名"
+                placeholder="请输入用户名"
+                autocomplete="off"
               />)}
             </Form.Item>
             <Form.Item label="密码">
@@ -34,7 +35,8 @@ class Administrator extends Component {
               })(<Input
                 prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
                 type="password"
-                placeholder="密码"
+                placeholder="请输入密码"
+                autocomplete="off"
               />)}
             </Form.Item>
             <Form.Item {...SUBMIT_BTN_LAYOUT} style={{ marginBottom: 0 }}>
