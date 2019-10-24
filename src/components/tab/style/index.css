@@ -1,0 +1,25 @@
+.p-tabs-container {
+  display: flex;
+  width: 100%;
+}
+.p-tabs {
+  width: 255px;
+  margin-top: 10px;
+}
+.p-tab {
+  height: 40px;
+  line-height: 40px;
+  padding: 0 20px;
+}
+.p-tab-ctn {
+  width: 100%;
+}
+.p-ctn-item {
+  padding-right: 255px;
+}
+.p-tab i{
+  margin-right: 10px;
+}
+.p-tab-active {
+  color: #1890ff;
+}

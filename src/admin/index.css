@@ -60,22 +60,3 @@
 .p-textarea.ant-input {
   height: 360px;
 }
-
-/* 覆写antd的tab样式 */
-.p-tabs > .ant-tabs {
-  width: 90%;
-}
-.p-tabs > .ant-tabs .ant-tabs-left-bar {
-  margin-top: 10px;
-  border-right: none;
-}
-.p-tabs > .ant-tabs .ant-tabs-left-bar .ant-tabs-tab {
-  text-align: left;
-}
-.p-tabs > .ant-tabs .ant-tabs-left-bar .ant-tabs-ink-bar {
-  opacity: 0;
-}
-.p-tabs > .ant-tabs .ant-tabs-left-content {
-  border-left: none;
-  padding: 0;
-}

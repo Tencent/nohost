@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon, Button, Tabs } from 'antd';
+import { Icon, Button } from 'antd';
 import Administrator from './component/administrator';
 import Domain from './component/domain';
 import TokenSetting from './component/tokenSetting';
@@ -7,6 +7,7 @@ import WhiteList from './component/whiteList';
 import Panel from '../../components/panel';
 import { getActiveTabFromHash, setActiveHash } from '../utils';
 import './index.css';
+import Tabs from '../../components/tab';
 
 const { TabPane } = Tabs;
 class Settings extends Component {
@@ -37,8 +38,8 @@ class Settings extends Component {
     const { activeKey } = this.state;
 
     return (
-      <div className={`box p-settings p-tabs${hide ? ' p-hide' : ''}`}>
-        <Tabs defaultActiveKey="administrator" tabPosition="left" onChange={this.handleClick} activeKey={activeKey}>
+      <div className={`box p-settings ${hide ? ' p-hide' : ''}`}>
+        <Tabs defaultActiveKey="administrator" onChange={this.handleClick} activeKey={activeKey}>
           <TabPane
             tab={(
               <span>
