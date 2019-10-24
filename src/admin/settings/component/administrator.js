@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Icon, Form, Input, Button } from 'antd';
 import Panel from '../../../components/panel';
-import { FORM_ITEM_LAYOUT, SUBMIT_BTN_LAYOUT } from '../utils';
+import { FORM_ITEM_LAYOUT, SUBMIT_BTN_LAYOUT } from '../../utils';
 
 class Administrator extends Component {
   handleSubmit = e => {

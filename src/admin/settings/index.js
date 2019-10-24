@@ -37,7 +37,7 @@ class Settings extends Component {
     const { activeKey } = this.state;
 
     return (
-      <div className={`box p-settings${hide ? ' p-hide' : ''}`}>
+      <div className={`box p-settings p-tabs${hide ? ' p-hide' : ''}`}>
         <Tabs defaultActiveKey="administrator" tabPosition="left" onChange={this.handleClick} activeKey={activeKey}>
           <TabPane
             tab={(

@@ -2,6 +2,7 @@ import './index.css';
 import React, { Component } from 'react';
 import { Menu, Icon } from 'antd';
 
+// eslint-disable-next-line react/prefer-stateless-function
 class Settings extends Component {
   render() {
     const { hide } = this.props;

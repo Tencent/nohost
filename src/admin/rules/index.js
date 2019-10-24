@@ -102,7 +102,7 @@ class Rules extends Component {
     const { activeKey } = this.state;
 
     return (
-      <div className={`box p-rules${hide ? ' p-hide' : ''}`}>
+      <div className={`box p-rules p-tabs${hide ? ' p-hide' : ''}`}>
         <Tabs defaultActiveKey="entrySetting" tabPosition="left" onChange={this.handleClick} activeKey={activeKey}>
           <TabPane
             tab={(

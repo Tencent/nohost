@@ -35,7 +35,7 @@ class Template extends Component {
     const { activeKey } = this.state;
 
     return (
-      <div className={`box p-template${hide ? ' p-hide' : ''}`}>
+      <div className={`box p-template p-tabs${hide ? ' p-hide' : ''}`}>
         <Tabs defaultActiveKey="rulesTemplate" tabPosition="left" onChange={this.handleClick} activeKey={activeKey}>
           <TabPane
             tab={(

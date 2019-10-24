@@ -72,6 +72,7 @@ const data = [
     age: 32,
   },
 ];
+// eslint-disable-next-line react/prefer-stateless-function
 class Certs extends Component {
   render() {
     const { hide } = this.props;
