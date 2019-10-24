@@ -10,6 +10,7 @@
   height: 40px;
   line-height: 40px;
   padding: 0 20px;
+  cursor: pointer;
 }
 .p-tab-ctn {
   width: 100%;
