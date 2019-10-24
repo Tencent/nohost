@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
 const Panel = ({ title, children, hide }) => (
   <div className={hide ? 'p-hide' : ''}>
