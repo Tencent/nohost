@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Icon, Form, Input, Button } from 'antd';
 import Panel from '../../../components/panel';
+import { FORM_ITEM_LAYOUT, SUBMIT_BTN_LAYOUT } from '../utils';
 
 class Administrator extends Component {
   handleSubmit = e => {
@@ -14,21 +15,12 @@ class Administrator extends Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 8 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 16 },
-      },
-    };
+
     return (
-      <Panel title="设置管理员名字和密码">
-        <div className="p-action-bar">
-          <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-            <Form.Item>
+      <div className="p-mid-con">
+        <Panel title="设置管理员名字和密码">
+          <Form {...FORM_ITEM_LAYOUT} onSubmit={this.handleSubmit}>
+            <Form.Item label="用户名">
               {getFieldDecorator('username', {
                 rules: [{ required: true, message: '请输入用户名!' }],
               })(<Input
@@ -36,7 +28,7 @@ class Administrator extends Component {
                 placeholder="用户名"
               />)}
             </Form.Item>
-            <Form.Item>
+            <Form.Item label="密码">
               {getFieldDecorator('password', {
                 rules: [{ required: true, message: '请输入密码!' }],
               })(<Input
@@ -45,14 +37,14 @@ class Administrator extends Component {
                 placeholder="密码"
               />)}
             </Form.Item>
-            <Form.Item>
+            <Form.Item {...SUBMIT_BTN_LAYOUT} style={{ marginBottom: 0 }}>
               <Button type="primary" htmlType="submit">
-                确定
+                  确定
               </Button>
             </Form.Item>
           </Form>
-        </div>
-      </Panel>
+        </Panel>
+      </div>
     );
   }
 }

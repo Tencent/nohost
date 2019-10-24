@@ -49,6 +49,7 @@
     "prop-types": "^15.5.10",
     "qrcode": "^1.2.0",
     "query-string": "^5.0.1",
+    "rc-tween-one": "^2.6.5",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "style-loader": "^0.18.2",

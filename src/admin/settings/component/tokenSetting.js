@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Input, Button } from 'antd';
+import Panel from '../../../components/panel';
+import { FORM_ITEM_LAYOUT, SUBMIT_BTN_LAYOUT } from '../utils';
 
 class TokenSetting extends Component {
   handleSubmit = e => {
@@ -13,32 +15,26 @@ class TokenSetting extends Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 8 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 16 },
-      },
-    };
 
     return (
-      <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-        <Form.Item>
-          {getFieldDecorator('token', {
-            rules: [{ required: true, message: '请输入Token!' }],
-          })(<Input
-            placeholder="请输入Token"
-          />)}
-        </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            确定
-          </Button>
-        </Form.Item>
-      </Form>
+      <div className="p-mid-con">
+        <Panel title="设置Token">
+          <Form {...FORM_ITEM_LAYOUT} onSubmit={this.handleSubmit}>
+            <Form.Item label="Token">
+              {getFieldDecorator('token', {
+                rules: [{ required: true, message: '请输入Token!' }],
+              })(<Input
+                placeholder="请输入Token"
+              />)}
+            </Form.Item>
+            <Form.Item {...SUBMIT_BTN_LAYOUT} style={{ marginBottom: 0 }}>
+              <Button type="primary" htmlType="submit">
+                  确定
+              </Button>
+            </Form.Item>
+          </Form>
+        </Panel>
+      </div>
     );
   }
 }

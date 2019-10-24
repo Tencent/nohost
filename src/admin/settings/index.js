@@ -1,88 +1,104 @@
 import React, { Component } from 'react';
-import { Menu, Icon, Button } from 'antd';
+import { Icon, Button, Tabs } from 'antd';
 import Administrator from './component/administrator';
 import Domain from './component/domain';
 import TokenSetting from './component/tokenSetting';
+import WhiteList from './component/whiteList';
 import Panel from '../../components/panel';
+import { getActiveTabFromHash, setActiveHash } from '../utils';
 import './index.css';
 
-const { location } = window;
-
+const { TabPane } = Tabs;
 class Settings extends Component {
   constructor(props) {
     super(props);
-    const tabName = location.hash.split('/')[1];
-    if (!tabName) {
-      location.hash = location.hash.replace(/(#.*)/, '$1/administrator');
-    }
-    const active = tabName || 'administrator';
-    this.state = { active };
+
+    this.state = { activeKey: getActiveTabFromHash('administrator') };
   }
 
+  // 切换页面时，重置二级菜单为默认值
   componentWillReceiveProps(props) {
-    const subMenu = location.hash.match(/#.*\/(.*)/);
-    const active = subMenu ? subMenu[1] : 'administrator';
     if (props.hide === false) {
       this.setState({
-        active,
+        activeKey: 'administrator',
       });
     }
   }
 
-  handleClick = e => {
-    const { key } = e;
+  handleClick = activeKey => {
     this.setState({
-      active: key,
+      activeKey,
     });
-    location.hash = location.hash.replace(/(#.*\/).*/, `$1${key}`);
+    setActiveHash(activeKey);
   };
 
   render() {
     const { hide = false } = this.props;
-    const { active } = this.state;
+    const { activeKey } = this.state;
 
     return (
       <div className={`box p-settings${hide ? ' p-hide' : ''}`}>
-        <div className="p-left-menu">
-          <Menu onClick={this.handleClick} selectedKeys={[active]}>
-            <Menu.Item key="administrator">
-              <Icon type="user" />
-              管理员
-            </Menu.Item>
-            <Menu.Item key="domain">
-              <Icon type="global" />
-              设置域名
-            </Menu.Item>
-            <Menu.Item key="tokenSetting">
-              <Icon type="setting" />
-              设置Token
-            </Menu.Item>
-            <Menu.Item key="restart">
-              <Icon type="redo" />
-              重启操作
-            </Menu.Item>
-          </Menu>
-        </div>
-        <div className="vbox fill p-mid">
-          <div className="p-mid-con">
-            <div className={active !== 'administrator' ? 'p-hide' : ''}>
-              <Administrator />
+        <Tabs defaultActiveKey="administrator" tabPosition="left" onChange={this.handleClick} activeKey={activeKey}>
+          <TabPane
+            tab={(
+              <span>
+                <Icon type="user" />
+                  管理员
+              </span>
+            )}
+            key="administrator"
+          >
+            <Administrator />
+          </TabPane>
+          <TabPane
+            tab={(
+              <span>
+                <Icon type="global" />
+                设置域名
+              </span>
+            )}
+            key="domain"
+          >
+            <Domain />
+          </TabPane>
+          <TabPane
+            tab={(
+              <span>
+                <Icon type="setting" />
+                设置Token
+              </span>
+            )}
+            key="tokenSetting"
+          >
+            <TokenSetting />
+          </TabPane>
+          <TabPane
+            tab={(
+              <span>
+                <Icon type="read" />
+                白名单
+              </span>
+            )}
+            key="whiteList"
+          >
+            <WhiteList />
+          </TabPane>
+          <TabPane
+            tab={(
+              <span>
+                <Icon type="redo" />
+                重启操作
+              </span>
+            )}
+            key="restart"
+          >
+            <div className="p-mid-con">
+              <Panel title="重启操作">
+                <Button type="danger">重启</Button>
+              </Panel>
             </div>
-            <div className={active !== 'domain' ? 'p-hide' : ''}>
-              <Domain />
-            </div>
-            <Panel title="设置Token" hide={active !== 'tokenSetting'}>
-              <div className="p-action-bar">
-                <TokenSetting />
-              </div>
-            </Panel>
-            <Panel title="重启操作" hide={active !== 'restart'}>
-              <div className="p-action-bar restart-action-bar">
-                <Button type="danger">重启</Button>
-              </div>
-            </Panel>
-          </div>
-        </div>
+          </TabPane>
+        </Tabs>
       </div>
     );
   }

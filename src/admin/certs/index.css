@@ -1,4 +1,7 @@
-
+.p-certs {
+  max-width: 1280px;
+  margin: 0 auto;
+}
 .p-certs a i {
   margin-right: 5px;
 }

@@ -6,7 +6,7 @@ class Settings extends Component {
   render() {
     const { hide } = this.props;
     return (
-      <div className={`box p-settings${hide ? ' p-hide' : ''}`}>
+      <div className={`box p-monitor${hide ? ' p-hide' : ''}`}>
         <div className="p-left-menu">
           <Menu>
             <Menu.Item key="1">

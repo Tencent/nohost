@@ -1,74 +1,79 @@
-import './index.css';
 import React, { Component } from 'react';
-import { Menu, Icon, Input, Button } from 'antd';
+import { Icon, Input, Button, Tabs } from 'antd';
 import Panel from '../../components/panel';
+import { getActiveTabFromHash, setActiveHash } from '../utils';
+import './index.css';
 
 const { TextArea } = Input;
-const { location } = window;
+const { TabPane } = Tabs;
 
 class Template extends Component {
   constructor(props) {
     super(props);
-    const tabName = location.hash.split('/')[1];
-    if (!tabName) {
-      location.hash = location.hash.replace(/(#.*)/, '$1/rulesTemplate');
-    }
-    const active = tabName || 'rulesTemplate';
-    this.state = { active };
+
+    this.state = { activeKey: getActiveTabFromHash('administrator') };
   }
 
+  // 切换页面时，重置二级菜单为默认值
   componentWillReceiveProps(props) {
-    const subMenu = location.hash.match(/#.*\/(.*)/);
-    const active = subMenu ? subMenu[1] : 'rulesTemplate';
     if (props.hide === false) {
       this.setState({
-        active,
+        activeKey: 'rulesTemplate',
       });
     }
   }
 
-  handleClick = e => {
-    const { key } = e;
+  handleClick = activeKey => {
     this.setState({
-      active: key,
+      activeKey,
     });
-    location.hash = location.hash.replace(/(#.*\/).*/, `$1${key}`);
+    setActiveHash(activeKey);
   };
 
   render() {
     const { hide = false } = this.props;
-    const { active } = this.state;
+    const { activeKey } = this.state;
 
     return (
-      <div className={`box p-settings${hide ? ' p-hide' : ''}`}>
-        <div className="p-left-menu">
-          <Menu onClick={this.handleClick} selectedKeys={[active]}>
-            <Menu.Item key="rulesTemplate">
-              <Icon type="book" />
-              规则模板
-            </Menu.Item>
-            <Menu.Item key="dataObj">
-              <Icon type="book" />
-              数据对象
-            </Menu.Item>
-          </Menu>
-        </div>
-        <div className="fill p-mid">
-          <div className="p-mid-con">
-            <Panel title="规则模板" hide={active !== 'rulesTemplate'}>
-              <div className="p-action-bar">
-                <Button type="primary"><Icon type="save" />保存</Button>
-              </div>
-              <TextArea className="p-textarea" />
-            </Panel>
-            <Panel title="数据对象" hide={active !== 'dataObj'}>
-              <div className="p-action-bar">
-                <Button type="primary"><Icon type="save" />保存</Button>
-              </div>
-              <TextArea className="p-textarea" />
-            </Panel>
-          </div>
-        </div>
+      <div className={`box p-template${hide ? ' p-hide' : ''}`}>
+        <Tabs defaultActiveKey="rulesTemplate" tabPosition="left" onChange={this.handleClick} activeKey={activeKey}>
+          <TabPane
+            tab={(
+              <span>
+                <Icon type="book" />
+                规则模板
+              </span>
+            )}
+            key="rulesTemplate"
+          >
+            <div className="p-mid-con">
+              <Panel title="规则模板">
+                <div className="p-action-bar">
+                  <Button type="primary"><Icon type="save" />保存</Button>
+                </div>
+                <TextArea className="p-textarea" />
+              </Panel>
+            </div>
+          </TabPane>
+          <TabPane
+            tab={(
+              <span>
+                <Icon type="book" />
+                数据对象
+              </span>
+            )}
+            key="dataObj"
+          >
+            <div className="p-mid-con">
+              <Panel title="数据对象">
+                <div className="p-action-bar">
+                  <Button type="primary"><Icon type="save" />保存</Button>
+                </div>
+                <TextArea className="p-textarea" />
+              </Panel>
+            </div>
+          </TabPane>
+        </Tabs>
       </div>
     );
   }

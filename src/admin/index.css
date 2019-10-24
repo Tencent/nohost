@@ -21,8 +21,7 @@
 }
 
 .p-mid-con {
-  min-width: 680px;
-  max-width: 900px;
+  width: 680px;
   margin: 0 auto;
 }
 
@@ -32,7 +31,7 @@
   font-weight: normal;
 }
 .p-mid-ctn {
-  border-radius: 3px;
+  border-radius: 4px;
   -webkit-box-shadow: 0 1px 3px rgba(26,26,26,.1);
   box-shadow: 0 1px 3px rgba(26,26,26,.1);
   border: 1px solid #f0f0f0;
@@ -60,4 +59,23 @@
 
 .p-textarea.ant-input {
   height: 360px;
+}
+
+/* 覆写antd的tab样式 */
+.ant-tabs {
+  width: 90%;
+}
+.ant-tabs .ant-tabs-left-bar {
+  margin-top: 10px;
+  border-right: none;
+}
+.ant-tabs .ant-tabs-left-bar .ant-tabs-tab {
+  text-align: left;
+}
+.ant-tabs .ant-tabs-left-bar .ant-tabs-ink-bar {
+  opacity: 0;
+}
+.ant-tabs .ant-tabs-left-content {
+  border-left: none;
+  padding: 0;
 }

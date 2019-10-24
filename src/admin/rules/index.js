@@ -1,10 +1,11 @@
 import './index.css';
 import React, { Component } from 'react';
-import { Menu, Button, Icon, Input, Table, Switch, Popconfirm } from 'antd';
+import { Button, Icon, Input, Table, Switch, Popconfirm, Tabs } from 'antd';
 import Panel from '../../components/panel';
+import { getActiveTabFromHash, setActiveHash } from '../utils';
 
 const { TextArea } = Input;
-const { location } = window;
+const { TabPane } = Tabs;
 
 const columns = [
   {
@@ -76,74 +77,79 @@ const data = [
 class Rules extends Component {
   constructor(props) {
     super(props);
-    const tabName = location.hash.split('/')[1];
-    if (!tabName) {
-      location.hash = location.hash.replace(/(#.*)/, '$1/entrySetting');
-    }
-    const active = tabName || 'entrySetting';
-    this.state = { active };
+
+    this.state = { activeKey: getActiveTabFromHash('entrySetting') };
   }
 
+  // 切换页面时，重置二级菜单为默认值
   componentWillReceiveProps(props) {
-    const subMenu = location.hash.match(/#.*\/(.*)/);
-    const active = subMenu ? subMenu[1] : 'entrySetting';
     if (props.hide === false) {
       this.setState({
-        active,
+        activeKey: 'entrySetting',
       });
     }
   }
 
-  handleClick = e => {
-    const { key } = e;
+  handleClick = activeKey => {
     this.setState({
-      active: key,
+      activeKey,
     });
-    location.hash = location.hash.replace(/(#.*\/).*/, `$1${key}`);
+    setActiveHash(activeKey);
   };
 
   render() {
     const { hide = false } = this.props;
-    const { active } = this.state;
+    const { activeKey } = this.state;
 
     return (
       <div className={`box p-rules${hide ? ' p-hide' : ''}`}>
-        <div className="p-left-menu">
-          <Menu onClick={this.handleClick} selectedKeys={[active]}>
-            <Menu.Item key="entrySetting">
-              <Icon type="bars" />
-              入口配置
-            </Menu.Item>
-            <Menu.Item key="globalRules">
-              <Icon type="bars" />
-              全局规则
-            </Menu.Item>
-            <Menu.Item key="accountRules">
-              <Icon type="bars" />
-              帐号规则
-            </Menu.Item>
-          </Menu>
-        </div>
-        <div className="fill p-mid">
-          <div className="p-mid-con">
-            {/* 入口配置 */}
-            <Panel title="入口配置" hide={active !== 'entrySetting'}>
-              <div className="p-action-bar">
-                <Button type="primary"><Icon type="plus" />添加规则</Button>
-              </div>
-              <Table columns={columns} dataSource={data} pagination={false} />
-            </Panel>
-
-            {/* 全局规则 */}
-            <Panel title="全局规则" hide={active !== 'globalRules'}>
-              <div className="p-action-bar">
-                <Button type="primary"><Icon type="save" />保存</Button>
-              </div>
-              <TextArea className="p-textarea" />
-            </Panel>
-
-            {/* 帐号规则 */}
-            <div className={active !== 'accountRules' ? 'p-hide' : 'p-accounts-rules'}>
+        <Tabs defaultActiveKey="entrySetting" tabPosition="left" onChange={this.handleClick} activeKey={activeKey}>
+          <TabPane
+            tab={(
+              <span>
+                <Icon type="bars" />
+                入口配置
+              </span>
+            )}
+            key="entrySetting"
+          >
+            <div className="p-mid-con">
+              <Panel title="入口配置">
+                <div className="p-action-bar">
+                  <Button type="primary"><Icon type="plus" />添加规则</Button>
+                </div>
+                <Table columns={columns} dataSource={data} pagination={false} />
+              </Panel>
+            </div>
+          </TabPane>
+          <TabPane
+            tab={(
+              <span>
+                <Icon type="bars" />
+                全局规则
+              </span>
+            )}
+            key="globalSetting"
+          >
+            <div className="p-mid-con">
+              <Panel title="全局规则">
+                <div className="p-action-bar">
+                  <Button type="primary"><Icon type="save" />保存</Button>
+                </div>
+                <TextArea className="p-textarea" />
+              </Panel>
+            </div>
+          </TabPane>
+          <TabPane
+            tab={(
+              <span>
+                <Icon type="bars" />
+                帐号规则
+              </span>
+            )}
+            key="accountRules"
+          >
+            <div className="p-mid-con">
               <Panel title="默认规则">
                 <div className="p-action-bar">
                   <Button type="primary"><Icon type="save" />保存</Button>
@@ -157,8 +163,10 @@ class Rules extends Component {
                 <TextArea className="p-textarea" />
               </Panel>
             </div>
-          </div>
-        </div>
+          </TabPane>
+        </Tabs>
+
+
       </div>
     );
   }

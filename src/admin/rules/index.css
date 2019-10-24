@@ -1,3 +1,6 @@
 .p-rules .ant-table-tbody>tr:last-child>td {
   border: none;
 }
+.p-rules .ant-input {
+  border: none;
+}
