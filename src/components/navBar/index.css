@@ -9,10 +9,10 @@
 .p-logo {
   display: inline-block;
   line-height: 60px;
-  padding: 0 30px 0 80px;
+  padding: 0 30px 0 65px;
   color: #fff;
-  font-size: 20px;
-  background: url(../../img/logo.png) 25px center no-repeat;
+  font-size: 14px;
+  background: url(../../img/logo.png) 10px center no-repeat;
   background-size: 42px;
 }
 
