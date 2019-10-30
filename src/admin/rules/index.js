@@ -1,8 +1,9 @@
 import './index.css';
 import React, { Component } from 'react';
-import { Button, Icon, Input, Table, Switch, Popconfirm, Tabs } from 'antd';
+import { Button, Icon, Input, Table, Switch, Popconfirm } from 'antd';
 import Panel from '../../components/panel';
 import { getActiveTabFromHash, setActiveHash } from '../utils';
+import Tabs from '../../components/tab';
 
 const { TextArea } = Input;
 const { TabPane } = Tabs;
@@ -102,8 +103,8 @@ class Rules extends Component {
     const { activeKey } = this.state;
 
     return (
-      <div className={`box p-rules p-tabs${hide ? ' p-hide' : ''}`}>
-        <Tabs defaultActiveKey="entrySetting" tabPosition="left" onChange={this.handleClick} activeKey={activeKey}>
+      <div className={`box p-rules ${hide ? ' p-hide' : ''}`}>
+        <Tabs defaultActiveKey="entrySetting" onChange={this.handleClick} activeKey={activeKey}>
           <TabPane
             tab={(
               <span>

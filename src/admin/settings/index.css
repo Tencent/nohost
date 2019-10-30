@@ -23,3 +23,12 @@
 .p-whitelist .submit-btn{
   margin-top: 24px;
 }
+.p-settings .ant-form-item,
+.p-settings .ant-form-item label,
+.p-settings .ant-form-item .ant-input,
+.p-settings .ant-form-item .ant-input-affix-wrapper,
+.p-settings .ant-btn,
+.p-settings .ant-form-explain,
+.p-settings .ant-form-extra {
+  font-size: 13px;
+}

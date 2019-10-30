@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Icon, Input, Button, Tabs } from 'antd';
+import { Icon, Input, Button } from 'antd';
 import Panel from '../../components/panel';
 import { getActiveTabFromHash, setActiveHash } from '../utils';
+import Tabs from '../../components/tab';
 import './index.css';
 
 const { TextArea } = Input;
@@ -35,8 +36,8 @@ class Template extends Component {
     const { activeKey } = this.state;
 
     return (
-      <div className={`box p-template p-tabs${hide ? ' p-hide' : ''}`}>
-        <Tabs defaultActiveKey="rulesTemplate" tabPosition="left" onChange={this.handleClick} activeKey={activeKey}>
+      <div className={`box p-template ${hide ? ' p-hide' : ''}`}>
+        <Tabs defaultActiveKey="rulesTemplate" onChange={this.handleClick} activeKey={activeKey}>
           <TabPane
             tab={(
               <span>
