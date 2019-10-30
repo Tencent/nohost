@@ -35,7 +35,7 @@ class NavBar extends Component {
     return (
       <div className="p-nav-bar" onClick={this.onChange}>
         <a href="https://github.com/imweb/punk" target="_blank" rel="noopener noreferrer" className="p-logo">
-          抓包调试及环境配置平台
+          Punk
         </a>
         <button
           type="button"
