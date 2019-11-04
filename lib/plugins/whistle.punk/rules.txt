@@ -1,2 +1,0 @@
-* enable://hide
-@whistle.punk/cgi-bin/entry-rules

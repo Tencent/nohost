@@ -1,6 +1,6 @@
-* htmlAppend://{whistle.punk/inject.html} disable://hide
+* htmlAppend://{whistle.nohost/inject.html} disable://hide
 
-``` whistle.punk/inject.html
+``` whistle.nohost/inject.html
 
 <script>
   (function() {
@@ -13,7 +13,7 @@
     var script = document.createElement('script');
     script.async = true;
     script.charset = 'utf8';
-    script.src = '/...whistle-path.5b6af7b9884e1165...///whistle.punk/js/nohost.js';
+    script.src = '/...whistle-path.5b6af7b9884e1165...///whistle.nohost/js/nohost.js';
     if (head.firstChild) {
       head.insertBefore(script, head.firstChild);
     } else {
