@@ -5,7 +5,7 @@ import Domain from './component/domain';
 import TokenSetting from './component/tokenSetting';
 import WhiteList from './component/whiteList';
 import Panel from '../../components/panel';
-import { getActiveTabFromHash, setActiveHash } from '../utils';
+import { getActiveTabFromHash, setActiveHash } from '../util';
 import './index.css';
 import Tabs from '../../components/tab';
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Icon, Input, Button } from 'antd';
 import Panel from '../../components/panel';
-import { getActiveTabFromHash, setActiveHash } from '../utils';
+import { getActiveTabFromHash, setActiveHash } from '../util';
 import Tabs from '../../components/tab';
 import './index.css';
 

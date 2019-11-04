@@ -2,7 +2,7 @@ import './index.css';
 import React, { Component } from 'react';
 import { Button, Icon, Input, Table, Switch, Popconfirm } from 'antd';
 import Panel from '../../components/panel';
-import { getActiveTabFromHash, setActiveHash } from '../utils';
+import { getActiveTabFromHash, setActiveHash } from '../util';
 import Tabs from '../../components/tab';
 
 const { TextArea } = Input;
