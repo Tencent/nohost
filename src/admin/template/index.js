@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { Icon, Input, Button, message } from 'antd';
-import Panel from '../../components/panel';
+import { Icon, Button, message } from 'antd';
 import { getActiveTabFromHash, setActiveHash, isPressEnter } from '../util';
 import { getSettings, setJsonData, setRulesTpl } from '../cgi';
+import TextAreaPanel from '../../components/textAreaPanel';
 import Tabs from '../../components/tab';
 import './index.css';
 
-const { TextArea } = Input;
 const { TabPane } = Tabs;
 
 class Template extends Component {
@@ -15,7 +14,6 @@ class Template extends Component {
 
     this.state = {
       activeKey: getActiveTabFromHash('administrator'),
-      rulesTplDisabled: true,
       jsonDataDisabled: true,
     };
   }
@@ -40,13 +38,6 @@ class Template extends Component {
     setActiveHash(activeKey);
   };
 
-  onRulesTplChange = (e) => {
-    this.setState({
-      rulesTpl: e.target.value,
-      rulesTplDisabled: false,
-    });
-  }
-
   onJsonDataChange = (e) => {
     this.setState({
       jsonData: e.target.value,
@@ -61,17 +52,16 @@ class Template extends Component {
     }
   }
 
-  setRulesTpl =(e) => {
+  setRulesTpl = (e, value) => {
     if (!isPressEnter(e)) {
       return;
     }
-    this.setState({ rulesTplDisabled: true });
-    const { rulesTpl } = this.state;
-    setRulesTpl({ rulesTpl }, (data) => {
+    setRulesTpl({ rulesTpl: value }, (data) => {
       if (!data) {
-        this.setState({ rulesTplDisabled: false });
         message.error('操作失败，请稍后重试');
+        return;
       }
+      message.success('配置规则模板成功！');
     });
   }
 
@@ -88,7 +78,9 @@ class Template extends Component {
       if (!data) {
         this.setState({ jsonDataDisabled: false });
         message.error('操作失败，请稍后重试');
+        return;
       }
+      message.success('配置数据对象成功！');
     });
   }
 
@@ -118,8 +110,8 @@ class Template extends Component {
       jsonData,
       rulesTpl,
       jsonDataDisabled,
-      rulesTplDisabled,
     } = this.state;
+
     if (ec !== 0) {
       return null;
     }
@@ -136,18 +128,12 @@ class Template extends Component {
             key="rulesTemplate"
           >
             <div className="p-mid-con">
-              <Panel title="规则模板">
-                <div className="p-action-bar">
-                  <Button type="primary" onClick={this.setRulesTpl} disabled={rulesTplDisabled}><Icon type="save" />保存</Button>
-                </div>
-                <TextArea
-                  className="p-textarea"
-                  onChange={this.onRulesTplChange}
-                  onKeyDown={this.setRulesTpl}
-                  value={rulesTpl}
-                  maxLength="3072"
-                />
-              </Panel>
+              <TextAreaPanel
+                title="规则模板"
+                value={rulesTpl}
+                handleSave={this.setRulesTpl}
+                maxLength="3072"
+              />
             </div>
           </TabPane>
           <TabPane
@@ -160,19 +146,17 @@ class Template extends Component {
             key="dataObj"
           >
             <div className="p-mid-con">
-              <Panel title="数据对象">
-                <div className="p-action-bar">
-                  <Button type="primary" style={{ marginRight: '10px' }} onClick={this.onFormat} disabled={jsonDataDisabled}><Icon type="tool" />格式化</Button>
-                  <Button type="primary" onClick={this.setJsonData} disabled={jsonDataDisabled}><Icon type="save" />保存</Button>
-                </div>
-                <TextArea
-                  className="p-textarea"
-                  onChange={this.onJsonDataChange}
-                  onKeyDown={this.setJsonData}
-                  value={jsonData}
-                  maxLength="3072"
-                />
-              </Panel>
+              <TextAreaPanel
+                title="数据对象"
+                value={jsonData}
+                handleChange={this.onJsonDataChange}
+                handleSave={this.setJsonData}
+                maxLength="3072"
+                buttons={[
+                  <Button type="primary" style={{ marginRight: '10px' }} onClick={this.onFormat} disabled={jsonDataDisabled}><Icon type="tool" />格式化</Button>,
+                  <Button type="primary" onClick={this.setJsonData} disabled={jsonDataDisabled}><Icon type="save" />保存</Button>]
+                }
+              />
             </div>
           </TabPane>
         </Tabs>
