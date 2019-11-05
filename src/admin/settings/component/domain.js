@@ -6,10 +6,8 @@ import { FORM_ITEM_LAYOUT, SUBMIT_BTN_LAYOUT } from '../../util';
 class Domain extends Component {
   handleSubmit = e => {
     e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        console.log('Received values of form: ', values);
-      }
+    this.props.form.validateFields(() => {
+
     });
   };
 

@@ -73,7 +73,6 @@ class Certs extends Component {
     const { files } = document.getElementById('upload-input');
     if (this.checkFiles(files)) {
       const fileArr = [];
-      console.log(files, 'files');
       Object.keys(files).map(index => {
         fileArr.push(new Promise((resolve) => { // 可能删除多行
           try {
@@ -89,9 +88,8 @@ class Certs extends Component {
         }));
       });
 
-      Promise.all(fileArr).then((fileText) => {
+      Promise.all(fileArr).then(() => {
         // TODO：cgi请求
-        console.log(fileText, 'fileText');
       });
     }
   };
