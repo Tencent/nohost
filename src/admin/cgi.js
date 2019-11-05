@@ -19,6 +19,7 @@ const {
   setAuthKey,
   getFollower,
   unfollow,
+  restart,
 } = createCgi({
   loadAllAccounts: {
     url: 'cgi-bin/list?parsed=1',
@@ -58,6 +59,7 @@ const {
     mode: 'ignore',
   },
   unfollow: 'unfollow',
+  restart: 'main/cgi-bin/restart'
 }, DEFAULT_CONF);
 
 const getAllAccounts = (cb) => {
@@ -103,4 +105,5 @@ export {
   setAuthKey,
   getFollower,
   unfollow,
+  restart,
 };
