@@ -59,7 +59,27 @@ const {
     mode: 'ignore',
   },
   unfollow: 'unfollow',
-  restart: 'main/cgi-bin/restart'
+  restart: {
+    url: 'main/cgi-bin/restart',
+    type: 'post',
+  },
+  getAdminSettings: 'main/cgi-bin/get-settings',
+  setAdmin: {
+    url: 'main/cgi-bin/set-admin',
+    type: 'post',
+  },
+  setDomain: {
+    url: 'main/cgi-bin/domain',
+    type: 'post',
+  },
+  setToken: {
+    url: 'main/cgi-bin/set-token',
+    type: 'post',
+  },
+  setWhiteList: {
+    url: 'main/cgi-bin/set-white-list',
+    type: 'post',
+  },
 }, DEFAULT_CONF);
 
 const getAllAccounts = (cb) => {
