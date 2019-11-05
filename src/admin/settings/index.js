@@ -9,7 +9,7 @@ import { getActiveTabFromHash, setActiveHash } from '../util';
 import './index.css';
 import Tabs from '../../components/tab';
 import { restart } from '../cgi';
-
+/* eslint-disable no-alert */
 const { TabPane } = Tabs;
 class Settings extends Component {
   constructor(props) {
@@ -35,14 +35,14 @@ class Settings extends Component {
   };
 
   restart = () => {
-    if (!confirm('是否重启系统？')) {
+    if (!window.confirm('是否重启系统？')) {
       return;
     }
     restart((data) => {
       if (data && data.ec === 0) {
-        alert('重启成功。');
+        window.alert('重启成功。');
       } else {
-        alert('重启失败！');
+        window.alert('重启失败！');
       }
     });
   }
