@@ -8,6 +8,7 @@ import Panel from '../../components/panel';
 import { getActiveTabFromHash, setActiveHash } from '../util';
 import './index.css';
 import Tabs from '../../components/tab';
+import { restart } from '../cgi';
 
 const { TabPane } = Tabs;
 class Settings extends Component {
@@ -32,6 +33,19 @@ class Settings extends Component {
     });
     setActiveHash(activeKey);
   };
+
+  restart = () => {
+    if (!confirm('是否重启系统？')) {
+      return;
+    }
+    restart((data) => {
+      if (data && data.ec === 0) {
+        alert('重启成功。');
+      } else {
+        alert('重启失败！');
+      }
+    });
+  }
 
   render() {
     const { hide = false } = this.props;
@@ -95,7 +109,7 @@ class Settings extends Component {
           >
             <div className="p-mid-con">
               <Panel title="重启操作">
-                <Button type="danger">重启</Button>
+                <Button type="danger" onClick={this.restart}>重启</Button>
               </Panel>
             </div>
           </TabPane>
