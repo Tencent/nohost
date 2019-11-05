@@ -1,85 +1,28 @@
 import './index.css';
 import React, { Component } from 'react';
-import { Button, Icon, Input, Table, Switch, Popconfirm } from 'antd';
+import { Button, Icon, Input, message } from 'antd';
 import Panel from '../../components/panel';
-import { getActiveTabFromHash, setActiveHash } from '../util';
+import { getActiveTabFromHash, setActiveHash, isPressEnter } from '../util';
+import { getSettings, setTestRules, setDefaultRules, setEntryRules } from '../cgi';
 import Tabs from '../../components/tab';
 
 const { TextArea } = Input;
 const { TabPane } = Tabs;
 
-const columns = [
-  {
-    title: '启用',
-    dataIndex: 'enable',
-    key: 'enable',
-    width: 120,
-    render: text => <a>{text}</a>,
-  },
-  {
-    title: '匹配规则',
-    dataIndex: 'name',
-    key: 'name',
-  },
-  {
-    title: '操作',
-    dataIndex: 'action',
-    key: 'action',
-    width: 200,
-  },
-];
-
-const data = [
-  {
-    key: '1',
-    enable: <Switch checkedChildren="已启用" unCheckedChildren="已禁用" defaultChecked />,
-    name: 'John Brown',
-    action: (
-      <div className="p-accounts-action">
-        <Popconfirm title="Sure to delete?" onConfirm={(record) => this.handleDelete(record.key)}>
-          <a><Icon type="delete" />Delete</a>
-        </Popconfirm>
-        <Switch checkedChildren="启用小圆点" unCheckedChildren="禁用小圆点" defaultChecked />
-      </div>
-    ),
-  },
-  {
-    key: '2',
-    enable: <Switch checkedChildren="已启用" unCheckedChildren="已禁用" defaultChecked />,
-    name: 'Jim Green',
-    age: 42,
-  },
-  {
-    key: '3',
-    enable: <Switch checkedChildren="已启用" unCheckedChildren="已禁用" defaultChecked />,
-    name: 'Joe Black',
-    age: 32,
-  },
-  {
-    key: '33',
-    enable: <Switch checkedChildren="已启用" unCheckedChildren="已禁用" defaultChecked />,
-    name: 'Joe Black',
-    age: 32,
-  },
-  {
-    key: '32',
-    enable: <Switch checkedChildren="已启用" unCheckedChildren="已禁用" defaultChecked />,
-    name: 'Joe Black',
-    age: 32,
-  },
-  {
-    key: '31',
-    enable: <Switch checkedChildren="已启用" unCheckedChildren="已禁用" defaultChecked />,
-    name: 'Joe Black',
-    age: 32,
-  },
-];
-
 class Rules extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { activeKey: getActiveTabFromHash('entrySetting') };
+    this.state = {
+      activeKey: getActiveTabFromHash('entrySetting'),
+      entryRulesDisabled: true,
+      testRulesDisabled: true,
+      defaultRulesDisabled: true,
+    };
+  }
+
+  componentDidMount() {
+    getSettings(this.setState.bind(this));
   }
 
   // 切换页面时，重置二级菜单为默认值
@@ -98,10 +41,85 @@ class Rules extends Component {
     setActiveHash(activeKey);
   };
 
+  onEntryRulesChange = (e) => {
+    this.setState({
+      entryRules: e.target.value,
+      entryRulesDisabled: false,
+    });
+  }
+
+  onTestRulesChange = (e) => {
+    this.setState({
+      testRules: e.target.value,
+      testRulesDisabled: false,
+    });
+  }
+
+  onDefaultRulesChange = (e) => {
+    this.setState({
+      defaultRules: e.target.value,
+      defaultRulesDisabled: false,
+    });
+  }
+
+  setEntryRules = (e) => {
+    if (!isPressEnter(e)) {
+      return;
+    }
+    this.setState({ entryRulesDisabled: true });
+    const { entryRules } = this.state;
+    setEntryRules({ entryRules }, (data) => {
+      if (!data) {
+        this.setState({ entryRulesDisabled: false });
+        message.error('操作失败，请稍后重试');
+      }
+    });
+  }
+
+  setTestRules = (e) => {
+    if (!isPressEnter(e)) {
+      return;
+    }
+    this.setState({ testRulesDisabled: true });
+    const { testRules } = this.state;
+    setTestRules({ testRules }, (data) => {
+      if (!data) {
+        this.setState({ testRulesDisabled: false });
+        message.error('操作失败，请稍后重试');
+      }
+    });
+  }
+
+  setDefaultRules = (e) => {
+    if (!isPressEnter(e)) {
+      return;
+    }
+    this.setState({ defaultRulesDisabled: true });
+    const { defaultRules } = this.state;
+    setDefaultRules({ defaultRules }, (data) => {
+      if (!data) {
+        this.setState({ defaultRulesDisabled: false });
+        message.error('操作失败，请稍后重试');
+      }
+    });
+  }
+
+
   render() {
     const { hide = false } = this.props;
-    const { activeKey } = this.state;
-
+    const {
+      activeKey,
+      ec, ///////////
+      entryRules,
+      testRules,
+      defaultRules,
+      entryRulesDisabled,
+      testRulesDisabled,
+      defaultRulesDisabled,
+    } = this.state;
+    if (ec !== 0) {
+      return null;
+    }
     return (
       <div className={`box p-rules ${hide ? ' p-hide' : ''}`}>
         <Tabs defaultActiveKey="entrySetting" onChange={this.handleClick} activeKey={activeKey}>
@@ -114,12 +132,19 @@ class Rules extends Component {
             )}
             key="entrySetting"
           >
+
             <div className="p-mid-con">
               <Panel title="入口配置">
                 <div className="p-action-bar">
-                  <Button type="primary"><Icon type="plus" />添加规则</Button>
+                  <Button type="primary" onClick={this.setEntryRules} disabled={entryRulesDisabled}><Icon type="save" />保存</Button>
                 </div>
-                <Table columns={columns} dataSource={data} pagination={false} />
+                <TextArea
+                  className="p-textarea"
+                  onChange={this.onEntryRulesChange}
+                  onKeyDown={this.setEntryRules}
+                  value={entryRules}
+                  maxLength="5120"
+                />
               </Panel>
             </div>
           </TabPane>
@@ -135,9 +160,12 @@ class Rules extends Component {
             <div className="p-mid-con">
               <Panel title="全局规则">
                 <div className="p-action-bar">
-                  <Button type="primary"><Icon type="save" />保存</Button>
+                  <Button type="primary" disabled><Icon type="save" />保存</Button>
                 </div>
-                <TextArea className="p-textarea" />
+                <TextArea
+                  className="p-textarea"
+                  maxLength="5120"
+                />
               </Panel>
             </div>
           </TabPane>
@@ -153,21 +181,31 @@ class Rules extends Component {
             <div className="p-mid-con">
               <Panel title="默认规则">
                 <div className="p-action-bar">
-                  <Button type="primary"><Icon type="save" />保存</Button>
+                  <Button type="primary" onClick={this.setDefaultRules} disabled={defaultRulesDisabled}><Icon type="save" />保存</Button>
                 </div>
-                <TextArea className="p-textarea" />
+                <TextArea
+                  className="p-textarea"
+                  onChange={this.onDefaultRulesChange}
+                  onKeyDown={this.setDefaultRules}
+                  value={defaultRules}
+                  maxLength="5120"
+                />
               </Panel>
               <Panel title="专属规则">
                 <div className="p-action-bar">
-                  <Button type="primary"><Icon type="save" />保存</Button>
+                  <Button type="primary" onClick={this.setTestRules} disabled={testRulesDisabled}><Icon type="save" />保存</Button>
                 </div>
-                <TextArea className="p-textarea" />
+                <TextArea
+                  className="p-textarea"
+                  onChange={this.onTestRulesChange}
+                  onKeyDown={this.setTestRules}
+                  value={testRules}
+                  maxLength="5120"
+                />
               </Panel>
             </div>
           </TabPane>
         </Tabs>
-
-
       </div>
     );
   }
