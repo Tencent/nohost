@@ -4,6 +4,7 @@ import { Button, Icon, Input, message } from 'antd';
 import Panel from '../../components/panel';
 import { getActiveTabFromHash, setActiveHash, isPressEnter } from '../util';
 import { getSettings, setTestRules, setDefaultRules, setEntryRules } from '../cgi';
+import TextAreaPanel from '../../components/textAreaPanel';
 import Tabs from '../../components/tab';
 
 const { TextArea } = Input;
@@ -15,9 +16,6 @@ class Rules extends Component {
 
     this.state = {
       activeKey: getActiveTabFromHash('entrySetting'),
-      entryRulesDisabled: true,
-      testRulesDisabled: true,
-      defaultRulesDisabled: true,
     };
   }
 
@@ -41,66 +39,45 @@ class Rules extends Component {
     setActiveHash(activeKey);
   };
 
-  onEntryRulesChange = (e) => {
-    this.setState({
-      entryRules: e.target.value,
-      entryRulesDisabled: false,
-    });
-  }
-
-  onTestRulesChange = (e) => {
-    this.setState({
-      testRules: e.target.value,
-      testRulesDisabled: false,
-    });
-  }
-
-  onDefaultRulesChange = (e) => {
-    this.setState({
-      defaultRules: e.target.value,
-      defaultRulesDisabled: false,
-    });
-  }
-
-  setEntryRules = (e) => {
+  setEntryRules = (e, value) => {
     if (!isPressEnter(e)) {
       return;
     }
-    this.setState({ entryRulesDisabled: true });
-    const { entryRules } = this.state;
-    setEntryRules({ entryRules }, (data) => {
+
+    setEntryRules({ entryRules: value }, (data) => {
       if (!data) {
-        this.setState({ entryRulesDisabled: false });
         message.error('操作失败，请稍后重试');
+        return;
       }
+      message.success('配置入口规则成功！');
     });
   }
 
-  setTestRules = (e) => {
+  setTestRules = (e, value) => {
     if (!isPressEnter(e)) {
       return;
     }
-    this.setState({ testRulesDisabled: true });
-    const { testRules } = this.state;
-    setTestRules({ testRules }, (data) => {
+
+    setTestRules({ testRules: value }, (data) => {
       if (!data) {
-        this.setState({ testRulesDisabled: false });
         message.error('操作失败，请稍后重试');
+        return;
       }
+      message.success('配置专属规则成功！');
     });
   }
 
-  setDefaultRules = (e) => {
+  setDefaultRules = (e, value) => {
     if (!isPressEnter(e)) {
       return;
     }
-    this.setState({ defaultRulesDisabled: true });
-    const { defaultRules } = this.state;
-    setDefaultRules({ defaultRules }, (data) => {
+
+    setDefaultRules({ defaultRules: value }, (data) => {
       if (!data) {
-        this.setState({ defaultRulesDisabled: false });
         message.error('操作失败，请稍后重试');
+        return;
       }
+      message.success('配置默认规则成功！');
     });
   }
 
@@ -109,13 +86,10 @@ class Rules extends Component {
     const { hide = false } = this.props;
     const {
       activeKey,
-      ec, ///////////
+      ec,
       entryRules,
       testRules,
       defaultRules,
-      entryRulesDisabled,
-      testRulesDisabled,
-      defaultRulesDisabled,
     } = this.state;
     if (ec !== 0) {
       return null;
@@ -132,20 +106,13 @@ class Rules extends Component {
             )}
             key="entrySetting"
           >
-
             <div className="p-mid-con">
-              <Panel title="入口配置">
-                <div className="p-action-bar">
-                  <Button type="primary" onClick={this.setEntryRules} disabled={entryRulesDisabled}><Icon type="save" />保存</Button>
-                </div>
-                <TextArea
-                  className="p-textarea"
-                  onChange={this.onEntryRulesChange}
-                  onKeyDown={this.setEntryRules}
-                  value={entryRules}
-                  maxLength="5120"
-                />
-              </Panel>
+              <TextAreaPanel
+                title="入口配置"
+                value={entryRules}
+                handleSave={this.setEntryRules}
+                maxLength="5120"
+              />
             </div>
           </TabPane>
           <TabPane
@@ -179,30 +146,18 @@ class Rules extends Component {
             key="accountRules"
           >
             <div className="p-mid-con">
-              <Panel title="默认规则">
-                <div className="p-action-bar">
-                  <Button type="primary" onClick={this.setDefaultRules} disabled={defaultRulesDisabled}><Icon type="save" />保存</Button>
-                </div>
-                <TextArea
-                  className="p-textarea"
-                  onChange={this.onDefaultRulesChange}
-                  onKeyDown={this.setDefaultRules}
-                  value={defaultRules}
-                  maxLength="5120"
-                />
-              </Panel>
-              <Panel title="专属规则">
-                <div className="p-action-bar">
-                  <Button type="primary" onClick={this.setTestRules} disabled={testRulesDisabled}><Icon type="save" />保存</Button>
-                </div>
-                <TextArea
-                  className="p-textarea"
-                  onChange={this.onTestRulesChange}
-                  onKeyDown={this.setTestRules}
-                  value={testRules}
-                  maxLength="5120"
-                />
-              </Panel>
+              <TextAreaPanel
+                title="默认规则"
+                value={defaultRules}
+                handleSave={this.setDefaultRules}
+                maxLength="5120"
+              />
+              <TextAreaPanel
+                title="专属规则"
+                value={testRules}
+                handleSave={this.setTestRules}
+                maxLength="5120"
+              />
             </div>
           </TabPane>
         </Tabs>
