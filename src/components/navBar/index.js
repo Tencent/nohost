@@ -83,7 +83,7 @@ class NavBar extends Component {
             className="p-about"
             style={{ display: displayAboutMenu ? 'block' : undefined }}
             onClick={this.showAboutDialog}
-          >关于 Punk
+          >关于 Nohost
           </button>
         </span>
       </div>
