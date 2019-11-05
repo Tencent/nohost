@@ -37,3 +37,17 @@ export const getActiveTabFromHash = (defaultTab) => {
 export const setActiveHash = (activeTab) => {
   location.hash = location.hash.replace(/(#.*\/).*/, `$1${activeTab}`);
 };
+
+/**
+ * 按command/control + enter时，自动保存表单
+ * @param {Object} e 事件对象
+ */
+export const isPressEnter = (e) => {
+  if (e.type !== 'keydown') {
+    return true;
+  }
+  if ((e.keyCode === 13 || e.keyCode === 83) && (e.ctrlKey || e.metaKey)) {
+    e.preventDefault();
+    return true;
+  }
+};

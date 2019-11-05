@@ -9,10 +9,7 @@ class WhiteList extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        console.log(values, '=====');
-      }
+    this.props.form.validateFields(() => {
     });
   }
 

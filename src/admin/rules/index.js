@@ -1,85 +1,26 @@
 import './index.css';
 import React, { Component } from 'react';
-import { Button, Icon, Input, Table, Switch, Popconfirm } from 'antd';
+import { Button, Icon, Input, message } from 'antd';
 import Panel from '../../components/panel';
-import { getActiveTabFromHash, setActiveHash } from '../util';
+import { getActiveTabFromHash, setActiveHash, isPressEnter } from '../util';
+import { getSettings, setTestRules, setDefaultRules, setEntryRules } from '../cgi';
+import TextAreaPanel from '../../components/textAreaPanel';
 import Tabs from '../../components/tab';
 
 const { TextArea } = Input;
 const { TabPane } = Tabs;
 
-const columns = [
-  {
-    title: '启用',
-    dataIndex: 'enable',
-    key: 'enable',
-    width: 120,
-    render: text => <a>{text}</a>,
-  },
-  {
-    title: '匹配规则',
-    dataIndex: 'name',
-    key: 'name',
-  },
-  {
-    title: '操作',
-    dataIndex: 'action',
-    key: 'action',
-    width: 200,
-  },
-];
-
-const data = [
-  {
-    key: '1',
-    enable: <Switch checkedChildren="已启用" unCheckedChildren="已禁用" defaultChecked />,
-    name: 'John Brown',
-    action: (
-      <div className="p-accounts-action">
-        <Popconfirm title="Sure to delete?" onConfirm={(record) => this.handleDelete(record.key)}>
-          <a><Icon type="delete" />Delete</a>
-        </Popconfirm>
-        <Switch checkedChildren="启用小圆点" unCheckedChildren="禁用小圆点" defaultChecked />
-      </div>
-    ),
-  },
-  {
-    key: '2',
-    enable: <Switch checkedChildren="已启用" unCheckedChildren="已禁用" defaultChecked />,
-    name: 'Jim Green',
-    age: 42,
-  },
-  {
-    key: '3',
-    enable: <Switch checkedChildren="已启用" unCheckedChildren="已禁用" defaultChecked />,
-    name: 'Joe Black',
-    age: 32,
-  },
-  {
-    key: '33',
-    enable: <Switch checkedChildren="已启用" unCheckedChildren="已禁用" defaultChecked />,
-    name: 'Joe Black',
-    age: 32,
-  },
-  {
-    key: '32',
-    enable: <Switch checkedChildren="已启用" unCheckedChildren="已禁用" defaultChecked />,
-    name: 'Joe Black',
-    age: 32,
-  },
-  {
-    key: '31',
-    enable: <Switch checkedChildren="已启用" unCheckedChildren="已禁用" defaultChecked />,
-    name: 'Joe Black',
-    age: 32,
-  },
-];
-
 class Rules extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { activeKey: getActiveTabFromHash('entrySetting') };
+    this.state = {
+      activeKey: getActiveTabFromHash('entrySetting'),
+    };
+  }
+
+  componentDidMount() {
+    getSettings(this.setState.bind(this));
   }
 
   // 切换页面时，重置二级菜单为默认值
@@ -98,10 +39,61 @@ class Rules extends Component {
     setActiveHash(activeKey);
   };
 
+  setEntryRules = (e, value) => {
+    if (!isPressEnter(e)) {
+      return;
+    }
+
+    setEntryRules({ entryRules: value }, (data) => {
+      if (!data) {
+        message.error('操作失败，请稍后重试');
+        return;
+      }
+      message.success('配置入口规则成功！');
+    });
+  }
+
+  setTestRules = (e, value) => {
+    if (!isPressEnter(e)) {
+      return;
+    }
+
+    setTestRules({ testRules: value }, (data) => {
+      if (!data) {
+        message.error('操作失败，请稍后重试');
+        return;
+      }
+      message.success('配置专属规则成功！');
+    });
+  }
+
+  setDefaultRules = (e, value) => {
+    if (!isPressEnter(e)) {
+      return;
+    }
+
+    setDefaultRules({ defaultRules: value }, (data) => {
+      if (!data) {
+        message.error('操作失败，请稍后重试');
+        return;
+      }
+      message.success('配置默认规则成功！');
+    });
+  }
+
+
   render() {
     const { hide = false } = this.props;
-    const { activeKey } = this.state;
-
+    const {
+      activeKey,
+      ec,
+      entryRules,
+      testRules,
+      defaultRules,
+    } = this.state;
+    if (ec !== 0) {
+      return null;
+    }
     return (
       <div className={`box p-rules ${hide ? ' p-hide' : ''}`}>
         <Tabs defaultActiveKey="entrySetting" onChange={this.handleClick} activeKey={activeKey}>
@@ -115,12 +107,12 @@ class Rules extends Component {
             key="entrySetting"
           >
             <div className="p-mid-con">
-              <Panel title="入口配置">
-                <div className="p-action-bar">
-                  <Button type="primary"><Icon type="plus" />添加规则</Button>
-                </div>
-                <Table columns={columns} dataSource={data} pagination={false} />
-              </Panel>
+              <TextAreaPanel
+                title="入口配置"
+                value={entryRules}
+                handleSave={this.setEntryRules}
+                maxLength="5120"
+              />
             </div>
           </TabPane>
           <TabPane
@@ -135,9 +127,12 @@ class Rules extends Component {
             <div className="p-mid-con">
               <Panel title="全局规则">
                 <div className="p-action-bar">
-                  <Button type="primary"><Icon type="save" />保存</Button>
+                  <Button type="primary" disabled><Icon type="save" />保存</Button>
                 </div>
-                <TextArea className="p-textarea" />
+                <TextArea
+                  className="p-textarea"
+                  maxLength="5120"
+                />
               </Panel>
             </div>
           </TabPane>
@@ -151,23 +146,21 @@ class Rules extends Component {
             key="accountRules"
           >
             <div className="p-mid-con">
-              <Panel title="默认规则">
-                <div className="p-action-bar">
-                  <Button type="primary"><Icon type="save" />保存</Button>
-                </div>
-                <TextArea className="p-textarea" />
-              </Panel>
-              <Panel title="专属规则">
-                <div className="p-action-bar">
-                  <Button type="primary"><Icon type="save" />保存</Button>
-                </div>
-                <TextArea className="p-textarea" />
-              </Panel>
+              <TextAreaPanel
+                title="默认规则"
+                value={defaultRules}
+                handleSave={this.setDefaultRules}
+                maxLength="5120"
+              />
+              <TextAreaPanel
+                title="专属规则"
+                value={testRules}
+                handleSave={this.setTestRules}
+                maxLength="5120"
+              />
             </div>
           </TabPane>
         </Tabs>
-
-
       </div>
     );
   }
