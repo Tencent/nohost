@@ -1,16 +1,14 @@
 const path = require('path');
 /* eslint-disable import/no-extraneous-dependencies */
-const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+
 const rootDir = process.cwd();
 const srcDir = path.resolve(rootDir, 'src');
-const env = process.argv[process.argv.indexOf('--env') + 1];
-const isDev = env === 'dev' || env === 'development';
 
 module.exports = {
   entry: {
-    index: path.resolve(srcDir,'admin/index'),
+    index: path.resolve(srcDir, 'admin/index'),
   },
   output: {
     filename: '[name].js',
@@ -33,11 +31,11 @@ module.exports = {
           'style-loader',
           'css-loader',
           {
-            loader:'less-loader',
-            options:{
-              javascriptEnabled:true
-            }
-          }
+            loader: 'less-loader',
+            options: {
+              javascriptEnabled: true,
+            },
+          },
         ],
       },
       {
@@ -79,7 +77,7 @@ module.exports = {
       template: path.resolve(srcDir, 'html/select.html'),
     }),
     new CopyPlugin([
-      {from:path.resolve(srcDir, 'assets'),to:path.resolve(rootDir, 'public')}
-    ])
+      { from: path.resolve(srcDir, 'assets'), to: path.resolve(rootDir, 'public') },
+    ]),
   ],
 };
