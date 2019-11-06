@@ -6,7 +6,7 @@ import ClipboardJS from 'clipboard';
 import { Cascader, Button, Modal, Input, Checkbox, Icon, message } from 'antd';
 import QRCode from '../components/qrCode';
 import Upload from '../components/upload';
-import { getAllAccounts, getFollower, unfollow } from '../cgi';
+import { getAllAccounts, getFollower, unfollow } from '../admin/cgi';
 import '../base.less';
 import './index.css';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { parse } from 'query-string';
-import Upload from './components/Upload';
+import Upload from './components/upload';
 import { importSessions as getSessions } from './cgi';
 import './base.less';
 

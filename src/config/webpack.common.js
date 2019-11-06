@@ -10,6 +10,8 @@ module.exports = {
   entry: {
     admin: path.resolve(srcDir, 'admin/index'),
     select: path.resolve(srcDir, 'select/index'),
+    capture: path.resolve(srcDir, 'capture/index'),
+    network: path.resolve(srcDir, 'admin/network'),
   },
   output: {
     filename: '[name].js',
@@ -72,6 +74,18 @@ module.exports = {
       filename: 'select.html',
       chunks: ['select'],
       template: path.resolve(srcDir, 'html/select.html'),
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'capture.html',
+      chunks: ['capture'],
+      title: 'Nohost -- 抓包调试',
+      template: path.resolve(srcDir, 'html/template.html'),
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'network.html',
+      chunks: ['network'],
+      title: 'Nohost -- 查看数据',
+      template: path.resolve(srcDir, 'html/template.html'),
     }),
     new CopyPlugin([
       { from: path.resolve(srcDir, 'assets'), to: path.resolve(rootDir, 'public') },
