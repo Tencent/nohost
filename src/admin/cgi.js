@@ -20,6 +20,11 @@ const {
   getFollower,
   unfollow,
   restart,
+  getAdminSettings,
+  setAdmin,
+  setDomain,
+  setToken,
+  setWhiteList,
 } = createCgi({
   loadAllAccounts: {
     url: 'cgi-bin/list?parsed=1',
@@ -100,6 +105,15 @@ const getSettings = (cb) => {
   });
 };
 
+const getAdministratorSettings = (cb) => {
+  getAdminSettings((data) => {
+    if (!data) {
+      return setTimeout(() => getAdministratorSettings(cb), 1000);
+    }
+    cb(data);
+  });
+};
+
 const {
   importSessions,
   exportSessions,
@@ -126,4 +140,9 @@ export {
   getFollower,
   unfollow,
   restart,
+  getAdministratorSettings,
+  setAdmin,
+  setDomain,
+  setToken,
+  setWhiteList,
 };
