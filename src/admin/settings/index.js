@@ -6,9 +6,10 @@ import TokenSetting from './component/tokenSetting';
 import WhiteList from './component/whiteList';
 import Panel from '../../components/panel';
 import { getActiveTabFromHash, setActiveHash } from '../util';
+import { getAdministratorSettings, restart } from '../cgi';
 import './index.css';
 import Tabs from '../../components/tab';
-import { restart } from '../cgi';
+
 /* eslint-disable no-alert */
 const { TabPane } = Tabs;
 class Settings extends Component {
@@ -16,6 +17,10 @@ class Settings extends Component {
     super(props);
 
     this.state = { activeKey: getActiveTabFromHash('administrator') };
+  }
+
+  componentDidMount() {
+    getAdministratorSettings(this.setState.bind(this));
   }
 
   // 切换页面时，重置二级菜单为默认值
@@ -49,8 +54,18 @@ class Settings extends Component {
 
   render() {
     const { hide = false } = this.props;
-    const { activeKey } = this.state;
+    const {
+      activeKey,
+      admin,
+      domain,
+      ec,
+      token,
+      whiteList,
+    } = this.state;
 
+    if (ec !== 0) {
+      return null;
+    }
     return (
       <div className={`box p-settings ${hide ? ' p-hide' : ''}`}>
         <Tabs defaultActiveKey="administrator" onChange={this.handleClick} activeKey={activeKey}>
@@ -63,7 +78,7 @@ class Settings extends Component {
             )}
             key="administrator"
           >
-            <Administrator />
+            <Administrator value={admin} />
           </TabPane>
           <TabPane
             tab={(
@@ -74,7 +89,7 @@ class Settings extends Component {
             )}
             key="domain"
           >
-            <Domain />
+            <Domain value={domain} />
           </TabPane>
           <TabPane
             tab={(
@@ -85,7 +100,7 @@ class Settings extends Component {
             )}
             key="tokenSetting"
           >
-            <TokenSetting />
+            <TokenSetting value={token} />
           </TabPane>
           <TabPane
             tab={(
@@ -96,7 +111,7 @@ class Settings extends Component {
             )}
             key="whiteList"
           >
-            <WhiteList />
+            <WhiteList value={whiteList} />
           </TabPane>
           <TabPane
             tab={(
