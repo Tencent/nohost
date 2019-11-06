@@ -5,7 +5,6 @@ const webpack = require('webpack');
 const common = require('./webpack.common.js');
 
 const rootDir = process.cwd();
-const srcDir = path.resolve(rootDir, 'src/client');
 
 module.exports = merge(common, {
   mode: 'development',
