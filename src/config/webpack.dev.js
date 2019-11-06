@@ -15,7 +15,6 @@ module.exports = merge(common, {
       'process.env.NODE_ENV': JSON.stringify('development'),
     }),
   ],
-  devtool: 'source-map',
   devServer: {
     compress: true,
     port: 8079,

@@ -1,0 +1,56 @@
+table {
+  table-layout: fixed;
+}
+#root .ant-tabs-bar {
+  margin: 0;
+}
+.n-settings {
+  margin: 0 auto;
+  width: 1024px;
+  padding-bottom: 60px;
+}
+
+.n-settings textarea {
+  display: block;
+  width: 100%;
+  resize: none;
+  border: none;
+  height: 280px;
+  padding: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  color: #fff;
+  background-color: #002240;
+  font-family: consolas,monospace!important;
+}
+
+.n-settings fieldset {
+  margin-top: 50px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.n-settings fieldset:nth-child(1) {
+  margin-top: 20px;
+}
+
+.n-settings legend {
+  font-size: 16px;
+  width: auto;
+  margin: 0 0 0 10px;
+  padding: 0 8px;
+  line-height: 1;
+}
+
+.n-settings-bar {
+  text-align: right;
+  margin: 0;
+  padding: 0 20px 6px;
+  border-bottom: 1px solid #ccc;
+}
+.n-auth-key-input {
+  border: none!important;
+  color: #fff!important;
+  background-color: #002240!important;
+  border-top-left-radius: 0!important;
+  border-top-right-radius: 0!important;
+}

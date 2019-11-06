@@ -1,3 +1,20 @@
 .p-certs a i {
   margin-right: 5px;
 }
+.upload-wrapper {
+  position: relative;
+  float: right;
+  width: 110px;
+  height: 32px;
+}
+#upload-input, .upload-btn {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%
+}
+#upload-input {
+  opacity: 0;
+  z-index: 50;
+}

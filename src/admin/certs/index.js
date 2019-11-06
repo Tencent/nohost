@@ -1,7 +1,7 @@
 import './index.css';
 import React, { Component } from 'react';
 
-import { Table, Switch, Popconfirm, Icon, Button } from 'antd';
+import { Table, Icon, Button, message } from 'antd';
 
 const columns = [
   {
@@ -30,59 +30,83 @@ const columns = [
   },
 ];
 
-const data = [
-  {
-    key: '1',
-    enable: <Switch checkedChildren="已启用" unCheckedChildren="已禁用" defaultChecked />,
-    name: 'John Brown',
-    action: (
-      <Popconfirm title="Sure to delete?" onConfirm={(record) => this.handleDelete(record.key)}>
-        <a><Icon type="delete" />Delete</a>
-      </Popconfirm>
-    ),
-  },
-  {
-    key: '2',
-    enable: <Switch checkedChildren="已启用" unCheckedChildren="已禁用" defaultChecked />,
-    name: 'Jim Green',
-    age: 42,
-  },
-  {
-    key: '3',
-    enable: <Switch checkedChildren="已启用" unCheckedChildren="已禁用" defaultChecked />,
-    name: 'Joe Black',
-    age: 32,
-  },
-  {
-    key: '33',
-    enable: <Switch checkedChildren="已启用" unCheckedChildren="已禁用" defaultChecked />,
-    name: 'Joe Black',
-    age: 32,
-  },
-  {
-    key: '32',
-    enable: <Switch checkedChildren="已启用" unCheckedChildren="已禁用" defaultChecked />,
-    name: 'Joe Black',
-    age: 32,
-  },
-  {
-    key: '31',
-    enable: <Switch checkedChildren="已启用" unCheckedChildren="已禁用" defaultChecked />,
-    name: 'Joe Black',
-    age: 32,
-  },
-];
+
 // eslint-disable-next-line react/prefer-stateless-function
 class Certs extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+    };
+  }
+
+  checkFiles = (fileList = []) => {
+    const certObj = {};
+    // eslint-disable-next-line no-restricted-syntax
+    for (const cert of fileList) {
+      if (cert.size > 10 * 1024) {
+        message.error('上传的证书过大，请上传10K以内的证书！');
+        return false;
+      }
+
+      // 上传的crt证书和key证书需要成对存在
+      const { name } = cert;
+      const crtCert = name.match(/(.+)\.crt/);
+      const keyCert = name.match(/(.+)\.key/);
+      if (crtCert) {
+        const trueName = crtCert[1];
+        certObj[trueName] = certObj[trueName] ? certObj[trueName] + 1 : 1;
+      } else if (keyCert) {
+        const trueName = keyCert[1];
+        certObj[trueName] = certObj[trueName] ? certObj[trueName] - 1 : -1;
+      }
+    }
+    if (Object.values(certObj).filter((cnt) => cnt !== 0).length) {
+      message.error('上传的crt证书和key证书的数量不一致，请检查后重新上传！');
+      return false;
+    }
+    return true;
+  }
+
+
+  handleChange = () => {
+    const { files } = document.getElementById('upload-input');
+    if (this.checkFiles(files)) {
+      const fileArr = [];
+      Object.keys(files).map(index => {
+        fileArr.push(new Promise((resolve) => { // 可能删除多行
+          try {
+            const reader = new FileReader();
+            reader.readAsText(files[index]);
+            reader.onload = function() {
+              resolve(reader.result);
+            };
+          } catch (err) {
+            // eslint-disable-next-line prefer-promise-reject-errors
+            resolve(false);
+          }
+        }));
+      });
+
+      Promise.all(fileArr).then(() => {
+        // TODO：cgi请求
+      });
+    }
+  };
+
   render() {
     const { hide } = this.props;
+
     return (
       <div className={`fill vbox p-certs${hide ? ' p-hide' : ''}`}>
         <div className="p-action-bar">
-          <Button type="primary"><Icon type="upload" />上传证书</Button>
+          <div className="upload-wrapper">
+            <input id="upload-input" type="file" accept=".crt,.key" multiple="multiple" onChange={this.handleChange} />
+            <Button className="upload-btn" type="primary"><Icon type="upload" />上传证书</Button>
+          </div>
         </div>
         <div className="fill p-content">
-          <Table columns={columns} dataSource={data} pagination={false} />
+          <Table columns={columns} pagination={false} />
         </div>
       </div>
     );
