@@ -8,7 +8,7 @@ const srcDir = path.resolve(rootDir, 'src');
 
 module.exports = {
   entry: {
-    index: path.resolve(srcDir, 'admin/index'),
+    admin: path.resolve(srcDir, 'admin/index'),
     select: path.resolve(srcDir, 'select/index'),
   },
   output: {
@@ -64,7 +64,8 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       filename: 'admin.html',
-      chunks: ['index'],
+      chunks: ['admin'],
+      title: 'Nohost -- 管理平台',
       template: path.resolve(srcDir, 'html/admin.html'),
     }),
     new HtmlWebpackPlugin({
