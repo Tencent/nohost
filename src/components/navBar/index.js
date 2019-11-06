@@ -34,7 +34,7 @@ class NavBar extends Component {
     const { active } = this.props;
     return (
       <div className="p-nav-bar" onClick={this.onChange}>
-        <a href="https://github.com/imweb/punk" target="_blank" rel="noopener noreferrer" className="p-logo">
+        <a href="https://github.com/nohosts/nohost" target="_blank" rel="noopener noreferrer" className="p-logo">
           Nohost
         </a>
         <button
@@ -74,7 +74,7 @@ class NavBar extends Component {
         >设置
         </button>
         <span className="p-help" onMouseEnter={this.showAboutMenu} onMouseLeave={this.hideAboutMenu}>
-          <a href="https://github.com/imweb/punk" rel="noopener noreferrer" target="_blank">
+          <a href="https://github.com/nohosts/nohost" rel="noopener noreferrer" target="_blank">
               帮助
             <Icon type="down" className="p-help-menu" />
           </a>
