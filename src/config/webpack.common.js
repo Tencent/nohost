@@ -12,7 +12,7 @@ module.exports = {
     select: path.resolve(srcDir, 'select/index'),
     capture: path.resolve(srcDir, 'capture/index'),
     network: path.resolve(srcDir, 'admin/network'),
-    nohost: path.resolve(srcDir, 'button/index'),
+    button: path.resolve(srcDir, 'button/index'),
   },
   output: {
     filename: '[name].js',
