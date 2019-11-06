@@ -65,12 +65,12 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       chunks: ['index'],
-      template: path.resolve(srcDir, 'html/template.html'),
+      template: path.resolve(srcDir, 'assets/html/template.html'),
     }),
     new HtmlWebpackPlugin({
       filename: 'select.html',
       chunks: ['index'],
-      template: path.resolve(srcDir, 'html/select.html'),
+      template: path.resolve(srcDir, 'assets/html/select.html'),
     }),
     new CopyPlugin([
       {from:path.resolve(srcDir, 'assets'),to:path.resolve(rootDir, 'public')}
