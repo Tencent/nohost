@@ -197,7 +197,7 @@ class Uploader extends Component {
           <Input
             ref={input => (this.nameInput = input)}
             placeholder="请输入文件名称"
-            maxLength="24"
+            maxLength={24}
             value={name}
             onPressEnter={this.handleOk}
             onChange={this.onChange}
