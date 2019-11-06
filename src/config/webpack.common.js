@@ -1,17 +1,20 @@
 const path = require('path');
 /* eslint-disable import/no-extraneous-dependencies */
 const webpack = require('webpack');
-
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
+const rootDir = process.cwd();
+const srcDir = path.resolve(rootDir, 'src');
 const env = process.argv[process.argv.indexOf('--env') + 1];
 const isDev = env === 'dev' || env === 'development';
 
 module.exports = {
   entry: {
-    index: './src/admin/index',
+    index: path.resolve(srcDir,'admin/index'),
   },
   output: {
     filename: '[name].js',
-    path: path.resolve(__dirname, '../public'),
+    path: path.resolve(rootDir, 'public'),
   },
   resolve: {
     extensions: ['.js', '.jsx', 'json'],
@@ -29,7 +32,12 @@ module.exports = {
         use: [
           'style-loader',
           'css-loader',
-          'less-loader',
+          {
+            loader:'less-loader',
+            options:{
+              javascriptEnabled:true
+            }
+          }
         ],
       },
       {
@@ -53,16 +61,25 @@ module.exports = {
       },
     ],
   },
-  plugins: isDev ? [] : [
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: '"production"',
-      },
+  devtool: 'none',
+  plugins: [
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      chunks: ['index'],
+      template: path.resolve(srcDir, 'html/template.html'),
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false,
-      },
+    new HtmlWebpackPlugin({
+      filename: 'admin.html',
+      chunks: ['index'],
+      template: path.resolve(srcDir, 'html/admin.html'),
     }),
+    new HtmlWebpackPlugin({
+      filename: 'select.html',
+      chunks: ['index'],
+      template: path.resolve(srcDir, 'html/select.html'),
+    }),
+    new CopyPlugin([
+      {from:path.resolve(srcDir, 'assets'),to:path.resolve(rootDir, 'public')}
+    ])
   ],
 };
