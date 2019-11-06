@@ -9,6 +9,7 @@ const srcDir = path.resolve(rootDir, 'src');
 module.exports = {
   entry: {
     index: path.resolve(srcDir, 'admin/index'),
+    select: path.resolve(srcDir, 'select/index'),
   },
   output: {
     filename: '[name].js',
@@ -62,18 +63,18 @@ module.exports = {
   devtool: 'none',
   plugins: [
     new HtmlWebpackPlugin({
-      filename: 'index.html',
-      chunks: ['index'],
-      template: path.resolve(srcDir, 'html/template.html'),
-    }),
-    new HtmlWebpackPlugin({
       filename: 'admin.html',
       chunks: ['index'],
       template: path.resolve(srcDir, 'html/admin.html'),
     }),
     new HtmlWebpackPlugin({
+      filename: 'index.html',
+      chunks: ['select'],
+      template: path.resolve(srcDir, 'html/select.html'),
+    }),
+    new HtmlWebpackPlugin({
       filename: 'select.html',
-      chunks: ['index'],
+      chunks: ['select'],
       template: path.resolve(srcDir, 'html/select.html'),
     }),
     new CopyPlugin([

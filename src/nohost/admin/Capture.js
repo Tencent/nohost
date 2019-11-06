@@ -4,7 +4,7 @@ import '../base.less';
 import './index.css';
 
 const Capture = () => (
-  <div className="container fill orient-vertical-box">
+  <div className="container fill vbox">
     <Upload />
     <iframe title="抓包界面" className="fill capture-win" src="whistle/" />
   </div>
