@@ -39,4 +39,3 @@ jspm_packages
 .DS_Store
 .idea
 package-lock.json
-public
