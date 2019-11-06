@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon, Button } from 'antd';
+import { Icon, Button, Modal, message } from 'antd';
 import Administrator from './component/administrator';
 import Domain from './component/domain';
 import TokenSetting from './component/tokenSetting';
@@ -40,15 +40,27 @@ class Settings extends Component {
   };
 
   restart = () => {
-    if (!window.confirm('是否重启系统？')) {
+    const self = this;
+    if (self.restarting) {
       return;
     }
-    restart((data) => {
-      if (data && data.ec === 0) {
-        window.alert('重启成功。');
-      } else {
-        window.alert('重启失败！');
-      }
+    self.restarting = true;
+    self.setState({});
+    Modal.confirm({
+      title: 'Do you want to restart the server?',
+      onOk() {
+        restart((data) => {
+          if (data && data.ec === 0) {
+            message.success('重启成功。');
+          } else {
+            message.error('重启失败！');
+          }
+          setTimeout(() => {
+            self.restarting = false;
+            self.setState({});
+          }, 3000);
+        });
+      },
     });
   }
 
@@ -124,7 +136,7 @@ class Settings extends Component {
           >
             <div className="p-mid-con">
               <Panel title="重启操作">
-                <Button type="danger" onClick={this.restart}>重启</Button>
+                <Button type="danger" disabled={this.restarting} onClick={this.restart}>重启</Button>
               </Panel>
             </div>
           </TabPane>

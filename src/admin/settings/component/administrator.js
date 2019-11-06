@@ -12,7 +12,7 @@ class Administrator extends Component {
       if (!err) {
         setAdmin({ username, password }, (data) => {
           if (!data) {
-            message.error('操作失败，请稍后重试');
+            message.error('操作失败，请稍后重试!');
             return;
           }
           message.success('设置管理员名字和密码成功！');
@@ -26,9 +26,9 @@ class Administrator extends Component {
     const { value = {} } = this.props;
     return (
       <div className="p-mid-con">
-        <Panel title="设置管理员名字和密码">
+        <Panel title="设置管理员账号和密码">
           <Form {...FORM_ITEM_LAYOUT} onSubmit={this.handleSubmit}>
-            <Form.Item label="用户名">
+            <Form.Item label="账号">
               {getFieldDecorator('username', {
                 initialValue: value.username || '',
                 rules: [{ required: true, message: '请输入用户名!' }],
@@ -40,11 +40,9 @@ class Administrator extends Component {
             </Form.Item>
             <Form.Item label="密码">
               {getFieldDecorator('password', {
-                initialValue: value.password || '',
                 rules: [{ required: true, message: '请输入密码!' }],
               })(<Input
                 prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                type="password"
                 placeholder="请输入密码"
                 autoComplete="off"
               />)}
