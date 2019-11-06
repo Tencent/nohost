@@ -2,20 +2,17 @@ import $ from 'jquery';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { parse } from 'query-string';
-import ClipboardJS from 'clipboard';
-import { Cascader, Button, Modal, Input, Checkbox, Icon, message } from 'antd';
+import { Cascader, Button, Modal, Checkbox, Icon, message } from 'antd';
 import QRCode from '../components/qrCode';
 import Upload from '../components/upload';
 import { getAllAccounts, getFollower, unfollow } from '../admin/cgi';
 import '../base.less';
 import './index.css';
 
-const ButtonGroup = Button.Group;
 const { search, href } = window.location;
 const query = parse(search);
 const PREFIX_LEN = 'x-nohost-'.length;
 const URL_DIR = href.replace(/[^/]+([?#].*)?$/, '');
-const REDIRECT_URL = `${URL_DIR.replace(/:\d+/, '')}redirect`;
 const { tab } = query;
 let pageName;
 
@@ -26,36 +23,6 @@ if (['network', 'rules', 'values', 'plugins'].indexOf(tab) !== -1) {
 }
 
 window.onWhistlePageChange = name => (pageName = `#${name}`);
-
-const clipboard = new ClipboardJS('.n-copy-btn');
-
-clipboard.on('success', (e) => {
-  message.success('复制成功');
-  e.clearSelection();
-});
-
-clipboard.on('error', () => {
-  message.error('复制失败');
-});
-
-const getRedirectUrl = (value, url) => {
-  value = value || [];
-  value = value.filter(v => v);
-  value = value.map((val, i) => {
-    val = encodeURIComponent(val);
-    if (i) {
-      return `env=${val}`;
-    }
-    return `name=${val}`;
-  });
-  if (url) {
-    if (!/^https?:\/\//.test(url)) {
-      url = `${/^\/\//.test(url) ? 'http:' : 'http://'}${url}`;
-    }
-    value.push(`url=${encodeURIComponent(url)}`);
-  }
-  return value.length ? `${REDIRECT_URL}?${value.join('&')}` : REDIRECT_URL;
-};
 
 const formatRules = (data) => {
   let { rules, headers } = data;
@@ -121,30 +88,6 @@ class Capture extends Component {
       url: getUrl(value[0], value[1]),
     });
   }
-
-  onEnvChange = (envValue) => {
-    this.setState({
-      envValue,
-      redirectUrl: getRedirectUrl(envValue, this.state.testUrl),
-    });
-  }
-
-  onTestUrlBlur = () => {
-    const { envValue, testUrl } = this.state;
-    this.setState({
-      redirectUrl: getRedirectUrl(envValue, testUrl),
-    });
-  }
-
-  onTestUrlChange = (e) => {
-    clearTimeout(this.timer);
-    const testUrl = e.target.value;
-    const { envValue } = this.state;
-    this.timer = setTimeout(() => {
-      this.setState({ redirectUrl: getRedirectUrl(envValue, testUrl) });
-    }, 600);
-    this.setState({ testUrl });
-  };
 
   getEnvValue(envMap, curEnv) {
     const formatEnvValue = (name, envName) => {
@@ -274,8 +217,6 @@ class Capture extends Component {
         if (value) {
           state.url = getUrl(value[0], value[1]);
         }
-        state.envValue = value;
-        state.redirectUrl = getRedirectUrl(value);
       }
       this.setState(state);
       this.initHints(data);
@@ -307,23 +248,8 @@ class Capture extends Component {
     this.setState({ followerIp: undefined });
   }
 
-  showSelectEnv = () => {
-    this.setState({ showSelectEnv: true, envUrl: './' });
-  }
-
-  createTestEnv = () => {
-    this.setState({ createTestEnv: true }, () => {
-      setTimeout(this.focusInput, 200);
-    });
-  }
-
   hideDialog = () => {
-    this.setState({
-      showQRCode: false,
-      showSelectEnv: false,
-      createTestEnv: false,
-      envUrl: undefined,
-    });
+    this.setState({ showQRCode: false });
   }
 
   handleMasker = (e) => {
@@ -346,17 +272,6 @@ class Capture extends Component {
     });
   }
 
-  focusInput = () => {
-    if (!this.testUrlInput) {
-      return;
-    }
-    this.testUrlInput.focus();
-  }
-
-  openRedirectUrl = () => {
-    window.open(this.state.redirectUrl);
-  }
-
   unfollow = () => {
     unfollow();
     this.confirmQRCode();
@@ -376,10 +291,9 @@ class Capture extends Component {
   /* eslint-disable no-script-url, jsx-a11y/anchor-is-valid */
   render() {
     const {
-      options, value, viewOwn, rules, showRules, envName, envUrl, redirectUrl,
-      showSelectEnv, showQRCode, qrCode, createTestEnv, followerIp,
+      options, value, viewOwn, rules, showRules, envName,
+      showQRCode, qrCode, followerIp,
     } = this.state;
-    const envValue = this.state.envValue || value;
     let { url } = this.state;
     url = url && url.replace(/#\w*/, pageName);
     let qrCodeTips;
@@ -457,10 +371,6 @@ class Capture extends Component {
               />
             ) : undefined}
           </span>
-          <ButtonGroup className="n-align-right">
-            <Button disabled={!options} onClick={this.showSelectEnv}>切换本机环境</Button>
-            <Button disabled={!options} onClick={this.createTestEnv}>生成测试环境</Button>
-          </ButtonGroup>
         </div>
         <iframe title="抓包界面" className="fill capture-win" src={url} />
         <div
@@ -476,6 +386,7 @@ class Capture extends Component {
           title="扫描二维码将手机请求设置为本机请求"
           footer={[
             <Button
+              key="close"
               onClick={this.hideDialog}
             >
               Close
@@ -485,72 +396,6 @@ class Capture extends Component {
         >
           {qrcodeElem}
           {qrCodeTips}
-        </Modal>
-        <Modal
-          className="n-create-test-env-dialog"
-          width={600}
-          visible={createTestEnv}
-          title="生成访问指定nohost环境的URL及二维码"
-          footer={[
-            <Button
-              onClick={this.hideDialog}
-            >
-              Close
-            </Button>,
-          ]}
-          onCancel={this.hideDialog}
-        >
-          <Input
-            className="n-test-url"
-            maxLength="320"
-            placeholder="请输入页面的URL"
-            onChange={this.onTestUrlChange}
-            onBlur={this.onTestUrlBlur}
-            ref={input => (this.testUrlInput = input)}
-          />
-          <Cascader
-            onChange={this.onEnvChange}
-            options={options}
-            value={envValue}
-            placeholder="选择nohost环境"
-            showSearch
-          />
-          <fieldset>
-            <legend>URL(直接访问可以切换到上述环境并跳转到测试页面)</legend>
-            <div className="n-settings-bar">
-              <ButtonGroup size="small">
-                <Button onClick={this.openRedirectUrl}>打开URL</Button>
-                <Button
-                  className="n-copy-btn"
-                  data-clipboard-text={redirectUrl}
-                >复制URL
-                </Button>
-              </ButtonGroup>
-            </div>
-            <Input readOnly value={redirectUrl} />
-          </fieldset>
-          <fieldset className="n-test-env-qrcode">
-            <legend>二维码(手机扫描可以直接切换到上述环境并跳转到测试页面)</legend>
-            <div className="n-settings-bar">
-              右键点击二维码复制图片
-            </div>
-            <QRCode size="300" value={redirectUrl} />
-          </fieldset>
-        </Modal>
-        <Modal
-          className="n-padding-0-dialog"
-          visible={showSelectEnv}
-          title="选择本机nohost环境"
-          footer={[
-            <Button
-              onClick={this.hideDialog}
-            >
-              Close
-            </Button>,
-          ]}
-          onCancel={this.hideDialog}
-        >
-          <iframe title="切换本机环境" className="n-select-env-win" src={envUrl} />
         </Modal>
       </div>
     );
