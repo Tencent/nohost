@@ -10,6 +10,7 @@
     "lint": "eslint *.js lib src",
     "lintfix": "eslint --fix *.js lib src",
     "dev": "webpack --config ./src/webpack.config.js -w",
+    "dist": "webpack --config ./src/config/webpack.prod.js",
     "start": "node ./test"
   },
   "repository": {
@@ -53,7 +54,8 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "style-loader": "^0.18.2",
-    "webpack": "^3.2.0"
+    "webpack": "^3.2.0",
+    "webpack-merge": "^4.2.2"
   },
   "dependencies": {
     "basic-auth": "^2.0.1",

@@ -1,17 +1,18 @@
 const path = require('path');
 /* eslint-disable import/no-extraneous-dependencies */
 const webpack = require('webpack');
-
+const rootDir = process.cwd();
+const srcDir = path.resolve(rootDir, 'src');
 const env = process.argv[process.argv.indexOf('--env') + 1];
 const isDev = env === 'dev' || env === 'development';
 
 module.exports = {
   entry: {
-    index: './src/admin/index',
+    index: path.resolve(srcDir,'admin/index'),
   },
   output: {
     filename: '[name].js',
-    path: path.resolve(__dirname, '../public'),
+    path: path.resolve(rootDir, 'public/nohost'),
   },
   resolve: {
     extensions: ['.js', '.jsx', 'json'],
@@ -53,16 +54,16 @@ module.exports = {
       },
     ],
   },
-  plugins: isDev ? [] : [
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: '"production"',
-      },
+  plugins: [
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      chunks: ['index'],
+      template: path.resolve(srcDir, 'html/template.html'),
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false,
-      },
+    new HtmlWebpackPlugin({
+      filename: 'select.html',
+      chunks: ['index'],
+      template: path.resolve(srcDir, 'html/select.html'),
     }),
   ],
 };
