@@ -69,7 +69,7 @@ const {
     type: 'post',
   },
   setDomain: {
-    url: 'main/cgi-bin/domain',
+    url: 'main/cgi-bin/set-domain',
     type: 'post',
   },
   setToken: {
