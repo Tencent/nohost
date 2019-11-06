@@ -68,11 +68,6 @@ module.exports = {
       template: path.resolve(srcDir, 'html/admin.html'),
     }),
     new HtmlWebpackPlugin({
-      filename: 'index.html',
-      chunks: ['select'],
-      template: path.resolve(srcDir, 'html/select.html'),
-    }),
-    new HtmlWebpackPlugin({
       filename: 'select.html',
       chunks: ['select'],
       template: path.resolve(srcDir, 'html/select.html'),
