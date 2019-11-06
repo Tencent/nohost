@@ -410,7 +410,7 @@ class Capture extends Component {
       }
     }
     return !options ? null : (
-      <div className="container fill orient-vertical-box">
+      <div className="container fill vbox">
         <div
           style={{ display: showRules ? 'block' : 'none' }}
           className="n-masker"

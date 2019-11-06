@@ -16,7 +16,7 @@ const clearNetwork = name ? '&clearNetwork=true' : '';
 
 const Network = () => {
   return (
-    <div className="container fill orient-vertical-box">
+    <div className="container fill vbox">
       <Upload />
       <iframe title="network" className="fill capture-win" src={`network/#network?ip=self${clearNetwork}`} />
     </div>
