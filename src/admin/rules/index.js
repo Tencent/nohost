@@ -1,13 +1,11 @@
 import './index.css';
 import React, { Component } from 'react';
-import { Button, Icon, Input, message } from 'antd';
-import Panel from '../../components/panel';
+import { Icon, message } from 'antd';
 import { getActiveTabFromHash, setActiveHash, isPressEnter } from '../util';
-import { getSettings, setTestRules, setDefaultRules, setEntryRules } from '../cgi';
+import { getSettings, setTestRules, setDefaultRules, setEntryRules, setGlobalRules } from '../cgi';
 import TextAreaPanel from '../../components/textAreaPanel';
 import Tabs from '../../components/tab';
 
-const { TextArea } = Input;
 const { TabPane } = Tabs;
 
 class Rules extends Component {
@@ -53,6 +51,20 @@ class Rules extends Component {
     });
   }
 
+  setGlobalRules = (e, value) => {
+    if (!isPressEnter(e)) {
+      return;
+    }
+
+    setGlobalRules({ globalRules: value }, (data) => {
+      if (!data) {
+        message.error('操作失败，请稍后重试！');
+        return;
+      }
+      message.success('全局规则设置成功！');
+    });
+  }
+
   setTestRules = (e, value) => {
     if (!isPressEnter(e)) {
       return;
@@ -88,6 +100,7 @@ class Rules extends Component {
       activeKey,
       ec,
       entryRules,
+      globalRules,
       testRules,
       defaultRules,
     } = this.state;
@@ -125,15 +138,12 @@ class Rules extends Component {
             key="globalSetting"
           >
             <div className="p-mid-con">
-              <Panel title="全局规则">
-                <div className="p-action-bar">
-                  <Button type="primary" disabled><Icon type="save" />保存</Button>
-                </div>
-                <TextArea
-                  className="p-textarea"
-                  maxLength="5120"
-                />
-              </Panel>
+              <TextAreaPanel
+                title="全局规则"
+                value={globalRules}
+                handleSave={this.setGlobalRules}
+                maxLength="5120"
+              />
             </div>
           </TabPane>
           <TabPane

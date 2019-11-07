@@ -11,6 +11,7 @@ const {
   loadAllAccounts,
   loadSettings,
   setEntryRules,
+  setGlobalRules,
   setJsonData,
   setRulesTpl,
   setTestRules,
@@ -36,6 +37,10 @@ const {
   loadSettings: 'cgi-bin/admin/get-settings',
   setEntryRules: {
     url: 'cgi-bin/admin/set-entry-rules',
+    type: 'post',
+  },
+  setGlobalRules: {
+    url: 'cgi-bin/admin/set-global-rules',
     type: 'post',
   },
   setJsonData: {
@@ -144,6 +149,7 @@ export {
   exportSessions,
   getSettings,
   setEntryRules,
+  setGlobalRules,
   setPluginRules,
   setJsonData,
   setRulesTpl,

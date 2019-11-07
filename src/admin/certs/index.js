@@ -82,10 +82,10 @@ class Certs extends Component {
               title="确定删除此证书？"
               onConfirm={() => this.removeCert(record.filename)}
             >
-              <a href="javascript:;">删除</a>
+              <a>删除</a>
             </Popconfirm>
           );
-        }
+        },
       },
     ];
   }
