@@ -31,8 +31,8 @@ const columns = [
 ];
 
 function parseCerts(data) {
-  const list = [];
-  Object.keys(data).forEach((domain, i) => {
+  const files = {};
+  Object.keys(data).forEach((domain) => {
     const cert = data[domain];
     const startDate = new Date(cert.notBefore);
     const endDate = new Date(cert.notAfter);
@@ -46,19 +46,29 @@ function parseCerts(data) {
       isInvalid = true;
       status = 'Expired';
     }
-    list.push({
-      key: i,
-      filename: cert.filename,
-      domain: cert.domain,
-      validity: `${startDate.toLocaleString()} ~ ${endDate.toLocaleString()}`,
-      status,
-      isInvalid,
-    });
+    const { filename } = cert;
+    let item = files[filename];
+    if (!item) {
+      item = {
+        key: filename,
+        filename,
+        domain: [cert.domain],
+        validity: `${startDate.toLocaleString()} ~ ${endDate.toLocaleString()}`,
+        status,
+        isInvalid,
+      };
+      files[filename] = item;
+    } else {
+      item.domain.push(cert.domain);
+    }
   });
-  list.sort((a, b) => {
-    return a.filename > b.filename ? 1 : -1;
+  return Object.keys(files).sort((a, b) => {
+    return a > b ? 1 : -1;
+  }).map(file => {
+    file = files[file];
+    file.domain = file.domain.join(', ');
+    return file;
   });
-  return list;
 }
 
 
