@@ -26,6 +26,7 @@ const {
   setToken,
   setWhiteList,
   uploadCerts,
+  getCertsInfo,
 } = createCgi({
   loadAllAccounts: {
     url: 'cgi-bin/list?parsed=1',
@@ -91,6 +92,7 @@ const {
     contentType: 'application/json;charset=utf8',
     type: 'post',
   },
+  getCertsInfo: 'cgi-bin/get-custom-certs-info',
 }, DEFAULT_CONF);
 
 const getAllAccounts = (cb) => {
@@ -152,4 +154,5 @@ export {
   setToken,
   setWhiteList,
   uploadCerts,
+  getCertsInfo,
 };

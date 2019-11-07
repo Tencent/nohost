@@ -1,7 +1,7 @@
 import './index.css';
 import React, { Component } from 'react';
 import { Table, Icon, Button, message } from 'antd';
-import { uploadCerts } from '../cgi';
+import { uploadCerts, getCertsInfo } from '../cgi';
 
 const columns = [
   {
@@ -13,8 +13,8 @@ const columns = [
   },
   {
     title: '域名列表',
-    dataIndex: 'domains',
-    key: 'domains',
+    dataIndex: 'domain',
+    key: 'domain',
   },
   {
     title: '有效期',
@@ -30,14 +30,53 @@ const columns = [
   },
 ];
 
+function parseCerts(data) {
+  const list = [];
+  Object.keys(data).forEach((domain, i) => {
+    const cert = data[domain];
+    const startDate = new Date(cert.notBefore);
+    const endDate = new Date(cert.notAfter);
+    let status = 'OK';
+    const now = Date.now();
+    let isInvalid;
+    if (startDate.getTime() > now) {
+      isInvalid = true;
+      status = 'Invalid';
+    } else if (endDate.getTime() < now) {
+      isInvalid = true;
+      status = 'Expired';
+    }
+    list.push({
+      key: i,
+      filename: cert.filename,
+      domain: cert.domain,
+      validity: `${startDate.toLocaleString()} ~ ${endDate.toLocaleString()}`,
+      status,
+      isInvalid,
+    });
+  });
+  list.sort((a, b) => {
+    return a.filename > b.filename ? 1 : -1;
+  });
+  return list;
+}
+
 
 // eslint-disable-next-line react/prefer-stateless-function
 class Certs extends Component {
-  constructor(props) {
-    super(props);
+  state = {}
 
-    this.state = {
-    };
+  componentDidMount() {
+    this.updateCertsInfo();
+  }
+
+  updateCertsInfo = () => {
+    getCertsInfo((data) => {
+      if (!data) {
+        return message.error('证书加载失败，请求稍后重试!');
+      }
+      this.setState({ data: parseCerts(data) });
+    });
   }
 
   checkFiles = (fileList = []) => {
@@ -118,7 +157,7 @@ class Certs extends Component {
           </div>
         </div>
         <div className="fill p-content">
-          <Table columns={columns} pagination={false} />
+          <Table columns={columns} dataSource={this.state.data} pagination={false} />
         </div>
       </div>
     );
