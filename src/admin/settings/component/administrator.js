@@ -58,6 +58,7 @@ class Administrator extends Component {
               })(<Input
                 prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
                 placeholder="请输入密码"
+                type="password"
                 autoComplete="off"
                 maxLength={32}
               />)}
