@@ -52,9 +52,11 @@ class Template extends Component {
     setRulesTpl({ rulesTpl: value }, (data) => {
       if (!data) {
         message.error('操作失败，请稍后重试');
+        this.rulesTplPanel.setBtnDisabled(false);
         return;
       }
       message.success('配置规则模板成功！');
+      this.rulesTplPanel.setBtnDisabled(true);
     });
   }
 
@@ -69,8 +71,8 @@ class Template extends Component {
     this.setState({ jsonData, jsonDataDisabled: true });
     setJsonData({ jsonData }, (data) => {
       if (!data) {
-        this.setState({ jsonDataDisabled: false });
         message.error('操作失败，请稍后重试');
+        this.setState({ jsonDataDisabled: false });
         return;
       }
       message.success('配置数据对象成功！');
@@ -133,6 +135,7 @@ class Template extends Component {
                 value={rulesTpl}
                 handleSave={this.setRulesTpl}
                 maxLength="3072"
+                ref={ref => this.rulesTplPanel = ref}
               />
             </div>
           </TabPane>

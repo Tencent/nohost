@@ -45,9 +45,11 @@ class Rules extends Component {
     setEntryRules({ entryRules: value }, (data) => {
       if (!data) {
         message.error('操作失败，请稍后重试');
+        this.entryRulesPanel.setBtnDisabled(false);
         return;
       }
       message.success('全局规则设置成功！');
+      this.entryRulesPanel.setBtnDisabled(true);
     });
   }
 
@@ -59,9 +61,11 @@ class Rules extends Component {
     setEntryPatterns({ entryPatterns: value }, (data) => {
       if (!data) {
         message.error('操作失败，请稍后重试！');
+        this.entryPatternsPanel.setBtnDisabled(false);
         return;
       }
       message.success('入口规则配置成功！');
+      this.entryPatternsPanel.setBtnDisabled(true);
     });
   }
 
@@ -73,9 +77,11 @@ class Rules extends Component {
     setTestRules({ testRules: value }, (data) => {
       if (!data) {
         message.error('操作失败，请稍后重试');
+        this.testRulesPanel.setBtnDisabled(false);
         return;
       }
       message.success('配置专属规则成功！');
+      this.testRulesPanel.setBtnDisabled(true);
     });
   }
 
@@ -87,9 +93,11 @@ class Rules extends Component {
     setDefaultRules({ defaultRules: value }, (data) => {
       if (!data) {
         message.error('操作失败，请稍后重试');
+        this.defaultRulesPanel.setBtnDisabled(false);
         return;
       }
       message.success('配置默认规则成功！');
+      this.defaultRulesPanel.setBtnDisabled(true);
     });
   }
 
@@ -125,6 +133,7 @@ class Rules extends Component {
                 value={entryPatterns}
                 handleSave={this.setEntryPatterns}
                 maxLength="5120"
+                ref={ref => this.entryPatternsPanel = ref}
               />
             </div>
           </TabPane>
@@ -143,6 +152,7 @@ class Rules extends Component {
                 value={entryRules}
                 handleSave={this.setEntryRules}
                 maxLength="5120"
+                ref={ref => this.entryRulesPanel = ref}
               />
             </div>
           </TabPane>
@@ -161,12 +171,14 @@ class Rules extends Component {
                 value={defaultRules}
                 handleSave={this.setDefaultRules}
                 maxLength="5120"
+                ref={ref => this.defaultRulesPanel = ref}
               />
               <TextAreaPanel
                 title="专属规则"
                 value={testRules}
                 handleSave={this.setTestRules}
                 maxLength="5120"
+                ref={ref => this.testRulesPanel = ref}
               />
             </div>
           </TabPane>

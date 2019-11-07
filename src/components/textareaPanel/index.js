@@ -31,8 +31,11 @@ class TextAreaPanel extends Component {
 
   handleSave = (e) => {
     this.props.handleSave(e, this.state.value);
+  }
+
+  setBtnDisabled = (isSaveBtnDisabled) => {
     this.setState({
-      isSaveBtnDisabled: true,
+      isSaveBtnDisabled,
     });
   }
 
