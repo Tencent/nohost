@@ -27,6 +27,9 @@ const columns = [
     dataIndex: 'action',
     key: 'action',
     width: 150,
+    render: (_, record) => {
+      return <a data-filename={record.filename} href="javascript:;">删除</a>;
+    }
   },
 ];
 
