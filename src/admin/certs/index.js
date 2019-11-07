@@ -1,37 +1,8 @@
 import './index.css';
 import React, { Component } from 'react';
-import { Table, Icon, Button, message } from 'antd';
-import { uploadCerts, getCertsInfo } from '../cgi';
+import { Table, Icon, Button, message, Popconfirm } from 'antd';
+import { uploadCerts, getCertsInfo, removeCert } from '../cgi';
 
-const columns = [
-  {
-    title: '文件名称',
-    dataIndex: 'filename',
-    key: 'filename',
-    width: 270,
-    render: text => <a>{text}</a>,
-  },
-  {
-    title: '域名列表',
-    dataIndex: 'domain',
-    key: 'domain',
-  },
-  {
-    title: '有效期',
-    dataIndex: 'validity',
-    key: 'validity',
-    width: 380,
-  },
-  {
-    title: '操作',
-    dataIndex: 'action',
-    key: 'action',
-    width: 150,
-    render: (_, record) => {
-      return <a data-filename={record.filename} href="javascript:;">删除</a>;
-    }
-  },
-];
 
 function parseCerts(data) {
   const files = {};
@@ -77,10 +48,59 @@ function parseCerts(data) {
 
 // eslint-disable-next-line react/prefer-stateless-function
 class Certs extends Component {
-  state = {}
+  constructor(props) {
+    super(props);
+    this.state = {};
+    this.columns = [
+      {
+        title: '文件名称',
+        dataIndex: 'filename',
+        key: 'filename',
+        width: 270,
+        render: text => <a>{text}</a>,
+      },
+      {
+        title: '域名列表',
+        dataIndex: 'domain',
+        key: 'domain',
+      },
+      {
+        title: '有效期',
+        dataIndex: 'validity',
+        key: 'validity',
+        width: 380,
+      },
+      {
+        title: '操作',
+        dataIndex: 'action',
+        key: 'action',
+        width: 150,
+        render: (_, record) => {
+          return (
+            <Popconfirm
+              title="确定删除此证书？"
+              onConfirm={() => this.removeCert(record.filename)}
+            >
+              <a href="javascript:;">删除</a>
+            </Popconfirm>
+          );
+        }
+      },
+    ];
+  }
+
 
   componentDidMount() {
     this.updateCertsInfo();
+  }
+
+  removeCert = (filename) => {
+    removeCert({ filename }, (data) => {
+      if (!data) {
+        return message.error('证书删除失败，请稍后重试！');
+      }
+      this.updateCertsInfo();
+    });
   }
 
   updateCertsInfo = () => {
@@ -148,6 +168,7 @@ class Certs extends Component {
         uploadCerts(JSON.stringify(list), (data) => {
           if (data.ec === 0) {
             message.success('上传成功');
+            this.updateCertsInfo();
           } else {
             message.error('上传失败，请稍后重试！');
           }
@@ -170,7 +191,7 @@ class Certs extends Component {
           </div>
         </div>
         <div className="fill p-content">
-          <Table columns={columns} dataSource={this.state.data} pagination={false} />
+          <Table columns={this.columns} dataSource={this.state.data} pagination={false} />
         </div>
       </div>
     );

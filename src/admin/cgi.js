@@ -27,6 +27,7 @@ const {
   setWhiteList,
   uploadCerts,
   getCertsInfo,
+  removeCert,
 } = createCgi({
   loadAllAccounts: {
     url: 'cgi-bin/list?parsed=1',
@@ -93,6 +94,10 @@ const {
     type: 'post',
   },
   getCertsInfo: 'cgi-bin/get-custom-certs-info',
+  removeCert: {
+    url: 'main/cgi-bin/remove-cert',
+    type: 'post',
+  },
 }, DEFAULT_CONF);
 
 const getAllAccounts = (cb) => {
@@ -155,4 +160,5 @@ export {
   setWhiteList,
   uploadCerts,
   getCertsInfo,
+  removeCert,
 };
