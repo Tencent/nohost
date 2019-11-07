@@ -26,6 +26,7 @@ function parseCerts(data) {
       item = {
         key: filename,
         filename,
+        mtime: cert.mtime,
         domain: [cert.domain],
         validity: `${startDate.toLocaleString()} ~ ${endDate.toLocaleString()}`,
         status,
@@ -37,7 +38,7 @@ function parseCerts(data) {
     }
   });
   return Object.keys(files).sort((a, b) => {
-    return a > b ? 1 : -1;
+    return files[a].mtime > files[b].mtime ? -1 : 1;
   }).map(file => {
     file = files[file];
     file.domain = file.domain.join(', ');
