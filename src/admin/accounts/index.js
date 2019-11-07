@@ -79,15 +79,15 @@ class Accounts extends Component {
       },
       success: (data) => {
         this.hideAddModal();
-        if (data.ec) {
-          message.error(`添加用户失败，错误码${data.ec} ${data.em}`);
-        } else {
+        if (data.ec === 0) {
           message.success(`${username}添加成功`);
           this.fetchAccounts();
+        } else {
+          message.error('添加用户失败！');
         }
       },
       error() {
-        message.error('添加用户失败，网络错误');
+        message.error('添加用户失败，网络错误！');
       },
     });
   };

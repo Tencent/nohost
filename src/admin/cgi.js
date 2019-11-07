@@ -25,6 +25,7 @@ const {
   setDomain,
   setToken,
   setWhiteList,
+  uploadCerts,
 } = createCgi({
   loadAllAccounts: {
     url: 'cgi-bin/list?parsed=1',
@@ -83,6 +84,11 @@ const {
   },
   setWhiteList: {
     url: 'main/cgi-bin/set-white-list',
+    type: 'post',
+  },
+  uploadCerts: {
+    url: 'main/cgi-bin/upload-certs',
+    contentType: 'application/json;charset=utf8',
     type: 'post',
   },
 }, DEFAULT_CONF);
@@ -145,4 +151,5 @@ export {
   setDomain,
   setToken,
   setWhiteList,
+  uploadCerts,
 };

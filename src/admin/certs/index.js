@@ -1,7 +1,7 @@
 import './index.css';
 import React, { Component } from 'react';
-
 import { Table, Icon, Button, message } from 'antd';
+import { uploadCerts } from '../cgi';
 
 const columns = [
   {
@@ -74,22 +74,34 @@ class Certs extends Component {
     if (this.checkFiles(files)) {
       const fileArr = [];
       Object.keys(files).map(index => {
-        fileArr.push(new Promise((resolve) => { // 可能删除多行
+        fileArr.push(new Promise((resolve, reject) => { // 可能删除多行
           try {
+            const file = files[index];
             const reader = new FileReader();
-            reader.readAsText(files[index]);
+            reader.readAsText(file);
             reader.onload = function() {
-              resolve(reader.result);
+              resolve({
+                content: reader.result,
+                name: file.name,
+              });
             };
           } catch (err) {
             // eslint-disable-next-line prefer-promise-reject-errors
-            resolve(false);
+            reject(err);
           }
         }));
       });
 
-      Promise.all(fileArr).then(() => {
-        // TODO：cgi请求
+      Promise.all(fileArr).then((list) => {
+        uploadCerts(JSON.stringify(list), (data) => {
+          if (data.ec === 0) {
+            message.success('上传成功');
+          } else {
+            message.error('上传失败，请稍后重试！');
+          }
+        });
+      }, () => {
+        message.error('上传失败，请稍后重试！');
       });
     }
   };
