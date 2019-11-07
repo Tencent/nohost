@@ -22,12 +22,13 @@ class Rules extends Component {
   }
 
   // 切换页面时，重置二级菜单为默认值
-  componentWillReceiveProps(props) {
-    if (props.hide === false) {
-      this.setState({
+  static getDerivedStateFromProps(props) {
+    if (props.hide === true) {
+      return {
         activeKey: 'entrySetting',
-      });
+      };
     }
+    return null;
   }
 
   handleClick = activeKey => {

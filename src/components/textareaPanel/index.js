@@ -5,18 +5,23 @@ import Panel from '../panel';
 const { TextArea } = Input;
 
 class TextAreaPanel extends Component {
-  state = {
-    value: this.props.value,
-    isSaveBtnDisabled: true,
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      value: this.props.value,
+      isSaveBtnDisabled: true,
+    };
   }
 
   // 切换页面时，重置二级菜单为默认值
-  componentWillReceiveProps(props) {
+  static getDerivedStateFromProps(props) {
     if (props.value) {
-      this.setState({
+      return {
         value: props.value,
-      });
+      };
     }
+    return null;
   }
 
   handleChange = (e) => {
