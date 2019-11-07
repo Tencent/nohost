@@ -35,13 +35,12 @@ class Tabs extends Component {
         <div className="p-tabs">
           {
             React.Children.map(this.props.children, item => {
-              const { tab } = item.props;
-              const { key } = item;
+              const { tab, tabKey } = item.props;
               return (
                 <div
-                  className={`p-tab ${activeTab === key ? 'p-tab-active' : ''} `}
-                  onClick={() => this.handleClick(key)}
-                  key={item.key}
+                  className={`p-tab ${activeTab === tabKey ? 'p-tab-active' : ''} `}
+                  onClick={() => this.handleClick(tabKey)}
+                  key={tabKey}
                 >
                   {tab}
                 </div>
@@ -52,10 +51,10 @@ class Tabs extends Component {
         <div className="p-tab-ctn">
           {
             React.Children.map(this.props.children, item => {
-              const { key } = item;
+              const { tabKey } = item.props;
               return (
                 <div
-                  className={`p-ctn-item ${activeTab === key ? '' : 'p-hide'}`}
+                  className={`p-ctn-item ${activeTab === tabKey ? '' : 'p-hide'}`}
                 >
                   {item}
                 </div>

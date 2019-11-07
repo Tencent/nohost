@@ -125,7 +125,7 @@ class Rules extends Component {
                 入口配置
               </span>
             )}
-            key="entrySetting"
+            tabKey="entrySetting"
           >
             <div className="p-mid-con">
               <TextAreaPanel
@@ -144,7 +144,7 @@ class Rules extends Component {
                 全局规则
               </span>
             )}
-            key="globalSetting"
+            tabKey="globalSetting"
           >
             <div className="p-mid-con">
               <TextAreaPanel
@@ -163,7 +163,7 @@ class Rules extends Component {
                 帐号规则
               </span>
             )}
-            key="accountRules"
+            tabKey="accountRules"
           >
             <div className="p-mid-con">
               <TextAreaPanel

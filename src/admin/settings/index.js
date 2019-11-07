@@ -92,7 +92,7 @@ class Settings extends Component {
                   管理员
               </span>
             )}
-            key="administrator"
+            tabKey="administrator"
           >
             <Administrator value={admin} />
           </TabPane>
@@ -103,7 +103,7 @@ class Settings extends Component {
                 设置域名
               </span>
             )}
-            key="domain"
+            tabKey="domain"
           >
             <Domain value={domain} />
           </TabPane>
@@ -114,7 +114,7 @@ class Settings extends Component {
                 设置Token
               </span>
             )}
-            key="tokenSetting"
+            tabKey="tokenSetting"
           >
             <TokenSetting value={token} />
           </TabPane>
@@ -125,7 +125,7 @@ class Settings extends Component {
                 白名单
               </span>
             )}
-            key="whiteList"
+            tabKey="whiteList"
           >
             <WhiteList value={whiteList} />
           </TabPane>
@@ -136,7 +136,7 @@ class Settings extends Component {
                 重启操作
               </span>
             )}
-            key="restart"
+            tabKey="restart"
           >
             <div className="p-mid-con">
               <Panel title="重启操作">

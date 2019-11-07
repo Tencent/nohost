@@ -127,7 +127,7 @@ class Template extends Component {
                 规则模板
               </span>
             )}
-            key="rulesTemplate"
+            tabKey="rulesTemplate"
           >
             <div className="p-mid-con">
               <TextAreaPanel
@@ -146,7 +146,7 @@ class Template extends Component {
                 数据对象
               </span>
             )}
-            key="dataObj"
+            tabKey="dataObj"
           >
             <div className="p-mid-con">
               <TextAreaPanel
