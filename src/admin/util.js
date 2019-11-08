@@ -51,3 +51,14 @@ export const isPressEnter = (e) => {
     return true;
   }
 };
+
+const JSON_RE = /^\s*(?:\{[\w\W]*\}|\[[\w\W]*\])\s*$/;
+
+export const evalJson = (str) => {
+  if (!JSON_RE.test(str)) {
+    return;
+  }
+  try {
+    return eval(`(${str})`); // eslint-disable-line
+  } catch (e) {}
+};

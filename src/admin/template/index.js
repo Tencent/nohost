@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Icon, Button, message } from 'antd';
-import { getActiveTabFromHash, setActiveHash, isPressEnter } from '../util';
+import { getActiveTabFromHash, setActiveHash, isPressEnter, evalJson } from '../util';
 import { getSettings, setJsonData, setRulesTpl } from '../cgi';
 import TextAreaPanel from '../../components/textAreaPanel';
 import Tabs from '../../components/tab';
@@ -45,13 +45,6 @@ class Template extends Component {
     });
   }
 
-  onFormat = () => {
-    const jsonData = this.formatJsonData();
-    if (jsonData !== false) {
-      this.setState({ jsonData });
-    }
-  }
-
   setRulesTpl = (e, value) => {
     if (!isPressEnter(e)) {
       return;
@@ -90,14 +83,21 @@ class Template extends Component {
     if (!jsonData) {
       return '';
     }
+    let err;
     try {
       jsonData = JSON.parse(jsonData);
-      if (jsonData && typeof jsonData === 'object') {
-        return JSON.stringify(jsonData, null, '  ');
-      }
     } catch (e) {
-      message.error(e.message);
+      err = e;
+      jsonData = evalJson(jsonData);
     }
+    if (jsonData && typeof jsonData === 'object') {
+      try {
+        return JSON.stringify(jsonData, null, '  ');
+      } catch (e) {
+        err = err || e;
+      }
+    }
+    message.error(err ? err.message : '请输入 JSON 对象！');
     return false;
   }
 
@@ -153,8 +153,7 @@ class Template extends Component {
                 handleSave={this.setJsonData}
                 maxLength="3072"
                 buttons={[
-                  <Button type="primary" style={{ marginRight: '10px' }} onClick={this.onFormat} disabled={jsonDataDisabled}><Icon type="tool" />格式化</Button>,
-                  <Button type="primary" onClick={this.setJsonData} disabled={jsonDataDisabled}><Icon type="save" />保存</Button>]
+                  <Button key="save" type="primary" onClick={this.setJsonData} disabled={jsonDataDisabled}><Icon type="save" />保存</Button>]
                 }
               />
             </div>
