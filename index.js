@@ -1,4 +1,3 @@
-const os = require('os');
 const fse = require('fs-extra');
 const { Socket } = require('net');
 const { getWhistlePath } = require('whistle/lib/config');

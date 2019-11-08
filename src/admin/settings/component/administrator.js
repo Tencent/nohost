@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import { Icon, Form, Input, Button, message, Checkbox } from 'antd';
+import { Icon, Form, Input, Button, message } from 'antd';
 import Panel from '../../../components/panel';
 import { FORM_ITEM_LAYOUT, SUBMIT_BTN_LAYOUT } from '../../util';
 import { setAdmin } from '../../cgi';
 
 class Administrator extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { enableGuest: !!props.enableGuest };
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.state = { enableGuest: !!props.enableGuest };
+  // }
+
   submitAdmin = e => {
     e.preventDefault();
     this.props.form.validateFields((err, value) => {
@@ -29,14 +30,13 @@ class Administrator extends Component {
     e.preventDefault();
   }
 
-  onEnableGuest = ({ target }) => {
-    this.setState({ enableGuest: target.checked });
-  }
+  // onEnableGuest = ({ target }) => {
+  //   this.setState({ enableGuest: target.checked });
+  // }
 
   render() {
     const { getFieldDecorator } = this.props.form;
     const { value = {} } = this.props;
-    const { enableGuest } = this.state;
     return (
       <div className="p-mid-con">
         <Panel title="设置管理员账号和密码">
