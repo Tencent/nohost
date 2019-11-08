@@ -315,7 +315,7 @@ class Capture extends Component {
             <p>重新扫描会解除上述关系</p>
             <Button onClick={this.confirmQRCode} type="primary">我知道了</Button>
             <p className="n-unfollow">
-              <a href="javascript:;" onClick={this.unfollow}>解除关联</a>
+              <a onClick={this.unfollow}>解除关联</a>
             </p>
           </div>
         );

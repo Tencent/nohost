@@ -5,15 +5,25 @@ import { FORM_ITEM_LAYOUT, SUBMIT_BTN_LAYOUT } from '../../util';
 import { setWhiteList } from '../../cgi';
 import '../index.css';
 
+const MAX_TAG_COUNT = 300;
+const MAX_TEXT_LEN = 36;
 const { confirm } = Modal;
 class WhiteList extends Component {
+  constructor(props) {
+    super(props);
+    const { value = '' } = props;
+    this.state = {
+      whiteList: value ? value.split('\n') : [],
+    };
+  }
+
   checkWord = (list) => {
-    if (list.length > 300) {
+    if (list.length > MAX_TAG_COUNT) {
       message.success('白名单最多添加300个人名，请缩减后输入！');
       return false;
     }
     const checkResult = list.map(word => {
-      if (word.length > 64) {
+      if (word.length > MAX_TEXT_LEN) {
         message.success(`白名单的“${word}”已超过64字符长度，请缩减后输入！`);
         return false;
       }
@@ -22,21 +32,12 @@ class WhiteList extends Component {
     return checkResult.indexOf(false) === -1;
   }
 
-  // 白名单人名用换行符\n分隔
-  formatWhitelist = (list) => {
-    return list.join('\n');
-  }
-
-  reformatWhiteList = (list) => {
-    return list.indexOf('\n') !== -1 ? list.split('\n') : [];
-  }
-
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, value) => {
       const { whiteList } = value;
       if (!err && this.checkWord(whiteList)) {
-        setWhiteList({ whiteList: this.formatWhitelist(whiteList) }, (data) => {
+        setWhiteList({ whiteList: whiteList.join('\n') }, (data) => {
           if (!data) {
             message.error('操作失败，请稍后重试');
             return;
@@ -65,8 +66,7 @@ class WhiteList extends Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { value = '' } = this.props;
-
+    const { whiteList } = this.state;
     return (
       <div className="p-mid-con p-whitelist">
         <Panel title="设置白名单">
@@ -74,11 +74,10 @@ class WhiteList extends Component {
             <Form.Item
               label="白名单"
             >
-              {getFieldDecorator('whiteList', {
-                initialValue: this.reformatWhiteList(value),
-                rules: [{ required: true, message: '请输入白名单！' }],
-              })(<Select
+              {getFieldDecorator('whiteList', { initialValue: whiteList })(<Select
                 mode="tags"
+                maxTagCount={MAX_TAG_COUNT}
+                maxTagTextLength={MAX_TEXT_LEN}
                 placeholder="请输入一个或多个人名，每次输入后按回车即可录入"
                 onDeselect={this.handleDeselect}
               />)}

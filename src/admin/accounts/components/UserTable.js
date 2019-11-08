@@ -28,8 +28,8 @@ class UserTable extends Component {
         /* eslint-disable*/
         <span className="nohost-user-operation">
           <a style={{ marginRight: 20 }} href={`data.html?name=${user.name}`} target="_blank">抓包配置</a>
-          <a style={{ marginRight: 20 }} href="javascript:;" data-action="modify">修改密码</a>
-          <a href="javascript:;" data-action="delete">删除</a>
+          <a style={{ marginRight: 20 }} data-action="modify">修改密码</a>
+          <a data-action="delete">删除</a>
         </span>
         /* eslint-enable */
       ),

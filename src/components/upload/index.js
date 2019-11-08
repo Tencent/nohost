@@ -53,7 +53,6 @@ const columns = [{
       <a
         style={{ marginLeft: 10 }}
         className="n-copy-text"
-        href="javascript:;"
         draggable={false}
         data-clipboard-text={url}
       >

@@ -5,11 +5,6 @@ import { FORM_ITEM_LAYOUT, SUBMIT_BTN_LAYOUT } from '../../util';
 import { setAdmin } from '../../cgi';
 
 class Administrator extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = { enableGuest: !!props.enableGuest };
-  // }
-
   submitAdmin = e => {
     e.preventDefault();
     this.props.form.validateFields((err, value) => {
@@ -25,14 +20,6 @@ class Administrator extends Component {
       }
     });
   }
-
-  submitGuest = e => {
-    e.preventDefault();
-  }
-
-  // onEnableGuest = ({ target }) => {
-  //   this.setState({ enableGuest: target.checked });
-  // }
 
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -70,7 +57,6 @@ class Administrator extends Component {
             </Form.Item>
           </Form>
         </Panel>
-
       </div>
     );
   }
