@@ -71,36 +71,6 @@ class Administrator extends Component {
           </Form>
         </Panel>
 
-        <Panel title={<Checkbox
-            checked={enableGuest}
-            onChange={this.onEnableGuest}
-          >启用访客账号和密码{enableGuest ? '（访客帐号或密码为空，表示无需登录即可以访客身份访问任何个人账号）' : ''}</Checkbox>}>
-          <Form {...FORM_ITEM_LAYOUT} onSubmit={this.submitGuest}>
-            <Form.Item label="访客账号">
-              <Input
-                disabled={!enableGuest}
-                prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                placeholder="请输入账号"
-                autoComplete="off"
-                maxLength={32}
-              />
-            </Form.Item>
-            <Form.Item label="访客密码">
-              <Input
-                disabled={!enableGuest}
-                prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                placeholder="请输入密码"
-                autoComplete="off"
-                maxLength={32}
-              />
-            </Form.Item>
-            <Form.Item {...SUBMIT_BTN_LAYOUT} style={{ marginBottom: 0 }}>
-              <Button disabled={!enableGuest} type="primary" htmlType="submit">
-                  确定
-              </Button>
-            </Form.Item>
-          </Form>
-        </Panel>
       </div>
     );
   }
