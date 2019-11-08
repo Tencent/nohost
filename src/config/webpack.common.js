@@ -69,24 +69,24 @@ module.exports = {
       filename: 'admin.html',
       chunks: ['admin'],
       title: 'Nohost -- 管理平台',
-      template: path.resolve(srcDir, 'html/admin.html'),
+      template: path.resolve(srcDir, 'pages/admin.html'),
     }),
     new HtmlWebpackPlugin({
       filename: 'select.html',
       chunks: ['select'],
-      template: path.resolve(srcDir, 'html/select.html'),
+      template: path.resolve(srcDir, 'pages/select.html'),
     }),
     new HtmlWebpackPlugin({
       filename: 'capture.html',
       chunks: ['capture'],
       title: 'Nohost -- 抓包调试',
-      template: path.resolve(srcDir, 'html/template.html'),
+      template: path.resolve(srcDir, 'pages/template.html'),
     }),
     new HtmlWebpackPlugin({
       filename: 'network.html',
       chunks: ['network'],
       title: 'Nohost -- 查看数据',
-      template: path.resolve(srcDir, 'html/template.html'),
+      template: path.resolve(srcDir, 'pages/template.html'),
     }),
     new CopyPlugin([
       { from: path.resolve(srcDir, 'assets'), to: path.resolve(rootDir, 'public') },
