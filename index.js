@@ -1,7 +1,7 @@
 const os = require('os');
 const fse = require('fs-extra');
-const { join } = require('path');
 const { Socket } = require('net');
+const { getWhistlePath } = require('whistle/lib/config');
 
 // 避免第三方模块没处理好异常导致程序crash
 const noop = () => {};
@@ -14,8 +14,7 @@ Socket.prototype.destroy = function(err) {
 };
 
 // 设置存储路径
-process.env.WHISTLE_PATH = process.env.NOHOST_PATH || join(os.homedir() || '~', '.NohostAppData');
-
+process.env.WHISTLE_PATH = process.env.NOHOST_PATH || getWhistlePath();
 fse.ensureDirSync(process.env.WHISTLE_PATH); // eslint-disable-line
 
 module.exports = require('./lib');
