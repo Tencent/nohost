@@ -217,7 +217,7 @@ class Accounts extends Component {
         <div style={style.buttonRow}>
           <Tooltip title="启用访客身份后，用户无需登录即可可以查看各个账号但抓包数据">
             <Checkbox
-              style={{marginRight: 20}}
+              style={{ marginRight: 20 }}
             >
               启用访客身份
             </Checkbox>
