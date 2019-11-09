@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Modal, message } from 'antd';
+import { Button, Modal, message, Checkbox, Tooltip } from 'antd';
 import $ from 'jquery';
 import UserTable from './components/UserTable';
 import AddUserForm from './components/AddUserForm';
@@ -215,6 +215,13 @@ class Accounts extends Component {
     return (
       <div className={`vbox fill p-accounts${hide ? ' p-hide' : ''}`}>
         <div style={style.buttonRow}>
+          <Tooltip title="启用访客身份后，用户无需登录即可可以查看各个账号但抓包数据">
+            <Checkbox
+              style={{marginRight: 20}}
+            >
+              启用访客身份
+            </Checkbox>
+          </Tooltip>
           <Button
             disabled={this.state.users.length > MAX_USER_COUNT}
             type="primary"

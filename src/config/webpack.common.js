@@ -68,7 +68,6 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'admin.html',
       chunks: ['admin'],
-      title: 'Nohost -- 管理平台',
       template: path.resolve(srcDir, 'pages/admin.html'),
     }),
     new HtmlWebpackPlugin({
@@ -79,13 +78,15 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'capture.html',
       chunks: ['capture'],
-      title: 'Nohost -- 抓包调试',
+      title: 'Nohost-抓包调试',
+      inject: true,
       template: path.resolve(srcDir, 'pages/template.html'),
     }),
     new HtmlWebpackPlugin({
       filename: 'network.html',
       chunks: ['network'],
-      title: 'Nohost -- 查看数据',
+      title: 'Nohost-查看抓包',
+      inject: true,
       template: path.resolve(srcDir, 'pages/template.html'),
     }),
     new CopyPlugin([
