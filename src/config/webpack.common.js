@@ -66,14 +66,17 @@ module.exports = {
   devtool: 'none',
   plugins: [
     new HtmlWebpackPlugin({
-      filename: 'admin.html',
-      chunks: ['admin'],
-      template: path.resolve(srcDir, 'pages/admin.html'),
-    }),
-    new HtmlWebpackPlugin({
       filename: 'select.html',
       chunks: ['select'],
       template: path.resolve(srcDir, 'pages/select.html'),
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'admin.html',
+      chunks: ['admin'],
+      title: 'Nohost-管理平台',
+      className: 'vbox',
+      inject: true,
+      template: path.resolve(srcDir, 'pages/template.html'),
     }),
     new HtmlWebpackPlugin({
       filename: 'capture.html',
