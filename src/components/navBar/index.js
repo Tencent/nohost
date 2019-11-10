@@ -5,19 +5,19 @@ import React, { Component } from 'react';
 class NavBar extends Component {
   state = {}
 
-  showAboutMenu = () => {
-    this.setState({ displayAboutMenu: true });
-  }
+  // showAboutMenu = () => {
+  //   this.setState({ displayAboutMenu: true });
+  // }
 
-  hideAboutMenu = () => {
-    this.setState({ displayAboutMenu: false });
-  }
+  // hideAboutMenu = () => {
+  //   this.setState({ displayAboutMenu: false });
+  // }
 
-  showAboutDialog = () => {
-    this.setState({
-      displayAboutMenu: false,
-    });
-  }
+  // showAboutDialog = () => {
+  //   this.setState({
+  //     displayAboutMenu: false,
+  //   });
+  // }
 
   onChange = ({ target }) => {
     if (target.nodeName !== 'BUTTON' || !target.name) {
@@ -30,7 +30,6 @@ class NavBar extends Component {
   }
 
   render() {
-    const { displayAboutMenu } = this.state;
     const { active } = this.props;
     return (
       <div className="p-nav-bar" onClick={this.onChange}>
