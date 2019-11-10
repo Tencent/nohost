@@ -1,6 +1,6 @@
 import './index.css';
 import React, { Component } from 'react';
-import { Icon } from 'antd';
+// import { Icon } from 'antd';
 
 class NavBar extends Component {
   state = {}
@@ -76,15 +76,15 @@ class NavBar extends Component {
         <span className="p-help" onMouseEnter={this.showAboutMenu} onMouseLeave={this.hideAboutMenu}>
           <a href="https://github.com/nohosts/nohost" rel="noopener noreferrer" target="_blank">
               帮助
-            <Icon type="down" className="p-help-menu" />
+            {/* <Icon type="down" className="p-help-menu" /> */}
           </a>
-          <button
+          {/* <button
             type="button"
             className="p-about"
             style={{ display: displayAboutMenu ? 'block' : undefined }}
             onClick={this.showAboutDialog}
           >关于 Nohost
-          </button>
+          </button> */}
         </span>
       </div>
     );
