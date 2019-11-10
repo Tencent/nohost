@@ -107,7 +107,7 @@ class Accounts extends Component {
       enableGuest: checked ? 1 : '',
     }, (data) => {
       if (data && data.ec === 0) {
-        message.success('启用成功');
+        message.success('设置成功');
         return this.setState({ enableGuest: checked });
       }
       message.error('操作失败，请稍后再试！');
@@ -230,13 +230,13 @@ class Accounts extends Component {
     return (
       <div className={`vbox fill p-accounts${hide ? ' p-hide' : ''}`}>
         <div style={style.buttonRow}>
-          <Tooltip title="启用访客身份后，用户无需登录即可直接访问各个账号，但只能查看抓包数据，不能修改规则配置。">
+          <Tooltip title="启用后，用户无需登录即可查看各个账号的抓包及配置数据，但不能进行修改操作。">
             <Checkbox
               checked={this.state.enableGuest}
               onChange={this.onEnableGuest}
               style={{ marginRight: 20 }}
             >
-              启用访客身份
+              允许访客访问
             </Checkbox>
           </Tooltip>
           <Button
