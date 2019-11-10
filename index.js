@@ -1,7 +1,6 @@
 const fse = require('fs-extra');
 const { Socket } = require('net');
 const { getWhistlePath } = require('whistle/lib/config');
-
 // 避免第三方模块没处理好异常导致程序crash
 const noop = () => {};
 const destroySocket = Socket.prototype.destroy;
