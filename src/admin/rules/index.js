@@ -2,7 +2,7 @@ import './index.css';
 import React, { Component } from 'react';
 import { Icon, message } from 'antd';
 import { getActiveTabFromHash, setActiveHash, isPressEnter } from '../util';
-import { getSettings, setTestRules, setDefaultRules, setEntryRules, setGlobalRules } from '../cgi';
+import { getSettings, setTestRules, setDefaultRules, setEntryRules, setEntryPatterns } from '../cgi';
 import TextAreaPanel from '../../components/textAreaPanel';
 import Tabs from '../../components/tab';
 
@@ -47,21 +47,21 @@ class Rules extends Component {
         message.error('操作失败，请稍后重试');
         return;
       }
-      message.success('配置入口规则成功！');
+      message.success('全局规则设置成功！');
     });
   }
 
-  setGlobalRules = (e, value) => {
+  setEntryPatterns = (e, value) => {
     if (!isPressEnter(e)) {
       return;
     }
 
-    setGlobalRules({ globalRules: value }, (data) => {
+    setEntryPatterns({ entryPatterns: value }, (data) => {
       if (!data) {
         message.error('操作失败，请稍后重试！');
         return;
       }
-      message.success('全局规则设置成功！');
+      message.success('入口规则配置成功！');
     });
   }
 
@@ -100,7 +100,7 @@ class Rules extends Component {
       activeKey,
       ec,
       entryRules,
-      globalRules,
+      entryPatterns,
       testRules,
       defaultRules,
     } = this.state;
@@ -122,8 +122,8 @@ class Rules extends Component {
             <div className="p-mid-con">
               <TextAreaPanel
                 title="入口配置"
-                value={entryRules}
-                handleSave={this.setEntryRules}
+                value={entryPatterns}
+                handleSave={this.setEntryPatterns}
                 maxLength="5120"
               />
             </div>
@@ -140,8 +140,8 @@ class Rules extends Component {
             <div className="p-mid-con">
               <TextAreaPanel
                 title="全局规则"
-                value={globalRules}
-                handleSave={this.setGlobalRules}
+                value={entryRules}
+                handleSave={this.setEntryRules}
                 maxLength="5120"
               />
             </div>
