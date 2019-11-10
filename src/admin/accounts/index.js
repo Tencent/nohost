@@ -4,6 +4,7 @@ import $ from 'jquery';
 import UserTable from './components/UserTable';
 import AddUserForm from './components/AddUserForm';
 import AccountList from './components/AccountList';
+import { enableGuest } from '../cgi';
 import './index.css';
 
 const MAX_USER_COUNT = 120;
@@ -51,6 +52,7 @@ class Accounts extends Component {
               active,
             };
           }),
+          enableGuest: data.enableGuest,
         });
       },
       error() {
@@ -97,7 +99,20 @@ class Accounts extends Component {
   beforeModSubmit = username => this.setState({
     modUserModal: true,
     chosenUser: username,
-  });
+  })
+
+  onEnableGuest = ({ target }) => {
+    const { checked } = target;
+    enableGuest({
+      enableGuest: checked ? 1 : '',
+    }, (data) => {
+      if (data && data.ec === 0) {
+        message.success('启用成功');
+        return this.setState({ enableGuest: checked });
+      }
+      message.error('操作失败，请稍后再试！');
+    });
+  }
 
   handleModSubmit = (password) => {
     $.post({
@@ -182,7 +197,7 @@ class Accounts extends Component {
         message.error('删除用户失败，网络错误');
       },
     });
-  };
+  }
 
   handleDrag = (fromIndex, toIndex) => {
     const users = [...this.state.users];
@@ -215,8 +230,10 @@ class Accounts extends Component {
     return (
       <div className={`vbox fill p-accounts${hide ? ' p-hide' : ''}`}>
         <div style={style.buttonRow}>
-          <Tooltip title="启用访客身份后，用户无需登录即可可以查看各个账号但抓包数据">
+          <Tooltip title="启用访客身份后，用户无需登录即可直接访问各个账号，但只能查看抓包数据，不能修改规则配置。">
             <Checkbox
+              checked={this.state.enableGuest}
+              onChange={this.onEnableGuest}
               style={{ marginRight: 20 }}
             >
               启用访客身份

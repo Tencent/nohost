@@ -29,6 +29,7 @@ const {
   uploadCerts,
   getCertsInfo,
   removeCert,
+  enableGuest,
 } = createCgi({
   loadAllAccounts: {
     url: 'cgi-bin/list?parsed=1',
@@ -103,6 +104,10 @@ const {
     url: 'main/cgi-bin/remove-cert',
     type: 'post',
   },
+  enableGuest: {
+    url: 'cgi-bin/admin/enable-guest',
+    type: 'post',
+  },
 }, DEFAULT_CONF);
 
 const getAllAccounts = (cb) => {
@@ -167,4 +172,5 @@ export {
   uploadCerts,
   getCertsInfo,
   removeCert,
+  enableGuest,
 };
