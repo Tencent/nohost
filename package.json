@@ -4,14 +4,16 @@
   "description": "Multi-user web debugging proxy based on whistle",
   "main": "index.js",
   "bin": {
-    "nohost": "./bin"
+    "nohost": "./bin/nohost",
+    "nohosts": "./bin/nohost"
   },
   "directories": {
     "lib": "lib"
   },
+  "port": 8080,
   "scripts": {
-    "lint": "eslint *.js lib src",
-    "lintfix": "eslint --fix *.js lib src",
+    "lint": "eslint *.js lib src bin",
+    "lintfix": "eslint --fix *.js lib src bin",
     "dev": "rimraf public && webpack --config ./src/config/webpack.dev.js -w",
     "dist": "rimraf public && webpack --config ./src/config/webpack.prod.js",
     "start": "node ./test"
