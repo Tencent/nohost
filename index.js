@@ -15,6 +15,4 @@ Socket.prototype.destroy = function(err) {
 process.env.WHISTLE_PATH = process.env.NOHOST_PATH || getWhistlePath();
 fse.ensureDirSync(process.env.WHISTLE_PATH); // eslint-disable-line
 
-process.env.PFORK_MODE = 'inline';
-
 module.exports = require('./lib');
