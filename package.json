@@ -67,6 +67,7 @@
   },
   "dependencies": {
     "basic-auth": "^2.0.1",
+    "colors": "^1.4.0",
     "cookie": "^0.4.0",
     "fs-extra": "^8.1.0",
     "hagent": "^0.7.0",
