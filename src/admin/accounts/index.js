@@ -230,11 +230,11 @@ class Accounts extends Component {
     return (
       <div className={`vbox fill p-accounts${hide ? ' p-hide' : ''}`}>
         <div style={style.buttonRow}>
-          <Tooltip title="启用后，用户无需登录即可查看各个账号的抓包及配置数据，但不能进行修改操作。">
+          <Tooltip title="启用后所有人无需登录即可查看各个账号的抓包及配置数据，但不能进行修改操作。">
             <Checkbox
               checked={this.state.enableGuest}
               onChange={this.onEnableGuest}
-              style={{ marginRight: 20 }}
+              style={{ marginRight: 20, height: 50 }}
             >
               允许访客访问
             </Checkbox>
