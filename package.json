@@ -1,6 +1,6 @@
 {
   "name": "nohosts",
-  "version": "0.1.0-beta1",
+  "version": "0.1.0-beta2",
   "description": "Multi-user web debugging proxy based on whistle",
   "main": "index.js",
   "bin": {
