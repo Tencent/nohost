@@ -64,4 +64,5 @@ program.setConfig({
 
 program
   .option('-p, --port [proxyPort]', 'set the proxy port (8080 by default)', parseInt, undefined)
+  .option('--reset', 'reset administrator account name and password')
   .parse(process.argv);
