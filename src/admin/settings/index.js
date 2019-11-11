@@ -47,7 +47,7 @@ class Settings extends Component {
     self.restarting = true;
     self.setState({});
     Modal.confirm({
-      title: 'Do you want to restart the server?',
+      title: '确定重启服务？',
       onOk() {
         restart((data) => {
           if (data && data.ec === 0) {
