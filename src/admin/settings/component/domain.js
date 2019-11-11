@@ -33,8 +33,8 @@ class Domain extends Component {
               {getFieldDecorator('domain', {
                 initialValue: value,
                 rules: [
-                  { required: true, message: '请输入域名，多个域名以逗号或空格分隔!' },
                   { max: 256, message: '域名最多不超过256个字符!' },
+                  { pattern: /^[\s;,\w.-]+$/, message: '请输入正确的域名！' },
                 ],
               })(<Input placeholder="请输入域名，如果有多个域名可用,分开" maxLength={256} autoComplete="off" />)}
             </Form.Item>
