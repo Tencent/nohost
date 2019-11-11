@@ -40,7 +40,7 @@ const {
     type: 'post',
   },
   setEntryPatterns: {
-    url: 'cgi-bin/admin/set-global-rules',
+    url: 'cgi-bin/admin/set-entry-patterns',
     type: 'post',
   },
   setJsonData: {
