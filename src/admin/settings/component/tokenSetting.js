@@ -36,7 +36,7 @@ class TokenSetting extends Component {
                   { required: true, message: '请输入Token!' },
                   { max: 64, message: 'Token最多不超过64个字符!' },
                 ],
-              })(<Input placeholder="请输入Token" autoComplete="off" />)}
+              })(<Input placeholder="请输入Token" maxLength={64} autoComplete="off" />)}
             </Form.Item>
             <Form.Item {...SUBMIT_BTN_LAYOUT} style={{ marginBottom: 0 }}>
               <Button type="primary" htmlType="submit">

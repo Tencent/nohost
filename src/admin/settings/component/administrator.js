@@ -31,7 +31,10 @@ class Administrator extends Component {
             <Form.Item label="管理员账号">
               {getFieldDecorator('username', {
                 initialValue: value.username || '',
-                rules: [{ required: true, message: '请输入用户名!' }],
+                rules: [
+                  { required: true, message: '请输入用户名!' },
+                  { pattern: /^[\w.-]+$/, message: '只能输入字母、数字、点（.）、下划线（_）、中划线（-）' },
+                ],
               })(<Input
                 prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
                 placeholder="请输入账号"
