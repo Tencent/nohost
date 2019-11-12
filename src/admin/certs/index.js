@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { Table, Icon, Button, message, Popconfirm } from 'antd';
 import { uploadCerts, getCertsInfo, removeCert } from '../cgi';
 
+const HIGHLIGHT = { color: 'red', fontWeight: 'bold' };
+
 function readFile(file) {
   return new Promise((resolve) => {
     const reader = new FileReader();
@@ -79,6 +81,15 @@ class Certs extends Component {
         dataIndex: 'validity',
         key: 'validity',
         width: 380,
+      },
+      {
+        title: '状态',
+        dataIndex: 'status',
+        key: 'status',
+        width: 100,
+        render: (_, record) => {
+          return <span style={record.status !== 'OK' ? HIGHLIGHT : null}>{record.status}</span>;
+        },
       },
       {
         title: '操作',
