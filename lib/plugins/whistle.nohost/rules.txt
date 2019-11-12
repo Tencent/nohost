@@ -1,2 +1,1 @@
-* enable://hide
 @whistle.nohost/cgi-bin/rules

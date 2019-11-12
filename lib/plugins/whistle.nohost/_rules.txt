@@ -1,4 +1,4 @@
-* htmlAppend://{whistle.nohost/inject.html} disable://hide
+* htmlAppend://{whistle.nohost/inject.html}
 
 ``` whistle.nohost/inject.html
 
