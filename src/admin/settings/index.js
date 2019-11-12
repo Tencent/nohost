@@ -59,7 +59,11 @@ class Settings extends Component {
             self.restarting = false;
             self.setState({});
           }, 3000);
-        });
+        })
+      },
+      onCancel() {
+        self.restarting = false;
+        self.setState({});
       },
     });
   }
