@@ -5,10 +5,10 @@
 <script>
   (function() {
     if (typeof window === 'undefined' || !window || window.self !== window.top
-    || window.__whistle_nohost_button_is_inited__) {
+    || window.__whistle_nohost_from_imweb_is_inited__) {
       return;
     }
-    window.__whistle_nohost_button_is_inited__ = true;
+    window.__whistle_nohost_from_imweb_is_inited__ = true;
     var head = document.head || document.getElementsByTagName('head')[0] || document.documentElement;
     var script = document.createElement('script');
     script.async = true;
