@@ -3,6 +3,15 @@ import React, { Component } from 'react';
 import { Table, Icon, Button, message, Popconfirm } from 'antd';
 import { uploadCerts, getCertsInfo, removeCert } from '../cgi';
 
+function readFile(file) {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.readAsText(file);
+    reader.onload = function() {
+      resolve(reader.result);
+    };
+  });
+}
 
 function parseCerts(data) {
   const files = {};
@@ -113,71 +122,67 @@ class Certs extends Component {
     });
   }
 
-  checkFiles = (fileList = []) => {
-    const certObj = {};
-    // eslint-disable-next-line no-restricted-syntax
-    for (const cert of fileList) {
-      if (cert.size > 10 * 1024) {
+  formatFiles = (fileList = []) => {
+    let certs;
+    for (let i = 0, len = fileList.length; i < len; i++) {
+      const cert = fileList[i];
+      if (cert.size > 10 * 1024 || !(cert.size > 0)) {
         message.error('上传的证书过大，请上传10K以内的证书！');
-        return false;
+        return;
       }
-
-      // 上传的crt证书和key证书需要成对存在
-      const { name } = cert;
-      const crtCert = name.match(/(.+)\.crt/);
-      const keyCert = name.match(/(.+)\.key/);
-      if (crtCert) {
-        const trueName = crtCert[1];
-        certObj[trueName] = certObj[trueName] ? certObj[trueName] + 1 : 1;
-      } else if (keyCert) {
-        const trueName = keyCert[1];
-        certObj[trueName] = certObj[trueName] ? certObj[trueName] - 1 : -1;
+      let { name } = cert;
+      if (!/\.(crt|key)/.test(name)) {
+        message.error('只支持 .key 或 .crt 后缀的文件！');
+        return;
       }
+      const suffix = RegExp.$1;
+      name = name.slice(0, -4);
+      if (!name || /[^\w*.-]/.test(name)) {
+        message.error('证书名称存在非法字符！');
+        return;
+      }
+      certs = certs || {};
+      const pair = certs[name] || [];
+      pair[suffix === 'key' ? 0 : 1] = cert;
+      certs[name] = pair;
     }
-    if (Object.values(certObj).filter((cnt) => cnt !== 0).length) {
-      message.error('上传的crt证书和key证书的数量不一致，请检查后重新上传！');
-      return false;
+    if (!certs) {
+      return message.error('请选择证书！');
     }
-    return true;
+    const badCert = Object.values(certs).find((list) => {
+      return !list[0] || !list[1];
+    });
+    if (badCert) {
+      message.error('上传的 key 文件和 crt 文件的不匹配，请检查后重新上传！');
+      return;
+    }
+    return certs;
   }
 
 
   handleChange = () => {
-    const { files } = document.getElementById('upload-input');
-    if (this.checkFiles(files)) {
-      const fileArr = [];
-      Object.keys(files).map(index => {
-        fileArr.push(new Promise((resolve, reject) => { // 可能删除多行
-          try {
-            const file = files[index];
-            const reader = new FileReader();
-            reader.readAsText(file);
-            reader.onload = function() {
-              resolve({
-                content: reader.result,
-                name: file.name,
-              });
-            };
-          } catch (err) {
-            // eslint-disable-next-line prefer-promise-reject-errors
-            reject(err);
-          }
-        }));
-      });
-
-      Promise.all(fileArr).then((list) => {
-        uploadCerts(JSON.stringify(list), (data) => {
-          if (data.ec === 0) {
-            message.success('上传成功');
-            this.updateCertsInfo();
-          } else {
-            message.error('上传失败，请稍后重试！');
-          }
-        });
-      }, () => {
-        message.error('上传失败，请稍后重试！');
-      });
+    const files = this.formatFiles(document.getElementById('upload-input').files);
+    if (!files) {
+      return;
     }
+    const pendingList = Object.keys(files).map((name) => {
+      return Promise.all(files[name].map(readFile)).then((result) => {
+        files[name] = result;
+      });
+    });
+
+    Promise.all(pendingList).then(() => {
+      uploadCerts(JSON.stringify(files), (data) => {
+        if (data.ec === 0) {
+          message.success('上传成功');
+          this.updateCertsInfo();
+        } else {
+          message.error('上传失败，请稍后重试！');
+        }
+      });
+    }, () => {
+      message.error('上传失败，请稍后重试！');
+    });
   };
 
   render() {
