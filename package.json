@@ -1,11 +1,11 @@
 {
   "name": "nohosts",
-  "version": "0.1.0-beta4",
+  "version": "0.1.0-beta5",
   "description": "Multi-user web debugging proxy based on whistle",
   "main": "index.js",
   "bin": {
-    "nohost": "./bin/nohost",
-    "nohosts": "./bin/nohost"
+    "nohost": "./bin/nohost.js",
+    "nohosts": "./bin/nohost.js"
   },
   "directories": {
     "lib": "lib"
