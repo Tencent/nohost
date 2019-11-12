@@ -32,7 +32,7 @@ class Accounts extends Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.fetchAccounts();
   }
 

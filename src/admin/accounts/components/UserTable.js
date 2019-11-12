@@ -127,7 +127,11 @@ class UserTable extends Component {
           columns={this.columns}
           rowKey="name"
           pagination={false}
-          onRowClick={this.handleClick}
+          onRow={(record, index) => {
+            return {
+              onClick: event => this.handleClick(record, index, event), // 点击行
+            };
+          }}
           bordered
         />
       </div>
