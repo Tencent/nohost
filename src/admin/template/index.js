@@ -124,7 +124,7 @@ class Template extends Component {
           <TabPane
             tab={(
               <span>
-                <Icon type="book" />
+                <Icon type="code" />
                 规则模板
               </span>
             )}

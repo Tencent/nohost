@@ -122,7 +122,7 @@ class Rules extends Component {
           <TabPane
             tab={(
               <span>
-                <Icon type="bars" />
+                <Icon type="menu" />
                 入口配置
               </span>
             )}
@@ -141,7 +141,7 @@ class Rules extends Component {
           <TabPane
             tab={(
               <span>
-                <Icon type="bars" />
+                <Icon type="unordered-list" />
                 全局规则
               </span>
             )}
@@ -160,7 +160,7 @@ class Rules extends Component {
           <TabPane
             tab={(
               <span>
-                <Icon type="bars" />
+                <Icon type="user" />
                 帐号规则
               </span>
             )}
