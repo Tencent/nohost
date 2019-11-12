@@ -10,7 +10,6 @@ Socket.prototype.destroy = function(err) {
   }
   destroySocket.call(this, err);
 };
-
 // 设置存储路径
 process.env.WHISTLE_PATH = process.env.NOHOST_PATH || getWhistlePath();
 fse.ensureDirSync(process.env.WHISTLE_PATH); // eslint-disable-line
