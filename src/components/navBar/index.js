@@ -52,7 +52,7 @@ class NavBar extends Component {
           type="button"
           name="template"
           className={active === 'template' ? 'p-active' : undefined}
-        >模板
+        >配置
         </button>
         <button
           type="button"

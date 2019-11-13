@@ -99,7 +99,7 @@ class Certs extends Component {
         render: (_, record) => {
           return (
             <Popconfirm
-              title="删除证书需要重启服务器，请谨慎操作，是否继续？"
+              title="删除证书需要重启服务器，请谨慎操作，确定删除？"
               onConfirm={() => this.removeCert(record.filename)}
             >
               <a>删除</a>
@@ -158,7 +158,7 @@ class Certs extends Component {
       certs[name] = pair;
     }
     if (!certs) {
-      return message.error('请选择证书！');
+      return;
     }
     const badCert = Object.values(certs).find((list) => {
       return !list[0] || !list[1];
