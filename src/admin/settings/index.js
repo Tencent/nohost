@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Icon, Button, Modal, message } from 'antd';
 import Administrator from './component/administrator';
 import Domain from './component/domain';
-import  AuthKeySetting from './component/authKeySetting';
+import AuthKeySetting from './component/authKeySetting';
 import Panel from '../../components/panel';
 import { getActiveTabFromHash, setActiveHash } from '../util';
 import { getAdministratorSettings, restart } from '../cgi';
@@ -47,7 +47,7 @@ class Settings extends Component {
     self.restarting = true;
     self.setState({});
     Modal.confirm({
-      title: '确定重启服务？',
+      title: '重启服务过程中部分请求可能失败，请谨慎操作，确定重启？',
       onOk() {
         restart((data) => {
           if (data && data.ec === 0) {

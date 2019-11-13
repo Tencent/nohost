@@ -6,7 +6,7 @@ import { setAuthKey } from '../../cgi';
 
 const AUTH_KEY_RE = /^[\w.@-]{1,32}$/;
 
-class  AuthKeySetting extends Component {
+class AuthKeySetting extends Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, value) => {
@@ -53,4 +53,4 @@ class  AuthKeySetting extends Component {
   }
 }
 
-export default Form.create({ name: 'authKey' })( AuthKeySetting);
+export default Form.create({ name: 'authKey' })(AuthKeySetting);
