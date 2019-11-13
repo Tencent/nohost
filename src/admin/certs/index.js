@@ -69,18 +69,26 @@ class Certs extends Component {
         dataIndex: 'filename',
         key: 'filename',
         width: 270,
-        render: text => <a>{text}</a>,
+        render: (_, record) => {
+          return <span style={record.status !== 'OK' ? HIGHLIGHT : null}>{record.filename}</span>;
+        },
       },
       {
         title: '域名列表',
         dataIndex: 'domain',
         key: 'domain',
+        render: (_, record) => {
+          return <span style={record.status !== 'OK' ? HIGHLIGHT : null}>{record.domain}</span>;
+        },
       },
       {
         title: '有效期',
         dataIndex: 'validity',
         key: 'validity',
         width: 380,
+        render: (_, record) => {
+          return <span style={record.status !== 'OK' ? HIGHLIGHT : null}>{record.validity}</span>;
+        },
       },
       {
         title: '状态',
@@ -99,7 +107,7 @@ class Certs extends Component {
         render: (_, record) => {
           return (
             <Popconfirm
-              title="删除证书需要重启服务器，请谨慎操作，确定删除？"
+              title="删除证书会自动重启服务，确定删除？"
               onConfirm={() => this.removeCert(record.filename)}
             >
               <a>删除</a>
@@ -172,7 +180,8 @@ class Certs extends Component {
 
 
   handleChange = () => {
-    const files = this.formatFiles(document.getElementById('upload-input').files);
+    const input = document.getElementById('upload-input');
+    const files = this.formatFiles(input.files);
     if (!files) {
       return;
     }
@@ -192,6 +201,7 @@ class Certs extends Component {
         }
       });
     }, () => {
+      input.value = '';
       message.error('上传失败，请稍后重试！');
     });
   };
@@ -202,7 +212,7 @@ class Certs extends Component {
     return (
       <div className={`fill vbox p-certs${hide ? ' p-hide' : ''}`}>
         <div className="p-action-bar">
-          <span>删除或上传证书会导致系统重启，请谨慎操作！</span>
+          <span>上传或删除证书会自动重启系统，请不要频繁操作！</span>
           <div className="upload-wrapper">
             <input id="upload-input" type="file" accept=".crt,.key" multiple="multiple" onChange={this.handleChange} />
             <Button className="upload-btn" type="primary"><Icon type="upload" />上传证书</Button>

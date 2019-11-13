@@ -7,22 +7,23 @@ import { setAdmin } from '../../cgi';
 class Administrator extends Component {
   submitAdmin = e => {
     e.preventDefault();
-    Modal.confirm({
-      title: '修改管理账号会导致系统重启，请谨慎操作！',
-      onOk: () => {
-        this.props.form.validateFields((err, value) => {
+    this.props.form.validateFields((err, value) => {
+      if (err) {
+        return;
+      }
+      Modal.confirm({
+        title: '修改管理账号会自动重启服务，确定修改？',
+        onOk: () => {
           const { username, password } = value;
-          if (!err) {
-            setAdmin({ username, password }, (data) => {
-              if (!data) {
-                message.error('操作失败，请稍后重试!');
-                return;
-              }
-              message.success('设置管理员名字和密码成功！');
-            });
-          }
-        });
-      },
+          setAdmin({ username, password }, (data) => {
+            if (!data) {
+              message.error('操作失败，请稍后重试!');
+              return;
+            }
+            message.success('设置管理员名字和密码成功！');
+          });
+        },
+      });
     });
   }
 
@@ -31,7 +32,7 @@ class Administrator extends Component {
     const { value = {} } = this.props;
     return (
       <div className="p-mid-con">
-        <Panel title="设置管理员账号和密码">
+        <Panel title={['设置管理员账号和密码（', <span style={{ color: 'red' }}>修改管理员账号会自动重启系统，请不要频繁操作！</span>, '）']}>
           <Form {...FORM_ITEM_LAYOUT} onSubmit={this.submitAdmin}>
             <Form.Item label="管理员账号">
               {getFieldDecorator('username', {

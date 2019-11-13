@@ -47,7 +47,7 @@ class Settings extends Component {
     self.restarting = true;
     self.setState({});
     Modal.confirm({
-      title: '重启服务过程中部分请求可能失败，请谨慎操作，确定重启？',
+      title: '重启服务可能会影响部分请求，确定重启？',
       onOk() {
         restart((data) => {
           if (data && data.ec === 0) {
