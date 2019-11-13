@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Icon, Button, Modal, message } from 'antd';
 import Administrator from './component/administrator';
 import Domain from './component/domain';
-import TokenSetting from './component/tokenSetting';
+import  AuthKeySetting from './component/authKeySetting';
 import Panel from '../../components/panel';
 import { getActiveTabFromHash, setActiveHash } from '../util';
 import { getAdministratorSettings, restart } from '../cgi';
@@ -75,7 +75,7 @@ class Settings extends Component {
       admin,
       domain,
       ec,
-      token,
+      authKey,
     } = this.state;
 
     if (ec !== 0) {
@@ -110,12 +110,12 @@ class Settings extends Component {
             tab={(
               <span>
                 <Icon type="setting" />
-                设置Token
+                Auth Key
               </span>
             )}
-            tabKey="tokenSetting"
+            tabKey="authKeySetting"
           >
-            <TokenSetting value={token} />
+            <AuthKeySetting value={authKey} />
           </TabPane>
           <TabPane
             tab={(
