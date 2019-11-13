@@ -51,6 +51,11 @@
   z-index: 1;
   background: #f8f9fa;
   border-bottom: 1px solid #e8e8e8;
+  line-height: 2.6;
+}
+
+.p-action-bar>span {
+  color: red;
 }
 
 .p-content {

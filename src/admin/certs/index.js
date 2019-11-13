@@ -202,6 +202,7 @@ class Certs extends Component {
     return (
       <div className={`fill vbox p-certs${hide ? ' p-hide' : ''}`}>
         <div className="p-action-bar">
+          <span>删除或上传证书会导致系统重启，请谨慎操作！</span>
           <div className="upload-wrapper">
             <input id="upload-input" type="file" accept=".crt,.key" multiple="multiple" onChange={this.handleChange} />
             <Button className="upload-btn" type="primary"><Icon type="upload" />上传证书</Button>

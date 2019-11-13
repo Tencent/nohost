@@ -8,7 +8,7 @@ class Administrator extends Component {
   submitAdmin = e => {
     e.preventDefault();
     Modal.confirm({
-      title: '修改管理账号会导致系统重启，请谨慎操作.',
+      title: '修改管理账号会导致系统重启，请谨慎操作！',
       onOk: () => {
         this.props.form.validateFields((err, value) => {
           const { username, password } = value;
