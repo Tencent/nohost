@@ -2,7 +2,7 @@ import './index.css';
 import React, { Component } from 'react';
 import { Icon, message } from 'antd';
 import { getActiveTabFromHash, setActiveHash, isPressEnter } from '../util';
-import { getSettings, setTestRules, setDefaultRules, setEntryRules, setEntryPatterns } from '../cgi';
+import { getSettings, setTestRules, setDefaultRules, setEntryPatterns } from '../cgi';
 import TextAreaPanel from '../../components/textAreaPanel';
 import Tabs from '../../components/tab';
 
@@ -38,21 +38,6 @@ class Rules extends Component {
     setActiveHash(activeKey);
   };
 
-  setEntryRules = (e, value) => {
-    if (!isPressEnter(e)) {
-      return;
-    }
-
-    setEntryRules({ entryRules: value }, (data) => {
-      if (!data) {
-        message.error('操作失败，请稍后重试');
-        this.entryRulesPanel.setBtnDisabled(false);
-        return;
-      }
-      message.success('全局规则设置成功！');
-      this.entryRulesPanel.setBtnDisabled(true);
-    });
-  }
 
   setEntryPatterns = (e, value) => {
     if (!isPressEnter(e)) {
@@ -108,7 +93,6 @@ class Rules extends Component {
     const {
       activeKey,
       ec,
-      entryRules,
       entryPatterns,
       testRules,
       defaultRules,
@@ -117,7 +101,7 @@ class Rules extends Component {
       return null;
     }
     return (
-      <div className={`box p-rules ${hide ? ' p-hide' : ''}`}>
+      <div className={`box fill p-rules ${hide ? ' p-hide' : ''}`}>
         <Tabs defaultActiveKey="entrySetting" onChange={this.handleClick} activeKey={activeKey}>
           <TabPane
             tab={(
@@ -139,6 +123,7 @@ class Rules extends Component {
             </div>
           </TabPane>
           <TabPane
+            className="vbox fill p-whistle"
             tab={(
               <span>
                 <Icon type="unordered-list" />
@@ -147,15 +132,7 @@ class Rules extends Component {
             )}
             tabKey="globalSetting"
           >
-            <div className="p-mid-con">
-              <TextAreaPanel
-                title="全局规则"
-                value={entryRules}
-                handleSave={this.setEntryRules}
-                maxLength="5120"
-                ref={ref => this.entryRulesPanel = ref}
-              />
-            </div>
+            <iframe title="全局规则" className="fill capture-win" src="whistle/" />
           </TabPane>
           <TabPane
             tab={(

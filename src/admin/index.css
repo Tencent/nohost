@@ -1,6 +1,6 @@
 
 .p-container {
-  overflow: scroll;
+  overflow: auto;
   max-width: 1680px;
   min-width: 1200px;
   margin: 0 auto;

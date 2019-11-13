@@ -10,7 +10,6 @@ const DEFAULT_CONF = {
 const {
   loadAllAccounts,
   loadSettings,
-  setEntryRules,
   setEntryPatterns,
   setJsonData,
   setRulesTpl,
@@ -34,10 +33,6 @@ const {
     mode: 'cancel',
   },
   loadSettings: 'cgi-bin/admin/get-settings',
-  setEntryRules: {
-    url: 'cgi-bin/admin/set-entry-rules',
-    type: 'post',
-  },
   setEntryPatterns: {
     url: 'cgi-bin/admin/set-entry-patterns',
     type: 'post',
@@ -143,7 +138,6 @@ export {
   importSessions,
   exportSessions,
   getSettings,
-  setEntryRules,
   setEntryPatterns,
   setJsonData,
   setRulesTpl,

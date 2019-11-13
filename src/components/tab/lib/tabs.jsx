@@ -49,13 +49,13 @@ class Tabs extends Component {
             })
           }
         </div>
-        <div className="p-tab-ctn">
+        <div className="vbox p-tab-ctn">
           {
             React.Children.map(this.props.children, item => {
-              const { tabKey } = item.props;
+              const { tabKey, className } = item.props;
               return (
                 <div
-                  className={`p-ctn-item ${activeTab === tabKey ? '' : 'p-hide'}`}
+                  className={`p-ctn-item ${activeTab === tabKey ? `${className || ''}` : 'p-hide'}`}
                 >
                   {item}
                 </div>
