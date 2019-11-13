@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon, Form, Input, Button, message } from 'antd';
+import { Icon, Form, Input, Button, message, Modal } from 'antd';
 import Panel from '../../../components/panel';
 import { FORM_ITEM_LAYOUT, SUBMIT_BTN_LAYOUT } from '../../util';
 import { setAdmin } from '../../cgi';
@@ -7,17 +7,22 @@ import { setAdmin } from '../../cgi';
 class Administrator extends Component {
   submitAdmin = e => {
     e.preventDefault();
-    this.props.form.validateFields((err, value) => {
-      const { username, password } = value;
-      if (!err) {
-        setAdmin({ username, password }, (data) => {
-          if (!data) {
-            message.error('操作失败，请稍后重试!');
-            return;
+    Modal.confirm({
+      title: '修改管理账号会导致系统重启，请谨慎操作.',
+      onOk: () => {
+        this.props.form.validateFields((err, value) => {
+          const { username, password } = value;
+          if (!err) {
+            setAdmin({ username, password }, (data) => {
+              if (!data) {
+                message.error('操作失败，请稍后重试!');
+                return;
+              }
+              message.success('设置管理员名字和密码成功！');
+            });
           }
-          message.success('设置管理员名字和密码成功！');
         });
-      }
+      },
     });
   }
 
