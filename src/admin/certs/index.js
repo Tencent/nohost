@@ -99,7 +99,7 @@ class Certs extends Component {
         render: (_, record) => {
           return (
             <Popconfirm
-              title="确定删除此证书？"
+              title="删除证书需要重启服务器，请谨慎操作，是否继续？"
               onConfirm={() => this.removeCert(record.filename)}
             >
               <a>删除</a>
