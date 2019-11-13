@@ -1,6 +1,6 @@
 {
-  "name": "nohosts",
-  "version": "0.1.0-beta8",
+  "name": "@nohost/server",
+  "version": "0.0.1",
   "description": "Multi-user web debugging proxy based on whistle",
   "main": "index.js",
   "bin": {
@@ -24,7 +24,8 @@
   },
   "keywords": [
     "whistle",
-    "multi-users"
+    "multi-users",
+    "nohost"
   ],
   "author": "avwu <avwu@qq.com>",
   "license": "MIT",
