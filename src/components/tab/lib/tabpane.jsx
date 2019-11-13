@@ -2,7 +2,7 @@ import React from 'react';
 
 const TabPane = function(props) {
   return (
-    <div tab={props.tab} key={props.tabKey}>
+    <div className={props.className || ''} key={props.tabKey}>
       {props.children}
     </div>
   );
