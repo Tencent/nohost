@@ -3,7 +3,6 @@ import { Icon, Button, Modal, message } from 'antd';
 import Administrator from './component/administrator';
 import Domain from './component/domain';
 import TokenSetting from './component/tokenSetting';
-import WhiteList from './component/whiteList';
 import Panel from '../../components/panel';
 import { getActiveTabFromHash, setActiveHash } from '../util';
 import { getAdministratorSettings, restart } from '../cgi';
@@ -77,7 +76,6 @@ class Settings extends Component {
       domain,
       ec,
       token,
-      whiteList,
     } = this.state;
 
     if (ec !== 0) {
@@ -118,17 +116,6 @@ class Settings extends Component {
             tabKey="tokenSetting"
           >
             <TokenSetting value={token} />
-          </TabPane>
-          <TabPane
-            tab={(
-              <span>
-                <Icon type="read" />
-                白名单
-              </span>
-            )}
-            tabKey="whiteList"
-          >
-            <WhiteList value={whiteList} />
           </TabPane>
           <TabPane
             tab={(
