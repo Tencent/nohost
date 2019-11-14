@@ -27,6 +27,9 @@ class Config extends Component {
       activeKey,
     });
     setActiveHash(activeKey);
+    if (this.props.onItemChange) {
+      this.props.onItemChange(activeKey);
+    }
   };
 
   onJsonDataChange = (e) => {

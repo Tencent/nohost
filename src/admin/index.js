@@ -52,6 +52,14 @@ class App extends Component {
     location.hash = subMenu[active];
   }
 
+  onConfigChange = (key) => {
+    subMenu.config = `config/${key}`;
+  }
+
+  onSettingsChange = (key) => {
+    subMenu.system = `system/${key}`;
+  }
+
   render() {
     const {
       accounts,
@@ -71,10 +79,10 @@ class App extends Component {
         <div className="fill vbox p-container">
           { accounts ? <Accounts hide={active !== 'accounts'} /> : null }
           { whistle ? <iframe title="全局规则" className={`fill capture-win ${active !== 'whistle' ? 'p-hide' : ''}`} src="whistle/" /> : null }
-          { config ? <Config hide={active !== 'config'} /> : null }
+          { config ? <Config onItemChange={this.onConfigChange} hide={active !== 'config'} /> : null }
           { certs ? <Certs hide={active !== 'certs'} /> : null }
           { monitor ? <Monitor hide={active !== 'monitor'} /> : null }
-          { system ? <Settings hide={active !== 'system'} /> : null }
+          { system ? <Settings onItemChange={this.onSettingsChange} hide={active !== 'system'} /> : null }
         </div>
       </Fragment>
     );

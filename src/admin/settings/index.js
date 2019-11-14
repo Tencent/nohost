@@ -27,6 +27,9 @@ class Settings extends Component {
       activeKey,
     });
     setActiveHash(activeKey);
+    if (this.props.onItemChange) {
+      this.props.onItemChange(activeKey);
+    }
   };
 
   restart = () => {
