@@ -14,11 +14,11 @@ import Settings from './settings';
 const { location } = window;
 const query = parse(location.search);
 const TABS = [
+  // 'monitor',
   'accounts',
-  'rules',
   'template',
   'certs',
-  // 'monitor',
+  'rules',
   'system',
 ];
 
@@ -32,7 +32,7 @@ const subMenu = {
 
 const getActive = (active) => {
   active = active.split('/')[0] || query.active || query.name;
-  return TABS[active] || TABS[TABS.indexOf(active)] || 'accounts';
+  return TABS[TABS.indexOf(active)] || 'accounts';
 };
 
 class App extends Component {

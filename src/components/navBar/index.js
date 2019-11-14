@@ -44,9 +44,9 @@ class NavBar extends Component {
         </button>
         <button
           type="button"
-          name="rules"
-          className={active === 'rules' ? 'p-active' : undefined}
-        >Rules
+          name="certs"
+          className={active === 'certs' ? 'p-active' : undefined}
+        >证书
         </button>
         <button
           type="button"
@@ -56,9 +56,9 @@ class NavBar extends Component {
         </button>
         <button
           type="button"
-          name="certs"
-          className={active === 'certs' ? 'p-active' : undefined}
-        >证书
+          name="rules"
+          className={active === 'rules' ? 'p-active' : undefined}
+        >Whistle
         </button>
         {/* <button
           type="button"
