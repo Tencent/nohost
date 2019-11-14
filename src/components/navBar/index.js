@@ -68,9 +68,9 @@ class NavBar extends Component {
         </button> */}
         <button
           type="button"
-          name="settings"
-          className={active === 'settings' ? 'p-active' : undefined}
-        >设置
+          name="system"
+          className={active === 'system' ? 'p-active' : undefined}
+        >系统
         </button>
         <span className="p-help" onMouseEnter={this.showAboutMenu} onMouseLeave={this.hideAboutMenu}>
           <a href="https://github.com/nohosts/nohost" rel="noopener noreferrer" target="_blank">

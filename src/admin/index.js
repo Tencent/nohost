@@ -19,7 +19,7 @@ const TABS = [
   'template',
   'certs',
   // 'monitor',
-  'settings',
+  'system',
 ];
 
 const subMenu = {
@@ -27,7 +27,7 @@ const subMenu = {
   rules: 'rules/entrySetting',
   template: 'template/rulesTemplate',
   certs: 'certs',
-  settings: 'settings/administrator',
+  system: 'system/administrator',
 };
 
 const getActive = (active) => {
@@ -60,7 +60,7 @@ class App extends Component {
       template,
       certs,
       monitor,
-      settings,
+      system,
     } = this.tabStatus;
     const {
       active,
@@ -75,7 +75,7 @@ class App extends Component {
           { template ? <Template hide={active !== 'template'} /> : null }
           { certs ? <Certs hide={active !== 'certs'} /> : null }
           { monitor ? <Monitor hide={active !== 'monitor'} /> : null }
-          { settings ? <Settings hide={active !== 'settings'} /> : null }
+          { system ? <Settings hide={active !== 'system'} /> : null }
         </div>
       </Fragment>
     );
