@@ -5,7 +5,6 @@ import ReactDOM from 'react-dom';
 import { parse } from 'query-string';
 import NavBar from '../components/navBar';
 import Accounts from './accounts';
-import Rules from './rules';
 import Config from './config';
 import Certs from './certs';
 import Monitor from './monitor';
@@ -18,14 +17,14 @@ const TABS = [
   'accounts',
   'config',
   'certs',
-  'rules',
+  'whistle',
   'system',
 ];
 
 const subMenu = {
   accounts: 'accounts',
-  rules: 'rules/entrySetting',
-  config: 'config/rulesConfig',
+  whistle: 'whistle',
+  config: 'config/whistleConfig',
   certs: 'certs',
   system: 'system/administrator',
 };
@@ -56,7 +55,7 @@ class App extends Component {
   render() {
     const {
       accounts,
-      rules,
+      whistle,
       config,
       certs,
       monitor,
@@ -71,7 +70,7 @@ class App extends Component {
         <NavBar active={active} onChange={this.onTabChange} />
         <div className="fill vbox p-container">
           { accounts ? <Accounts hide={active !== 'accounts'} /> : null }
-          { rules ? <Rules hide={active !== 'rules'} /> : null }
+          { whistle ? <iframe title="全局规则" className={`fill capture-win ${active !== 'whistle' ? 'hide' : ''}`} src="whistle/" /> : null }
           { config ? <Config hide={active !== 'config'} /> : null }
           { certs ? <Certs hide={active !== 'certs'} /> : null }
           { monitor ? <Monitor hide={active !== 'monitor'} /> : null }

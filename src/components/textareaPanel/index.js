@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Icon, Button, Input } from 'antd';
+import { isPressEnter } from '../../admin/util';
 import Panel from '../panel';
 
 const { TextArea } = Input;
@@ -14,20 +15,10 @@ class TextAreaPanel extends Component {
     };
   }
 
-  // 切换页面时，重置二级菜单为默认值
-  static getDerivedStateFromProps(props) {
-    if (props.value) {
-      return {
-        value: props.value,
-      };
-    }
-    return null;
-  }
-
   handleChange = (e) => {
     this.setState({
-      value: e.target.value,
       isSaveBtnDisabled: false,
+      value: e.target.value,
     });
     if (this.props.handleChange) {
       this.props.handleChange(e);
@@ -35,13 +26,13 @@ class TextAreaPanel extends Component {
   }
 
   handleSave = (e) => {
-    this.props.handleSave(e, this.state.value);
+    if (isPressEnter(e)) {
+      this.props.handleSave(e, this.state.value);
+    }
   }
 
   setBtnDisabled = (isSaveBtnDisabled) => {
-    this.setState({
-      isSaveBtnDisabled,
-    });
+    this.setState({ isSaveBtnDisabled });
   }
 
   render() {
