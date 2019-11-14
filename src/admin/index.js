@@ -6,7 +6,7 @@ import { parse } from 'query-string';
 import NavBar from '../components/navBar';
 import Accounts from './accounts';
 import Rules from './rules';
-import Template from './template';
+import Config from './config';
 import Certs from './certs';
 import Monitor from './monitor';
 import Settings from './settings';
@@ -16,7 +16,7 @@ const query = parse(location.search);
 const TABS = [
   // 'monitor',
   'accounts',
-  'template',
+  'config',
   'certs',
   'rules',
   'system',
@@ -25,7 +25,7 @@ const TABS = [
 const subMenu = {
   accounts: 'accounts',
   rules: 'rules/entrySetting',
-  template: 'template/rulesTemplate',
+  config: 'config/rulesConfig',
   certs: 'certs',
   system: 'system/administrator',
 };
@@ -57,7 +57,7 @@ class App extends Component {
     const {
       accounts,
       rules,
-      template,
+      config,
       certs,
       monitor,
       system,
@@ -72,7 +72,7 @@ class App extends Component {
         <div className="fill vbox p-container">
           { accounts ? <Accounts hide={active !== 'accounts'} /> : null }
           { rules ? <Rules hide={active !== 'rules'} /> : null }
-          { template ? <Template hide={active !== 'template'} /> : null }
+          { config ? <Config hide={active !== 'config'} /> : null }
           { certs ? <Certs hide={active !== 'certs'} /> : null }
           { monitor ? <Monitor hide={active !== 'monitor'} /> : null }
           { system ? <Settings hide={active !== 'system'} /> : null }

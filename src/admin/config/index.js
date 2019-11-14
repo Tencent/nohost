@@ -8,7 +8,7 @@ import './index.css';
 
 const { TabPane } = Tabs;
 
-class Template extends Component {
+class Config extends Component {
   constructor(props) {
     super(props);
 
@@ -26,7 +26,7 @@ class Template extends Component {
   static getDerivedStateFromProps(props) {
     if (props.hide === true) {
       return {
-        activeKey: 'rulesTemplate',
+        activeKey: 'rulesConfig',
       };
     }
     return null;
@@ -119,8 +119,8 @@ class Template extends Component {
       return null;
     }
     return (
-      <div className={`box p-template ${hide ? ' p-hide' : ''}`}>
-        <Tabs defaultActiveKey="rulesTemplate" onChange={this.handleClick} activeKey={activeKey}>
+      <div className={`box p-config ${hide ? ' p-hide' : ''}`}>
+        <Tabs defaultActiveKey="rulesConfig" onChange={this.handleClick} activeKey={activeKey}>
           <TabPane
             tab={(
               <span>
@@ -128,7 +128,7 @@ class Template extends Component {
                 规则模板
               </span>
             )}
-            tabKey="rulesTemplate"
+            tabKey="rulesConfig"
           >
             <div className="p-mid-con">
               <TextAreaPanel
@@ -143,15 +143,15 @@ class Template extends Component {
           <TabPane
             tab={(
               <span>
-                <Icon type="book" />
-                数据对象
+                <Icon type="database" />
+                模板数据
               </span>
             )}
-            tabKey="dataObj"
+            tabKey="tplData"
           >
             <div className="p-mid-con">
               <TextAreaPanel
-                title="数据对象"
+                title="模板数据"
                 value={jsonData}
                 handleChange={this.onJsonDataChange}
                 handleSave={this.setJsonData}
@@ -168,4 +168,4 @@ class Template extends Component {
   }
 }
 
-export default Template;
+export default Config;

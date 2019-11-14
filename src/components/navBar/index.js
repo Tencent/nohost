@@ -50,8 +50,8 @@ class NavBar extends Component {
         </button>
         <button
           type="button"
-          name="template"
-          className={active === 'template' ? 'p-active' : undefined}
+          name="config"
+          className={active === 'config' ? 'p-active' : undefined}
         >配置
         </button>
         <button
