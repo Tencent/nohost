@@ -32,7 +32,7 @@ class Administrator extends Component {
     const { value = {} } = this.props;
     return (
       <div className="p-mid-con">
-        <Panel title={['设置管理员账号和密码（', <span style={{ color: 'red' }}>修改管理员账号会自动重启系统，请不要频繁操作！</span>, '）']}>
+        <Panel title={['设置管理员账号和密码（', <span key="warnings" style={{ color: 'red' }}>修改管理员账号会自动重启系统，请不要频繁操作！</span>, '）']}>
           <Form {...FORM_ITEM_LAYOUT} onSubmit={this.submitAdmin}>
             <Form.Item label="管理员账号">
               {getFieldDecorator('username', {
