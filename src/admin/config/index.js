@@ -153,7 +153,7 @@ class Config extends Component {
     }
     return (
       <div className={`box p-config ${hide ? ' p-hide' : ''}`}>
-        <Tabs defaultActiveKey="rulesConfig" onChange={this.handleClick} activeKey={activeKey}>
+        <Tabs defaultActiveKey="entrySettings" onChange={this.handleClick} activeKey={activeKey}>
           <TabPane
             tab={(
               <span>

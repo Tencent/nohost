@@ -107,7 +107,7 @@ class Certs extends Component {
         render: (_, record) => {
           return (
             <Popconfirm
-              title="删除证书会自动重启服务，确定删除？"
+              title={`确定删除证书 "${record.filename}" ？`}
               onConfirm={() => this.removeCert(record.filename)}
             >
               <a>删除</a>
@@ -212,7 +212,6 @@ class Certs extends Component {
     return (
       <div className={`fill vbox p-certs${hide ? ' p-hide' : ''}`}>
         <div className="p-action-bar">
-          <span>上传或删除证书会自动重启系统，请不要频繁操作！</span>
           <div className="upload-wrapper">
             <input id="upload-input" type="file" accept=".crt,.key" multiple="multiple" onChange={this.handleChange} />
             <Button className="upload-btn" type="primary"><Icon type="upload" />上传证书</Button>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon, Form, Input, Button, message, Modal } from 'antd';
+import { Icon, Form, Input, Button, message } from 'antd';
 import Panel from '../../../components/panel';
 import { FORM_ITEM_LAYOUT, SUBMIT_BTN_LAYOUT } from '../../util';
 import { setAdmin } from '../../cgi';
@@ -11,18 +11,13 @@ class Administrator extends Component {
       if (err) {
         return;
       }
-      Modal.confirm({
-        title: '修改管理账号会自动重启服务，确定修改？',
-        onOk: () => {
-          const { username, password } = value;
-          setAdmin({ username, password }, (data) => {
-            if (!data) {
-              message.error('操作失败，请稍后重试!');
-              return;
-            }
-            message.success('设置管理员名字和密码成功！');
-          });
-        },
+      const { username, password } = value;
+      setAdmin({ username, password }, (data) => {
+        if (!data) {
+          message.error('操作失败，请稍后重试!');
+          return;
+        }
+        message.success('设置管理员名字和密码成功！');
       });
     });
   }
@@ -32,7 +27,7 @@ class Administrator extends Component {
     const { value = {} } = this.props;
     return (
       <div className="p-mid-con">
-        <Panel title={['设置管理员账号和密码（', <span key="warnings" style={{ color: 'red' }}>修改管理员账号会自动重启系统，请不要频繁操作！</span>, '）']}>
+        <Panel title="设置管理员账号和密码">
           <Form {...FORM_ITEM_LAYOUT} onSubmit={this.submitAdmin}>
             <Form.Item label="管理员账号">
               {getFieldDecorator('username', {

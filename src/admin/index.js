@@ -24,7 +24,7 @@ const TABS = [
 const subMenu = {
   accounts: 'accounts',
   whistle: 'whistle',
-  config: 'config/whistleConfig',
+  config: 'config/entrySettings',
   certs: 'certs',
   system: 'system/administrator',
 };
