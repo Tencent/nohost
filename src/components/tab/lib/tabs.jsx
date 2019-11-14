@@ -9,16 +9,6 @@ class Tabs extends Component {
     };
   }
 
-  static getDerivedStateFromProps(props, state) {
-    const { activeKey } = props;
-    if (activeKey !== state.activeTab) {
-      return {
-        activeTab: activeKey,
-      };
-    }
-    return null;
-  }
-
   handleClick = (key) => {
     if (key !== this.state.activeTab) {
       this.setState({

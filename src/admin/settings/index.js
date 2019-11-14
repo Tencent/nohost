@@ -22,16 +22,6 @@ class Settings extends Component {
     getAdministratorSettings(this.setState.bind(this));
   }
 
-  // 切换页面时，重置二级菜单为默认值
-  static getDerivedStateFromProps(props) {
-    if (props.hide === true) {
-      return {
-        activeKey: 'administrator',
-      };
-    }
-    return null;
-  }
-
   handleClick = activeKey => {
     this.setState({
       activeKey,
