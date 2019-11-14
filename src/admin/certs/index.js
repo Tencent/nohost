@@ -201,9 +201,9 @@ class Certs extends Component {
         }
       });
     }, () => {
-      input.value = '';
       message.error('上传失败，请稍后重试！');
     });
+    input.value = '';
   };
 
   render() {
