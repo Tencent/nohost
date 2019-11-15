@@ -18,6 +18,7 @@
     "dist": "rimraf public && webpack --config ./src/config/webpack.prod.js",
     "start": "node ./test"
   },
+  "registry": "https://registry.npmjs.org/@nohost/server",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nohosts/nohosts.git"

@@ -1,6 +1,7 @@
 import './index.css';
 import React, { Component } from 'react';
-import { Icon, Modal } from 'antd';
+import { Icon, Modal, message } from 'antd';
+import { getVersion } from '../../admin/cgi';
 
 class NavBar extends Component {
   state = {}
@@ -15,16 +16,27 @@ class NavBar extends Component {
 
   showAboutDialog = () => {
     this.setState({ displayAboutMenu: false });
-    Modal.info({
-      icon: null,
-      content: (
-        <div className="p-about-dialog">
-          <div className="p-about-desc">多用户环境配置及抓包调试系统</div>
-          <div className="p-about-version">版本 0.1.0</div>
-          <div className="p-about-update">版本更新(有新版本)</div>
-        </div>
-      ),
-      onOk() {},
+    if (this.loadingVersion) {
+      return;
+    }
+    this.loadingVersion = true;
+    getVersion((data) => {
+      this.loadingVersion = false;
+      if (!data) {
+        return message.error('请求失败，请稍后重试！');
+      }
+      Modal.info({
+        icon: null,
+        content: (
+          <div className="p-about-dialog">
+            <div className="p-about-desc">多用户环境配置及抓包调试系统</div>
+            <div className="p-about-version">版本 {data.version}</div>
+            <div className="p-about-update">
+              <a href="https://www.npmjs.com/package/@nohost/server" rel="noopener noreferrer" target="_blank">版本更新（有新版本）</a>
+            </div>
+          </div>
+        ),
+      });
     });
   }
 
