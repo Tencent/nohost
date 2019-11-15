@@ -3,6 +3,17 @@ import React, { Component } from 'react';
 import { Icon, Modal, message } from 'antd';
 import { getVersion } from '../../admin/cgi';
 
+const parseNum = n => parseInt(n, 10);
+
+const compareVersion = (cur, next) => {
+  if (!next) {
+    return false;
+  }
+  cur = cur.split('.').map(parseNum);
+  next = next.split('.').map(parseNum);
+  return next[0] > cur[0] || next[1] > cur[1] || next[2] > cur[2];
+};
+
 class NavBar extends Component {
   state = {}
 
@@ -25,6 +36,7 @@ class NavBar extends Component {
       if (!data) {
         return message.error('请求失败，请稍后重试！');
       }
+      const hasNew = compareVersion(data.version, data.latestVersion);
       Modal.info({
         icon: null,
         content: (
@@ -32,7 +44,13 @@ class NavBar extends Component {
             <div className="p-about-desc">多用户环境配置及抓包调试系统</div>
             <div className="p-about-version">版本 {data.version}</div>
             <div className="p-about-update">
-              <a href="https://www.npmjs.com/package/@nohost/server" rel="noopener noreferrer" target="_blank">版本更新（有新版本）</a>
+              <a
+                style={{ color: hasNew ? 'red' : null }}
+                href="https://www.npmjs.com/package/@nohost/server"
+                rel="noopener noreferrer"
+                target="_blank"
+              >版本更新{hasNew ? `（有新版本 ${data.latestVersion}）` : ''}
+              </a>
             </div>
           </div>
         ),
