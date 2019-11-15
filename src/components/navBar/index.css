@@ -74,3 +74,19 @@
   text-align: center;
   z-index: 10;
 }
+
+.p-about-dialog {
+  text-align: center;
+  background: url(../../img/logo.png) center 0 no-repeat;
+  background-size: 25%;
+  padding-top: 105px;
+}
+
+.p-about-dialog > div {
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.p-about-name {
+  font-size: 20px!important;
+}

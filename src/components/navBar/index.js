@@ -1,23 +1,32 @@
 import './index.css';
 import React, { Component } from 'react';
-// import { Icon } from 'antd';
+import { Icon, Modal } from 'antd';
 
 class NavBar extends Component {
   state = {}
 
-  // showAboutMenu = () => {
-  //   this.setState({ displayAboutMenu: true });
-  // }
+  showAboutMenu = () => {
+    this.setState({ displayAboutMenu: true });
+  }
 
-  // hideAboutMenu = () => {
-  //   this.setState({ displayAboutMenu: false });
-  // }
+  hideAboutMenu = () => {
+    this.setState({ displayAboutMenu: false });
+  }
 
-  // showAboutDialog = () => {
-  //   this.setState({
-  //     displayAboutMenu: false,
-  //   });
-  // }
+  showAboutDialog = () => {
+    this.setState({ displayAboutMenu: false });
+    Modal.info({
+      icon: null,
+      content: (
+        <div className="p-about-dialog">
+          <div className="p-about-desc">多用户环境配置及抓包调试系统</div>
+          <div className="p-about-version">版本 0.1.0</div>
+          <div className="p-about-update">版本更新(有新版本)</div>
+        </div>
+      ),
+      onOk() {},
+    });
+  }
 
   onChange = ({ target }) => {
     if (target.nodeName !== 'BUTTON' || !target.name) {
@@ -31,6 +40,7 @@ class NavBar extends Component {
 
   render() {
     const { active } = this.props;
+    const { displayAboutMenu } = this.state;
     return (
       <div className="p-nav-bar" onClick={this.onChange}>
         <a href="https://github.com/nohosts/nohost" target="_blank" rel="noopener noreferrer" className="p-logo">
@@ -75,15 +85,15 @@ class NavBar extends Component {
         <span className="p-help" onMouseEnter={this.showAboutMenu} onMouseLeave={this.hideAboutMenu}>
           <a href="https://github.com/nohosts/nohost" rel="noopener noreferrer" target="_blank">
               帮助
-            {/* <Icon type="down" className="p-help-menu" /> */}
+            <Icon type="down" className="p-help-menu" />
           </a>
-          {/* <button
+          <button
             type="button"
             className="p-about"
             style={{ display: displayAboutMenu ? 'block' : undefined }}
             onClick={this.showAboutDialog}
           >关于 Nohost
-          </button> */}
+          </button>
         </span>
       </div>
     );
