@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon, Form, Input, Button, message } from 'antd';
+import { Icon, Form, Input, Button, message, Popconfirm } from 'antd';
 import Panel from '../../../components/panel';
 import { FORM_ITEM_LAYOUT, SUBMIT_BTN_LAYOUT } from '../../util';
 import { setAdmin } from '../../cgi';
@@ -28,7 +28,7 @@ class Administrator extends Component {
     return (
       <div className="p-mid-con">
         <Panel title="设置管理员账号和密码">
-          <Form {...FORM_ITEM_LAYOUT} onSubmit={this.submitAdmin}>
+          <Form {...FORM_ITEM_LAYOUT}>
             <Form.Item label="管理员账号">
               {getFieldDecorator('username', {
                 initialValue: value.username || '',
@@ -55,9 +55,14 @@ class Administrator extends Component {
               />)}
             </Form.Item>
             <Form.Item {...SUBMIT_BTN_LAYOUT} style={{ marginBottom: 0 }}>
-              <Button type="primary" htmlType="submit">
-                  确定
-              </Button>
+              <Popconfirm
+                title="确认修改管理员账号？"
+                onConfirm={this.submitAdmin}
+              >
+                <Button type="primary" htmlType="submit">
+                    确定
+                </Button>
+              </Popconfirm>
             </Form.Item>
           </Form>
         </Panel>
