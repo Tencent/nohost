@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Input, Button, message } from 'antd';
+import { Form, Input, Button, message, Popconfirm } from 'antd';
 import Panel from '../../../components/panel';
 import { FORM_ITEM_LAYOUT, SUBMIT_BTN_LAYOUT } from '../../util';
 import { setDomain } from '../../cgi';
@@ -10,7 +10,7 @@ class Domain extends Component {
     this.props.form.validateFields((err, value) => {
       const { domain } = value;
       if (!err) {
-        setDomain({ domain }, (data) => {
+        setDomain({ domain: domain.trim() }, (data) => {
           if (!data) {
             message.error('操作失败，请稍后重试');
             return;
@@ -28,7 +28,7 @@ class Domain extends Component {
     return (
       <div className="p-mid-con">
         <Panel title="设置域名">
-          <Form {...FORM_ITEM_LAYOUT} onSubmit={this.handleSubmit}>
+          <Form {...FORM_ITEM_LAYOUT}>
             <Form.Item label="域名">
               {getFieldDecorator('domain', {
                 initialValue: value,
@@ -39,9 +39,14 @@ class Domain extends Component {
               })(<Input placeholder="请输入域名，如果有多个域名可用,分开" maxLength={256} autoComplete="off" />)}
             </Form.Item>
             <Form.Item {...SUBMIT_BTN_LAYOUT} style={{ marginBottom: 0 }}>
-              <Button type="primary" htmlType="submit">
-                确定
-              </Button>
+              <Popconfirm
+                title="确定修改域名？"
+                onConfirm={this.handleSubmit}
+              >
+                <Button type="primary" htmlType="submit">
+                  确定
+                </Button>
+              </Popconfirm>
             </Form.Item>
           </Form>
         </Panel>
