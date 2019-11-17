@@ -56,18 +56,16 @@ function showUsage(isRunning, options, restart) {
   }
   const port = /^\d+$/.test(options.port) && options.port > 0 ? options.port : pkg.port;
   const list = options.host ? [options.host] : getIpList();
-  info(`[i] 1. use your device to visit the following URL list, gets the ${colors.bold('IP')} of the URL you can access:`);
+  info(`[i] use your device to visit the following URL list, gets the ${colors.bold('IP')} of the URL you can access:`);
   info(list.map((ip) => {
     return `       http://${colors.bold(ip)}${port ? `:${port}` : ''}/`;
   }).join('\n'));
 
   warn('       Note: If all the above URLs are unable to access, check the firewall settings');
   warn(`             For help see ${colors.bold('https://github.com/nohosts/nohosts')}`);
-  info(`[i] 2. configure your device to use nohost as its HTTP and HTTPS proxy on ${colors.bold('IP:')}${port}`);
-  info(`[i] 3. use ${colors.bold('Chrome')} to visit ${colors.bold(`http://${options.localUIHost || pkg.localUIHost}/`)} to get started`);
 
   if (parseInt(process.version.slice(1), 10) < 6) {
-    warn(colors.bold('\nWarning: The current Node version is too low, access https://nodejs.org to install the latest version, or may not be able to intercept HTTPS CONNECTs\n'));
+    warn(colors.bold('\nWarning: The current Node version is too low, access https://nodejs.org to install the latest version, or may not be able to Capture HTTPS CONNECTs\n'));
   }
 }
 
