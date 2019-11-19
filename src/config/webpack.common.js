@@ -15,7 +15,9 @@ module.exports = {
     button: path.resolve(srcDir, 'button/index'),
   },
   output: {
-    filename: '[name].js',
+    filename: ({ chunk: { name, hash } }) => {
+      return name === 'button' ? 'button.js' : `${name}.${hash}.js`;
+    },
     path: path.resolve(rootDir, 'public'),
   },
   resolve: {
