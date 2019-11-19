@@ -2,7 +2,7 @@ export default `<div id="w-nohost">
 <div class="w-nohost-modal" id="w-nohost-select-modal">
   <div id="w-nohost-list">
     <div id="w-nohost-toolbar">
-      <button type="button" id="w-nohost-btn--top">当前环境/返回用户列表</button>
+      <button type="button" id="w-nohost-btn--top">当前环境/返回账号列表</button>
       <input id="w-nohost-filter" placeholder="输入字符过滤(忽略大小写)" autocomplete="off" />
     </div>
     <ul id="w-nohost-user-ul"></ul>

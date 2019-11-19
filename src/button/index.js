@@ -311,7 +311,7 @@ function showEnvList(user) {
   userUl.hide();
   envUl.show();
   genEnvList(user);
-  topBtn.addClass('back').text(`返回用户列表 / ${user.name}`);
+  topBtn.addClass('back').text(`返回账号列表 / ${user.name}`);
   scrollToView($('#w-nohost-env-ul .envSelected'), true);
 }
 

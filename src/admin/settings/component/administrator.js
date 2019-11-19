@@ -33,7 +33,7 @@ class Administrator extends Component {
               {getFieldDecorator('username', {
                 initialValue: value.username || '',
                 rules: [
-                  { required: true, message: '请输入用户名!' },
+                  { required: true, message: '请输入账号名!' },
                   { pattern: /^[\w.-]+$/, message: '只能输入字母、数字、点（.）、下划线（_）、中划线（-）' },
                 ],
               })(<Input

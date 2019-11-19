@@ -14,8 +14,10 @@ const style = {
     minHeight: '512px',
   },
   buttonRow: {
-    lineHeight: '80px',
     textAlign: 'right',
+    padding: '15px 20px',
+    height: 62,
+    overflow: 'hidden',
   },
 };
 /* eslint-disable react/no-access-state-in-setstate */
@@ -56,14 +58,14 @@ class Accounts extends Component {
         });
       },
       error() {
-        message.error('获取用户数据失败');
+        message.error('获取账号数据失败');
       },
     });
   }
 
   showAddModal = () => {
     if (this.state.users.length > MAX_USER_COUNT) {
-      message.error(`用户数不能超过 ${MAX_USER_COUNT} 个`);
+      message.error(`账号数不能超过 ${MAX_USER_COUNT} 个`);
       return false;
     }
     this.setState({ addUserModal: true });
@@ -125,14 +127,14 @@ class Accounts extends Component {
       success: (data) => {
         this.hideModModal();
         if (data.ec) {
-          message.error(`修改用户$${this.state.chosenUser}密码失败，错误码${data.ec} ${data.em}`);
+          message.error(`修改账号$${this.state.chosenUser}密码失败，错误码${data.ec} ${data.em}`);
         } else {
-          message.success(`修改用户${this.state.chosenUser}密码成功`);
+          message.success(`修改账号${this.state.chosenUser}密码成功`);
         }
       },
       error: () => {
         this.hideDeleteModal();
-        message.error(`修改用户${this.state.chosenUser}密码失败，网络错误`);
+        message.error(`修改账号${this.state.chosenUser}密码失败，网络错误`);
       },
     });
   };
@@ -158,7 +160,7 @@ class Accounts extends Component {
         }
       },
       error: () => {
-        message.error('切换用户状态失败，网络错误');
+        message.error('切换账号状态失败，网络错误');
         newUsers[index].active = !active;
         this.setState({ users: newUsers });
       },
@@ -186,7 +188,7 @@ class Accounts extends Component {
       success: (data) => {
         this.hideDeleteModal();
         if (data.ec) {
-          message.error(`删除用户失败，错误码${data.ec} ${data.em}`);
+          message.error(`删除账号失败，错误码${data.ec} ${data.em}`);
         } else {
           message.success(`${this.state.chosenUser}删除成功`);
           this.fetchAccounts();
@@ -194,7 +196,7 @@ class Accounts extends Component {
       },
       error: () => {
         this.hideDeleteModal();
-        message.error('删除用户失败，网络错误');
+        message.error('删除账号失败，网络错误');
       },
     });
   }
@@ -263,24 +265,24 @@ class Accounts extends Component {
         >
           <AddUserForm key={Date.now()} handleSubmit={this.handleAddSubmit} users={this.state.users} />
         </Modal>
-        {/* 修改用户密码弹窗 */}
+        {/* 修改账号密码弹窗 */}
         <Modal
-          title="修改用户密码"
+          title="修改账号密码"
           visible={this.state.modUserModal}
           onCancel={this.hideModModal}
           footer={null}
         >
           <AccountList key={Date.now()} handleSubmit={this.handleModSubmit} />
         </Modal>
-        {/* 删除用户弹窗 */}
+        {/* 删除账号弹窗 */}
         <Modal
-          title="删除用户"
+          title="删除账号"
           visible={this.state.deleteUserModal}
           onCancel={this.hideDeleteModal}
           onOk={this.handleDeleteSubmit}
           confirmLoading={this.state.deleteLoading}
         >
-          确定要删除用户{this.state.chosenUser}吗？
+          确定要删除账号{this.state.chosenUser}吗？
         </Modal>
       </div>
     );

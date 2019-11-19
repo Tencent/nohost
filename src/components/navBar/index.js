@@ -41,7 +41,7 @@ class NavBar extends Component {
         icon: null,
         content: (
           <div className="p-about-dialog">
-            <div className="p-about-desc">多用户环境配置及抓包调试系统</div>
+            <div className="p-about-desc">多账号环境配置及抓包调试系统</div>
             <div className="p-about-version">版本 {data.version}</div>
             <div className="p-about-update">
               <a

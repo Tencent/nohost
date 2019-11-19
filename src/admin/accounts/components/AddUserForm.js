@@ -31,7 +31,7 @@ class AddUserForm extends Component {
   checkUser = (rule, value, callback) => {
     this.props.users.forEach((user) => {
       if (user.name === value) {
-        callback('已存在该用户名');
+        callback('已存在该账号名');
       }
     });
     callback();
@@ -50,10 +50,10 @@ class AddUserForm extends Component {
     const { getFieldDecorator } = this.props.form;
     return (
       <Form onSubmit={this.handelSubmit}>
-        <FormItem {...this.formItemLayout} label="用户名" hasFeedback>
+        <FormItem {...this.formItemLayout} label="账号名" hasFeedback>
           { getFieldDecorator('username', {
             rules: [
-              { required: true, message: '请输入用户名' },
+              { required: true, message: '请输入账号名' },
               { pattern: /^[\w.-]{1,24}$/, message: '只能包含大小写字母、数字、下划线、点或横线' },
               { validator: this.checkUser },
             ],

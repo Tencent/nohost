@@ -311,7 +311,7 @@ function handleChooseUser(event) {
     const tips = index ? `打开${name}的环境配置页面` : '打开系统管理员页面';
     const url = `data.html?name=${name}`;
     const userLink = `<a title="${tips}" class="w-nohost-data-url" href="${url}" target="_blank">${USER_ICON}</a>`;
-    backBtn.html(`${userLink}返回用户列表 / ${escape(name)}`);
+    backBtn.html(`${userLink}返回账号列表 / ${escape(name)}`);
     localStorage[CUR_SELECTED_USER] = `__nohost_-_${name}`;
   }
   return false;
