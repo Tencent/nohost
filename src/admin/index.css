@@ -6,6 +6,10 @@
   margin: 0 auto;
 }
 
+.p-full-container {
+  max-width: unset;
+}
+
 .p-left-menu {
   width: 250px;
   padding-top: 10px;

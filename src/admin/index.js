@@ -72,13 +72,14 @@ class App extends Component {
     const {
       active,
     } = this.state;
+    const showWhistle = active === 'whistle';
 
     return (
       <Fragment>
         <NavBar active={active} onChange={this.onTabChange} />
-        <div className="fill vbox p-container">
+        <div className={`fill vbox p-container${showWhistle ? ' p-full-container' : ''}`}>
           { accounts ? <Accounts hide={active !== 'accounts'} /> : null }
-          { whistle ? <iframe title="全局规则" className={`fill capture-win ${active !== 'whistle' ? 'p-hide' : ''}`} src="whistle/" /> : null }
+          { whistle ? <iframe title="全局规则" className={`fill capture-win ${showWhistle ? '' : 'p-hide'}`} src="whistle/" /> : null }
           { config ? <Config onItemChange={this.onConfigChange} hide={active !== 'config'} /> : null }
           { certs ? <Certs hide={active !== 'certs'} /> : null }
           { monitor ? <Monitor hide={active !== 'monitor'} /> : null }
