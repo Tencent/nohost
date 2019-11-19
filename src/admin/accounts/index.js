@@ -236,7 +236,7 @@ class Accounts extends Component {
             <Checkbox
               checked={this.state.enableGuest}
               onChange={this.onEnableGuest}
-              style={{ marginRight: 20, height: 50 }}
+              style={{ marginRight: 20, height: 22 }}
             >
               允许访客访问
             </Checkbox>
