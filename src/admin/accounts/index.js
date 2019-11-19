@@ -85,11 +85,11 @@ class Accounts extends Component {
           message.success(`${username}添加成功`);
           this.fetchAccounts();
         } else {
-          message.error('添加用户失败！');
+          message.error('添加账号失败！');
         }
       },
       error() {
-        message.error('添加用户失败，网络错误！');
+        message.error('添加账号失败，网络错误！');
       },
     });
   };
@@ -244,7 +244,7 @@ class Accounts extends Component {
             type="primary"
             icon="plus"
             onClick={this.showAddModal}
-          >添加用户
+          >添加账号
           </Button>
         </div>
         <UserTable
@@ -254,9 +254,9 @@ class Accounts extends Component {
           onModify={this.beforeModSubmit}
           onDrag={this.handleDrag}
         />
-        {/* 添加用户弹窗 */}
+        {/* 添加账号弹窗 */}
         <Modal
-          title="添加用户"
+          title="添加账号"
           visible={this.state.addUserModal}
           onCancel={this.hideAddModal}
           footer={null}
