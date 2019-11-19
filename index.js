@@ -13,7 +13,6 @@ Socket.prototype.destroy = function(err) {
   destroySocket.call(this, err);
 };
 
-// process.env.PFORK_MODE = 'inline'
 // 设置存储路径
 process.env.WHISTLE_PATH = process.env.NOHOST_PATH || getWhistlePath();
 fse.ensureDirSync(process.env.WHISTLE_PATH); // eslint-disable-line
@@ -24,6 +23,9 @@ module.exports = (options, cb) => {
     options = {};
   } else if (!options) {
     options = {};
+  }
+  if (options.debugMode) {
+    process.env.PFORK_MODE = 'bind';
   }
   options.port = parseInt(options.port, 10) || DEFAULT_PORT;
   initConfig(options);
