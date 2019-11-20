@@ -5,7 +5,8 @@
   "main": "index.js",
   "bin": {
     "nohost": "./bin/nohost.js",
-    "nohosts": "./bin/nohost.js"
+    "nohosts": "./bin/nohost.js",
+    "n2": "./bin/nohost.js"
   },
   "directories": {
     "lib": "lib"
