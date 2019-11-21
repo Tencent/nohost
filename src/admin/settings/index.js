@@ -121,7 +121,7 @@ class Settings extends Component {
           >
             <div className="p-mid-con">
               <Panel title="重启操作">
-                <Button type="danger" disabled={this.restarting} onClick={this.restart}>重启</Button>
+                <Button type="danger" disabled={this.restarting} onClick={this.restart}>重启</Button>
               </Panel>
             </div>
           </TabPane>
