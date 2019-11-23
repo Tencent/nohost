@@ -1,4 +1,4 @@
-* htmlAppend://{whistle.nohost/inject.html} enable://strictHtml
+* htmlAppend://{whistle.nohost/inject.html} enable://safeHtml
 
 ``` whistle.nohost/inject.html
 
