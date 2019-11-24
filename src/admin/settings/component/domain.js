@@ -33,10 +33,10 @@ class Domain extends Component {
               {getFieldDecorator('domain', {
                 initialValue: value,
                 rules: [
-                  { max: 32, message: '域名最多不超过32个字符!' },
-                  { pattern: /^\s*[\w.,\s-]+\s*$/, message: '请输入正确的域名，多个页面用逗号（,）分隔！' },
+                  { max: 128, message: '域名最多不超过128个字符!' },
+                  { pattern: /^\s*[\w.,\s-]+\s*$/, message: '请输入正确的域名，多个域名用逗号（,）分隔！' },
                 ],
-              })(<Input placeholder="请输入一个DNS指向当前服务器的域名" maxLength={32} autoComplete="off" />)}
+              })(<Input placeholder="请输入一个DNS指向当前服务器的域名" maxLength={128} autoComplete="off" />)}
             </Form.Item>
             <Form.Item {...SUBMIT_BTN_LAYOUT} style={{ marginBottom: 0 }}>
               <Popconfirm
