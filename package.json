@@ -54,7 +54,7 @@
     "eslint-config-imweb": "^0.2.19",
     "file-loader": "^4.2.0",
     "html-webpack-plugin": "^3.2.0",
-    "jquery": "3.3.1",
+    "jquery": "3.4.1",
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
     "prop-types": "^15.5.10",
