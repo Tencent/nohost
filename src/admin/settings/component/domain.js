@@ -34,7 +34,7 @@ class Domain extends Component {
                 initialValue: value,
                 rules: [
                   { max: 32, message: '域名最多不超过32个字符!' },
-                  { pattern: /^\s*[\w.-]+\s*$/, message: '请输入正确的域名！' },
+                  { pattern: /^\s*[\w.,\s-]+\s*$/, message: '请输入正确的域名，多个页面用逗号（,）分隔！' },
                 ],
               })(<Input placeholder="请输入一个DNS指向当前服务器的域名" maxLength={32} autoComplete="off" />)}
             </Form.Item>
