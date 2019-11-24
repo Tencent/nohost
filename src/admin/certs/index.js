@@ -4,6 +4,7 @@ import { Table, Icon, Button, message, Popconfirm } from 'antd';
 import { uploadCerts, getCertsInfo, removeCert } from '../cgi';
 
 const HIGHLIGHT = { color: 'red', fontWeight: 'bold' };
+const OK_STYLE = { color: '#5bbd72', fontSize: '22px', fontWeight: 'bold', overflow: 'hide', lineHeight: '18px' };
 
 function readFile(file) {
   return new Promise((resolve) => {
@@ -21,7 +22,7 @@ function parseCerts(data) {
     const cert = data[domain];
     const startDate = new Date(cert.notBefore);
     const endDate = new Date(cert.notAfter);
-    let status = 'OK';
+    let status = '✓';
     const now = Date.now();
     let isInvalid;
     if (startDate.getTime() > now) {
@@ -70,7 +71,7 @@ class Certs extends Component {
         key: 'filename',
         width: 270,
         render: (_, record) => {
-          return <span style={record.status !== 'OK' ? HIGHLIGHT : null}>{record.filename}</span>;
+          return <span style={record.status !== '✓' ? HIGHLIGHT : null}>{record.filename}</span>;
         },
       },
       {
@@ -78,7 +79,7 @@ class Certs extends Component {
         dataIndex: 'domain',
         key: 'domain',
         render: (_, record) => {
-          return <span style={record.status !== 'OK' ? HIGHLIGHT : null}>{record.domain}</span>;
+          return <span style={record.status !== '✓' ? HIGHLIGHT : null}>{record.domain}</span>;
         },
       },
       {
@@ -87,7 +88,7 @@ class Certs extends Component {
         key: 'validity',
         width: 380,
         render: (_, record) => {
-          return <span style={record.status !== 'OK' ? HIGHLIGHT : null}>{record.validity}</span>;
+          return <span style={record.status !== '✓' ? HIGHLIGHT : null}>{record.validity}</span>;
         },
       },
       {
@@ -96,7 +97,7 @@ class Certs extends Component {
         key: 'status',
         width: 100,
         render: (_, record) => {
-          return <span style={record.status !== 'OK' ? HIGHLIGHT : null}>{record.status}</span>;
+          return <span style={record.status !== '✓' ? HIGHLIGHT : OK_STYLE}>{record.status}</span>;
         },
       },
       {
