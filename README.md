@@ -23,7 +23,6 @@ nohost 是基于 [whistle](https://github.com/avwo/whistle) 实现的多用户�
 
 [七. 规则](#whistle)
 
-[八. 插件](#plugins)
 
 # <a href="#prepare" id="prepare">一. 准备</a>
 安装 nohost 之前，建议先做好以下工作：
@@ -122,17 +121,38 @@ nohost 本身就是一个代理，可以直接配置浏览器或系统代理访�
 创建完环境后，可以在环境里面配置任何 whistle 规则，跟普通到本地 whistle 功能一模一样，甚至更多。每个实例可以建立上百个账号，每个账号可以建立上百个环境，具体取决于你到机器性能。
 
 # <a href="#config" id="config">六. 配置</a>
-默认情况下，只有证书里面域名的请求才会被转发到各个账号，且默认 html 类型的内容会自动注入小圆点，但我们可能会遇到以下问题：
-1. **不注入小圆点**：证书里面的某些域名或某些路径不希望注入小圆点，如某些接口返回 json 数据但响应类型设置为 html ，注入小圆点后会导致前端解析 json 失败
-2. **没有证书的域名**：不是所有域名都可以拿到测试环境的证书，某些不在证书里面的域名请求也想转发到账号，如业务用到的第三方到域名，只有 http 请求的页面
-3. **不转发到nohost**：某些域名或路径不希望转发到 nohost，如 QQ 快速登录的请求
+默认情况下，只有证书里面域名的请求才会被转发到各个账号，且 html 类型的内容会自动注入小圆点，但在实际应用中你可能会遇到以下问题：
 
+#### 域名证书问题
+有些域名只涉及 http 请求，不涉及 https 的请求不需要证书，或者某些敏感及第三方域名无法获得证书，这类域名可以通过在 `配置 -> 入口配置` 里面设置：
+![入口配置](https://user-images.githubusercontent.com/11450939/69488891-e8221b80-0eaa-11ea-8b46-68c5755f850a.png)
+
+入口配置的规则有三种（`#xxx`表示注释）：
+``` txt
+pattern #转发到nohost，如果是html页面则注入小圆点
+-pattern #转发到nohost，不注入小圆点
+--pattern #不转发到nohost，且不注入小圆点
+x)-pattern #x为整数（正负数零都可以），表示手动设置优先级，默认为0
+```
+pattern 参见：[https://wproxy.org/whistle/pattern.html](https://wproxy.org/whistle/pattern.html)，匹配顺序是从上到下，每个请求只会匹配其中一个，证书里面到域名优先级默认最低，可以通过 `1)` 设置优先级。
+
+如：
+``` txt
+ke.qq.com
+-*.url.cn
+--localhost.**
+-1)**.qq.com
+```
+表示：
+1. 所有 `ke.qq.com` 的请求都转发到nohost，且所有 html 都注入小圆点
+2. 所有 `xxx.url.cn` 的请求都转发到nohost，但不注入小圆点
+3. 所有 `localhost.xxx.yyy...` 的请求都不转发到nohost，且不注入小圆点
+4. 所有 `qq.com` 的子代域名请求都转发到nohost，但不注入小圆点，并优先级设为 `-1` ，确保证书里面的 `qq.com` 子域名可以正常注入小圆点
 
 # <a href="#whistle" id="whistle">七. 规则</a>
+这个是 nohost 主进程 whistle，所有请求都会通过该 whistle，并通过该进程的 whistle.nohost 插件进行账号管理及请求转发，主进程 whistle 在生产环境下无法查看抓包数据，可用于设置规则及全局插件管理，如：屏蔽一些请求等等，更多内容参见后面的文档。
 
-# <a href="#plugins" id="plugins">八. 插件</a>
-
-**更多功能参见详细文档：[https://nohosts.github.io/nohost/](https://nohosts.github.io/nohost/)**
+**详细内容参见文档：[https://nohosts.github.io/nohost/](https://nohosts.github.io/nohost/)**
 
 
 # License
