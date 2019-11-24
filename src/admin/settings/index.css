@@ -5,24 +5,6 @@
 .p-restart-bar{
   text-align: left;
 }
-.p-whitelist .tag-container{
-  text-align: left;
-}
-.p-whitelist .tag-container .ant-tag{
-  font-size: 13px;
-}
-.p-whitelist .edit-input{
-  width: 78px;
-  margin-right: 8px;
-}
-.p-whitelist .edit-tag{
-  background: #e6f7ff;
-  color: #1890ff;
-  border: 1px dashed #91d5ff;
-}
-.p-whitelist .submit-btn{
-  margin-top: 24px;
-}
 .p-settings .ant-form-item,
 .p-settings .ant-form-item label,
 .p-settings .ant-form-item .ant-input,

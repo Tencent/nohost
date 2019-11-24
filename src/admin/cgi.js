@@ -22,7 +22,6 @@ const {
   getAdminSettings,
   setAdmin,
   setDomain,
-  setWhiteList,
   uploadCerts,
   getCertsInfo,
   removeCert,
@@ -74,10 +73,6 @@ const {
   },
   setDomain: {
     url: 'main/cgi-bin/set-domain',
-    type: 'post',
-  },
-  setWhiteList: {
-    url: 'main/cgi-bin/set-white-list',
     type: 'post',
   },
   uploadCerts: {
@@ -152,7 +147,6 @@ export {
   getAdministratorSettings,
   setAdmin,
   setDomain,
-  setWhiteList,
   uploadCerts,
   getCertsInfo,
   removeCert,
