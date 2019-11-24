@@ -80,7 +80,7 @@ class NavBar extends Component {
           type="button"
           name="accounts"
           className={active === 'accounts' ? 'p-active' : undefined}
-        >帐号
+        >账号
         </button>
         <button
           type="button"

@@ -170,7 +170,7 @@ class Config extends Component {
             tab={(
               <span>
                 <Icon type="user" />
-                帐号规则
+                账号规则
               </span>
             )}
             tabKey="accountRules"
