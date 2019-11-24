@@ -25,7 +25,7 @@ nohost 是基于 [whistle](https://github.com/avwo/whistle) 实现的多用户�
 
 [八. 插件](#plugins)
 
-# <a href="#prepare" href="#prepare">一. 准备</a>
+# <a href="#prepare" id="prepare">一. 准备</a>
 安装 nohost 之前，建议先做好以下工作：
 
 1. 准备一台服务器，假设IP为：10.222.2.200（以你自己的服务器为准，建议4核8G以上到配置）
@@ -34,7 +34,7 @@ nohost 是基于 [whistle](https://github.com/avwo/whistle) 实现的多用户�
 
 > 申请域名的好处是可以直接用域名访问管理及账号页面，手机也可以通过域名设置代理访问 nohost，方便记忆及输入
 
-# <a href="#install" href="#install">二. 安装</a>
+# <a href="#install" id="install">二. 安装</a>
 首先，需要安装Node（建议使用最新的LTS版本）：[Node](https://nodejs.org/en/)
 
 Node安装成功后，通过npm安装 `nohost`：
@@ -63,7 +63,7 @@ n2 stop
 n2 restart --reset
 ```
 
-# <a href="#settings" href="#settings">三. 设置</a>
+# <a href="#settings" id="settings">三. 设置</a>
 安装启动成功后，打开管理员页面 `http://10.222.2.200:8080/admin.html#system/administrator`，输入默认用户名（`admin`）和密码（`123456`），打开系统配置后：
 > 其中 `10.222.2.200` 表示nohost运行的服务器IP，具体根据实际 ServerIP 替换
 1. 修改管理员的默认账号名和密码（**不建议使用默认账号及密码，如果忘记管理员账号名或密码，可以通过 `n2 restart --reset` 重置**）
@@ -74,7 +74,7 @@ n2 restart --reset
 
 **Note: 设置的域名 DNS 一定要指向该IP，否则可能出现不可用状态，上述配置会自动重启服务，建议避免频繁操作**
 
-# <a href="#access" href="#access">四. 访问</a>
+# <a href="#access" id="access">四. 访问</a>
 nohost 本身就是一个代理，可以直接配置浏览器或系统代理访问，也可以通过 Nginx反向代理访问，为方便大家使用，针对不同的人群可以使用不同的方案（以下用 `imwebtest.oa.com` 表示 nohost 的域名，具体域名需要自己申请及设置）。
 
 #### 前端开发
@@ -98,7 +98,7 @@ nohost 本身就是一个代理，可以直接配置浏览器或系统代理访�
 #### 外网访问
 一般 nohost 是部署在公司内网，外网是不可以直接访问，需要通过接入层（如：Nginx）转发，如何配置转发参见详细文档：https://nohosts.github.io/nohost/
 
-# <a href="#accounts" href="#accounts">五. 账号</a>
+# <a href="#accounts" id="accounts">五. 账号</a>
 安装好插件或配置好代理后，打开相关页面（这些页面的域名必须在上面上传证书里面，如果没有需要额外配置，具体参考下方 **配置** 说明），即可看到页面左下脚出现一个小圆点，点击小圆点可以进行切换环境：
 
 ![证书列表](https://user-images.githubusercontent.com/11450939/69306641-2d540c80-0c63-11ea-917f-f0fa0c88a222.png)
@@ -121,16 +121,16 @@ nohost 本身就是一个代理，可以直接配置浏览器或系统代理访�
 
 创建完环境后，可以在环境里面配置任何 whistle 规则，跟普通到本地 whistle 功能一模一样，甚至更多。每个实例可以建立上百个账号，每个账号可以建立上百个环境，具体取决于你到机器性能。
 
-# <a href="#config" href="#config">六. 配置</a>
+# <a href="#config" id="config">六. 配置</a>
 默认情况下，只有证书里面域名的请求才会被转发到各个账号，且默认 html 类型的内容会自动注入小圆点，但我们可能会遇到以下问题：
 1. **不注入小圆点**：证书里面的某些域名或某些路径不希望注入小圆点，如某些接口返回 json 数据但响应类型设置为 html ，注入小圆点后会导致前端解析 json 失败
 2. **没有证书的域名**：不是所有域名都可以拿到测试环境的证书，某些不在证书里面的域名请求也想转发到账号，如业务用到的第三方到域名，只有 http 请求的页面
 3. **不转发到nohost**：某些域名或路径不希望转发到 nohost，如 QQ 快速登录的请求
 
 
-# <a href="#whistle" id="#whistle">七. 规则</a>
+# <a href="#whistle" id="whistle">七. 规则</a>
 
-# <a href="#plugins" id="#plugins">八. 插件</a>
+# <a href="#plugins" id="plugins">八. 插件</a>
 
 **更多功能参见详细文档：[https://nohosts.github.io/nohost/](https://nohosts.github.io/nohost/)**
 
