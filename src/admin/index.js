@@ -7,13 +7,11 @@ import NavBar from '../components/navBar';
 import Accounts from './accounts';
 import Config from './config';
 import Certs from './certs';
-import Monitor from './monitor';
 import Settings from './settings';
 
 const { location } = window;
 const query = parse(location.search);
 const TABS = [
-  // 'monitor',
   'accounts',
   'config',
   'certs',
@@ -66,7 +64,6 @@ class App extends Component {
       whistle,
       config,
       certs,
-      monitor,
       system,
     } = this.tabStatus;
     const {
@@ -82,7 +79,6 @@ class App extends Component {
           { whistle ? <iframe title="全局规则" className={`fill capture-win ${showWhistle ? '' : 'p-hide'}`} src="whistle/" /> : null }
           { config ? <Config onItemChange={this.onConfigChange} hide={active !== 'config'} /> : null }
           { certs ? <Certs hide={active !== 'certs'} /> : null }
-          { monitor ? <Monitor hide={active !== 'monitor'} /> : null }
           { system ? <Settings onItemChange={this.onSettingsChange} hide={active !== 'system'} /> : null }
         </div>
       </Fragment>

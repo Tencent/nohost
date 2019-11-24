@@ -100,12 +100,6 @@ class NavBar extends Component {
           className={active === 'whistle' ? 'p-active' : undefined}
         >Whistle
         </button>
-        {/* <button
-          type="button"
-          name="monitor"
-          className={active === 'monitor' ? 'p-active' : undefined}
-        >监控
-        </button> */}
         <button
           type="button"
           name="system"
