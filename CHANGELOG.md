@@ -1,3 +1,9 @@
+# v0.1.5
+1. refactor: 更好支持访问插件的配置界面
+  - `http://nohost.domain.com:8080/p/name/`
+  - `http://nohost.domain.com:8080/whistle.name/`
+  - 在管理员的 Whistle 里面配置规则：`xxx.oa.com http://local.whistlejs.com/pluign.name/`
+
 # v0.1.4
 1. refactor: 添加全局日志，及处理未知异常
 
