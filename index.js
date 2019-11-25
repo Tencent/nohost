@@ -1,17 +1,10 @@
 const fse = require('fs-extra');
-const { Socket } = require('net');
 const { getWhistlePath } = require('whistle/lib/config');
 const initConfig = require('./lib/config');
 // 避免第三方模块没处理好异常导致程序crash
-const noop = () => {};
+require('whistle/lib/util/patch');
+
 const DEFAULT_PORT = 8080;
-const destroySocket = Socket.prototype.destroy;
-Socket.prototype.destroy = function(err) {
-  if (err && this.listenerCount('error')) {
-    this.on('error', noop);
-  }
-  destroySocket.call(this, err);
-};
 
 // 设置存储路径
 process.env.WHISTLE_PATH = process.env.NOHOST_PATH || getWhistlePath();
