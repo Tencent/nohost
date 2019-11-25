@@ -1,3 +1,6 @@
+# v0.1.3
+1. refactor: 通过 `n2 restart --reset` 重置密码后，再用 `n2 restart` 重启时不带上 `--reset` 参数
+
 # v0.1.2
 1. fix: iOS无法访问的问题
 
