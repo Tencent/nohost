@@ -1,3 +1,6 @@
+# V0.1.1
+1. refactor: 兼容插件版通过 `http://domain:port/user/account.html` 访问抓包配置页面
+
 # v0.1.0
 1. 正式可用版本
 
