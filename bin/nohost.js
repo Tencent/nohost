@@ -61,8 +61,11 @@ program.setConfig({
     }
   },
 });
-
+const { argv } = process;
+if (argv.indexOf('--reset') === -1) {
+  argv.push('--reset', 'none');
+}
 program
   .option('-p, --port [proxyPort]', 'set the proxy port (8080 by default)', parseInt, undefined)
-  .option('--reset', 'reset administrator account name and password')
-  .parse(process.argv);
+  .option('--reset [reset]', 'reset administrator account name and password')
+  .parse(argv);
