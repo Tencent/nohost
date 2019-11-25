@@ -1,3 +1,6 @@
+# v0.1.2
+1. fix: iOS无法访问的问题
+
 # V0.1.1
 1. refactor: 兼容插件版通过 `http://domain:port/user/account.html` 访问抓包配置页面
 
