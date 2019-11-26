@@ -18,3 +18,7 @@
   opacity: 0;
   z-index: 50;
 }
+
+.p-clear-valid-certs {
+  margin-right: 20px;
+}
