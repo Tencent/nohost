@@ -11,10 +11,11 @@ module.exports = {
     repo: 'https://github.com/nohosts/nohost.git',
     repoLabel: 'GitHub',
     displayAllHeaders: true,
+    sidebarDepth: 1,
     sidebar: [
       {
         title: '概述',
-        path: '/zh/overview',
+        path: '/',
       },
       {
         title: '快速上手',
