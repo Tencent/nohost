@@ -1,3 +1,6 @@
+# v0.1.6
+1. refactor: 手动销毁异常连接
+
 # v0.1.5
 1. refactor: 更好支持访问插件的配置界面
   - `http://nohost.domain.com:8080/p/name/`
