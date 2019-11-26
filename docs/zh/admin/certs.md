@@ -16,10 +16,11 @@ nohost作为代理抓包服务器，如果用户希望nohost能抓包https请求
 如果希望https的页面能注入**环境选择小圆点**，也是有必要实施上面的2种方案，否则nohost代理是没法拦截页面然后在页面注入脚本的。用户体验上，第二种方案nohost代理上传证书，可以省去让用户安装whistle根证书的麻烦。
 
 
-## 上传证书
-nohost管理页面提供了上传业务域名证书功能, 地址
-http://10.10.10.11:8080/admin.html#certs
-> 其中 10.10.10.11 表示nohost运行的服务器IP，具体IP根据实际情况填写。
+**上传证书**
+
+nohost管理页面提供了上传业务域名证书功能, 地址为
+http://imwebtest.oa.com:8080/admin.html#certs
+> 其中 imwebtest.oa.com 表示nohost运行的域名
 
 ![上传证书](https://user-images.githubusercontent.com/4689952/69628531-b4035200-1086-11ea-9935-7feb0cfd2df7.png)
 
