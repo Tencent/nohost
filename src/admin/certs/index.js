@@ -56,12 +56,12 @@ function parseCerts(data) {
   });
   return {
     data: Object.keys(files).sort((a, b) => {
-        return files[a].mtime > files[b].mtime ? -1 : 1;
-      }).map(file => {
-        file = files[file];
-        file.domain = file.domain.join(', ');
-        return file;
-      }),
+      return files[a].mtime > files[b].mtime ? -1 : 1;
+    }).map(file => {
+      file = files[file];
+      file.domain = file.domain.join(', ');
+      return file;
+    }),
     invalidList,
   };
 }
