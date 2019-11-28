@@ -3,6 +3,10 @@ const colors = require('colors/safe');
 const pkg = require('../package.json');
 
 const isWin = process.platform === 'win32';
+const HOST_RE = /^(?:([\w.-]+):)?(\d{1,5})$/;
+const resolveHost = (host) => {
+  return HOST_RE.test(host) ? [RegExp.$1, parseInt(RegExp.$2, 10)] : [];
+};
 /* eslint-disable no-console */
 function getIpList() {
   const ipList = [];
@@ -54,8 +58,9 @@ function showUsage(isRunning, options, restart) {
   } else {
     info(`[i] nohost@${pkg.version}${restart ? ' restarted' : ' started'}`);
   }
-  const port = /^\d+$/.test(options.port) && options.port > 0 ? options.port : pkg.port;
-  const list = options.host ? [options.host] : getIpList();
+  let [host, port] = resolveHost(options.port);
+  port = port ? options.port : pkg.port;
+  const list = host ? [host] : getIpList();
   info(`[i] use your device to visit the following URL list, gets the ${colors.bold('IP')} of the URL you can access:`);
   info(list.map((ip) => {
     return `     http://${colors.bold(ip)}${port ? `:${port}` : ''}/`;
