@@ -1,4 +1,4 @@
-# 准备
+## 准备
 安装 nohost 之前，建议先做好以下工作：
 
 1. 准备一台服务器，假设IP为：10.1.2.3（以你自己的服务器为准，建议4核8G以上到配置）
@@ -7,7 +7,7 @@
 
 > 申请域名的好处是可以直接用域名访问管理及账号页面，手机也可以通过域名设置代理访问 nohost，方便记忆及输入
 
-# 安装
+## 安装
 首先，需要安装Node（建议使用最新的LTS版本）：[Node](https://nodejs.org/en/)
 
 Node安装成功后，通过npm安装 `nohost`：
@@ -36,7 +36,7 @@ n2 stop
 n2 restart --reset
 ```
 
-# 配置
+## 配置
 
 安装启动成功后，打开管理员页面 `http://10.1.2.3:8080/admin.html#system/administrator`，输入默认用户名（`admin`）和密码（`123456`），打开系统配置后：
 > 其中 `10.1.2.3` 表示nohost运行的服务器IP，具体根据实际 ServerIP 替换
@@ -46,7 +46,7 @@ n2 restart --reset
 
 ![admin](https://user-images.githubusercontent.com/11450939/69247822-0c010b00-0be6-11ea-8b03-5a0ae4b12c6e.gif)
 
-# 访问
+## 访问
 nohost 本身就是一个代理，可以直接配置浏览器或系统代理访问，也可以通过 Nginx反向代理访问，为方便大家使用，针对不同的人群可以使用不同的方案（以下用 `imwebtest.oa.com` 表示 nohost 的域名，具体域名需要自己申请及设置）。
 
 #### 前端开发
