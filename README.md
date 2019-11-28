@@ -50,6 +50,7 @@ npm i -g @nohost/server --registry=https://r.npm.taobao.org
 ``` sh
 n2 start
 ```
+> 也可以启动时直接设置当前 nohost 服务到域名 `n2 restart -o nohost.oa.com`
 > nohost 的默认端口为 8080，如果需要自定义端口，可以通过 `n2 restart -p 80` 设置。
 > 如果命令行提示没有对应命令，检查下系统环境变量 `PATH` 配置，看看 nohost 安装后生成的命令所在目录是否已添加到 `PATH`。
 
@@ -72,7 +73,7 @@ n2 restart --reset
 安装启动成功后，打开管理员页面 `http://10.1.2.3:8080/admin.html#system/administrator`，输入默认用户名（`admin`）和密码（`123456`），打开系统配置后：
 > 其中 `10.1.2.3` 表示nohost运行的服务器IP，具体根据实际 ServerIP 替换
 1. 修改管理员的默认账号名和密码（**不建议使用默认账号及密码，如果忘记管理员账号名或密码，可以通过 `n2 restart --reset` 重置**）
-2. 设置nohost的域名（将申请的域名填上，如果需要设置多个域名，可以通过逗号 `,` 分隔）
+2. 设置nohost的域名（将申请的域名填上，如果需要设置多个域名，可以通过逗号 `,` 分隔，也可以通过启动参数 `-o www.xxx.com,www.yyy.com` 设置）
 3. 上传涉及的 key 和证书（证书只支持 `.crt` 格式）
 
 ![admin](https://user-images.githubusercontent.com/11450939/69247822-0c010b00-0be6-11ea-8b03-5a0ae4b12c6e.gif)
