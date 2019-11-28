@@ -18,6 +18,7 @@ function readFile(file) {
 
 function parseCerts(data) {
   const files = {};
+  let invalidList;
   Object.keys(data).forEach((domain) => {
     const cert = data[domain];
     const startDate = new Date(cert.notBefore);
@@ -45,17 +46,24 @@ function parseCerts(data) {
         isInvalid,
       };
       files[filename] = item;
+      if (isInvalid) {
+        invalidList = invalidList || [];
+        invalidList.push(filename);
+      }
     } else {
       item.domain.push(cert.domain);
     }
   });
-  return Object.keys(files).sort((a, b) => {
-    return files[a].mtime > files[b].mtime ? -1 : 1;
-  }).map(file => {
-    file = files[file];
-    file.domain = file.domain.join(', ');
-    return file;
-  });
+  return {
+    data: Object.keys(files).sort((a, b) => {
+      return files[a].mtime > files[b].mtime ? -1 : 1;
+    }).map(file => {
+      file = files[file];
+      file.domain = file.domain.join(', ');
+      return file;
+    }),
+    invalidList,
+  };
 }
 
 
@@ -125,9 +133,9 @@ class Certs extends Component {
   }
 
   removeCert = (filename) => {
-    removeCert({ filename }, (data) => {
+    removeCert(JSON.stringify({ filename }), (data) => {
       if (!data) {
-        return message.error('证书删除失败，请稍后重试！');
+        return message.error('操作异常，请稍后重试！');
       }
       this.updateCertsInfo();
     });
@@ -138,7 +146,16 @@ class Certs extends Component {
       if (!data) {
         return message.error('证书加载失败，请求稍后重试!');
       }
-      this.setState({ data: parseCerts(data) });
+      this.setState(parseCerts(data));
+    });
+  }
+
+  clearAllInvalidCerts = () => {
+    removeCert(JSON.stringify({ filename: this.state.invalidList }), (data) => {
+      if (!data) {
+        return message.error('操作异常，请稍后重试！');
+      }
+      this.updateCertsInfo();
     });
   }
 
@@ -213,6 +230,16 @@ class Certs extends Component {
     return (
       <div className={`fill vbox p-certs${hide ? ' p-hide' : ''}`}>
         <div className="p-action-bar">
+          {
+            this.state.invalidList ? (
+              <Popconfirm
+                title="确定清除所有不可用证书？"
+                onConfirm={this.clearAllInvalidCerts}
+              >
+                <Button type="danger" className="p-clear-valid-certs">一键清除不可用证书</Button>
+              </Popconfirm>
+            ) : null
+          }
           <div className="upload-wrapper">
             <input id="upload-input" type="file" accept=".crt,.key" multiple="multiple" onChange={this.handleChange} />
             <Button className="upload-btn" type="primary"><Icon type="upload" />上传证书</Button>

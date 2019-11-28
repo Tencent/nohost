@@ -66,6 +66,7 @@ if (argv.indexOf('--reset') === -1) {
   argv.push('--reset', 'none');
 }
 program
-  .option('-p, --port [proxyPort]', 'set the proxy port (8080 by default)', parseInt, undefined)
+  .option('-p, --port [proxyPort]', 'set the listening port or host:port (8080 by default)', String, undefined)
+  .option('-o, --nohostDomain [domain]', 'set the nohost domain (as: nohost.oa.com,xxx.yyy.com)', String, undefined)
   .option('--reset [reset]', 'reset administrator account name and password')
   .parse(argv);

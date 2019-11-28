@@ -87,6 +87,11 @@ module.exports = {
         ],
       },
       {
+        title: 'API',
+        path: '/zh/api',
+        collapsable: false,
+      },
+      {
         title: '高级应用',
         path: '/zh/advance/',
         collapsable: false,

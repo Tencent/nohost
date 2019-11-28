@@ -83,6 +83,7 @@ const {
   getCertsInfo: 'cgi-bin/get-custom-certs-info',
   removeCert: {
     url: 'main/cgi-bin/remove-cert',
+    contentType: 'application/json;charset=utf8',
     type: 'post',
   },
   enableGuest: {

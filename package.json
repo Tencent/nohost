@@ -1,6 +1,6 @@
 {
   "name": "@nohost/server",
-  "version": "0.1.6",
+  "version": "0.2.3",
   "description": "Multi-user & multi-env web debugging proxy based on whistle",
   "main": "index.js",
   "bin": {
@@ -24,7 +24,7 @@
   "registry": "https://registry.npmjs.org/@nohost/server",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nohosts/nohosts.git"
+    "url": "git+https://github.com/nohosts/nohost.git"
   },
   "keywords": [
     "whistle",
@@ -34,11 +34,11 @@
   "author": "avwu <avwu@qq.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/nohosts/nohosts/issues"
+    "url": "https://github.com/nohosts/nohost/issues"
   },
-  "homepage": "https://github.com/nohosts/nohosts#readme",
+  "homepage": "https://github.com/nohosts/nohost#readme",
   "devDependencies": {
-    "antd": "^3.23.6",
+    "antd": "^3.25.3",
     "babel-core": "^6.25.0",
     "babel-eslint": "^10.0.3",
     "babel-loader": "^7.1.1",
@@ -90,6 +90,6 @@
     "parseurl": "^1.3.3",
     "pfork": "^0.3.6",
     "starting": "^6.2.0",
-    "whistle": "beta"
+    "whistle": "^2.3.5"
   }
 }
