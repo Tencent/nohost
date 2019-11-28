@@ -11,7 +11,15 @@ const compareVersion = (cur, next) => {
   }
   cur = cur.split('.').map(parseNum);
   next = next.split('.').map(parseNum);
-  return next[0] > cur[0] || next[1] > cur[1] || next[2] > cur[2];
+  if (next[0] !== cur[0]) {
+    return next[0] > cur[0];
+  }
+
+  if (next[1] !== cur[1]) {
+    return next[1] > cur[1];
+  }
+
+  return next[2] > cur[2];
 };
 
 class NavBar extends Component {
