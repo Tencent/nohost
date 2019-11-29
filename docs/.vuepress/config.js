@@ -62,7 +62,7 @@ module.exports = {
             path: '/zh/developer/capture',
           },
           {
-            title: '插件开发',
+            title: '安装插件',
             path: '/zh/developer/plugin',
           },
         ],
