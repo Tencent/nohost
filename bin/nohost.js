@@ -30,9 +30,7 @@ function showStartupInfo(err, options, debugMode, restart) {
 }
 
 program.setConfig({
-  main() {
-    return path.join(__dirname, '../index.js');
-  },
+  main: path.join(__dirname, '../index.js'),
   name: 'nohost',
   version: pkg.version,
   runCallback(err, options) {
