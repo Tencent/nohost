@@ -39,7 +39,7 @@ const handleUncaughtException = (err) => {
 };
 
 process.on('unhandledRejection', handleUncaughtException);
-process.on('unhandledPromiseRejection', handleUncaughtException);
+process.on('uncaughtException', handleUncaughtException);
 
 module.exports = (options, cb) => {
   if (typeof options === 'function') {
