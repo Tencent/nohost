@@ -1,3 +1,7 @@
+# v0.3
+1. feat: 支持 docker 的宿主机的IP访问界面
+2. feat: 配置代理后，支持默认域名 `admin.nohost.pro` 访问界面
+
 # v0.2
 1. 正式稳定版本
 
