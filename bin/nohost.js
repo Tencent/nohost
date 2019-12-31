@@ -5,6 +5,7 @@ const path = require('path');
 const os = require('os');
 const pkg = require('../package.json');
 const util = require('./util');
+const plugin = require('./plugin');
 
 const { showUsage } = util;
 const { error } = util;
@@ -59,12 +60,39 @@ program.setConfig({
     }
   },
 });
-const { argv } = process;
-if (argv.indexOf('--reset') === -1) {
-  argv.push('--reset', 'none');
-}
+
 program
-  .option('-p, --port [proxyPort]', 'set the listening port or host:port (8080 by default)', String, undefined)
-  .option('-o, --nohostDomain [domain]', 'set the nohost domain (as: nohost.oa.com,xxx.yyy.com)', String, undefined)
-  .option('--reset [reset]', 'reset administrator account name and password')
-  .parse(argv);
+  .command('install')
+  .description('Install the plugin');
+
+program.command('uninstall')
+  .description('Uninstall the plugin');
+
+let { argv } = process;
+let cmd = argv[2];
+const removeItem = (list, name) => {
+  const i = list.indexOf(name);
+  if (i !== -1) {
+    list.splice(i, 1);
+  }
+};
+
+if (/^([a-z]{1,2})?uni(nstall)?$/.test(cmd)) {
+  plugin.uninstall(Array.prototype.slice.call(argv, 3));
+} else if (/^([a-z]{1,2})?i(nstall)?$/.test(cmd)) {
+  cmd = `${RegExp.$1 || ''}npm`;
+  argv = Array.prototype.slice.call(argv, 3);
+  removeItem(argv, '-g');
+  removeItem(argv, '--global');
+  plugin.install(cmd, argv);
+} else {
+  if (argv.indexOf('--reset') === -1) {
+    argv.push('--reset', 'none');
+  }
+  program
+    .option('-p, --port [proxyPort]', 'set the listening port or host:port (8080 by default)', String, undefined)
+    .option('-o, --nohostDomain [domain]', 'set the nohost domain (as: nohost.oa.com,xxx.yyy.com)', String, undefined)
+    .option('-a, --account <account>', 'set the account for installing the plugin (all accounts by default)', String, undefined)
+    .option('--reset [reset]', 'reset administrator account name and password')
+    .parse(argv);
+}
