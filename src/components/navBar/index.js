@@ -116,7 +116,7 @@ class NavBar extends Component {
         </button>
         <span className="p-help" onMouseEnter={this.showAboutMenu} onMouseLeave={this.hideAboutMenu}>
           <a href="https://github.com/nohosts/nohost" rel="noopener noreferrer" target="_blank">
-              帮助
+            帮助
             <Icon type="down" className="p-help-menu" />
           </a>
           <button

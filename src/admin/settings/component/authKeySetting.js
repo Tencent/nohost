@@ -43,7 +43,7 @@ class AuthKeySetting extends Component {
             </Form.Item>
             <Form.Item {...SUBMIT_BTN_LAYOUT} style={{ marginBottom: 0 }}>
               <Button type="primary" htmlType="submit">
-                  确定
+                确定
               </Button>
             </Form.Item>
           </Form>

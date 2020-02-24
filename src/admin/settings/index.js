@@ -81,7 +81,7 @@ class Settings extends Component {
             tab={(
               <span>
                 <Icon type="user" />
-                  管理员
+                管理员
               </span>
             )}
             tabKey="administrator"

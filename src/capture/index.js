@@ -300,7 +300,7 @@ class Capture extends Component {
     if (!qrCode) {
       qrCodeTips = this.state.loadQRCodeError ? (
         <div className="n-qrcode-loading">
-                二维码加载失败，请<a href="javascript:;">点击重试</a>
+          二维码加载失败，请<a href="javascript:;">点击重试</a>
         </div>
       ) : (
         <div className="n-qrcode-loading">二维码加载中...</div>

@@ -60,7 +60,7 @@ class Administrator extends Component {
                 onConfirm={this.submitAdmin}
               >
                 <Button type="primary" htmlType="submit">
-                    确定
+                  确定
                 </Button>
               </Popconfirm>
             </Form.Item>
