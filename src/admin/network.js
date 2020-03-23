@@ -3,15 +3,14 @@ import ReactDOM from 'react-dom';
 import { parse } from 'query-string';
 import Upload from '../components/upload';
 import { importSessions as getSessions } from './cgi';
+import { getString } from './util';
 import '../base.less';
 
-let { name, date } = parse(window.location.search);
-if (typeof name !== 'string') {
-  name = '';
-}
-if (typeof date !== 'string') {
-  date = '';
-}
+let { name, date, username } = parse(window.location.search);
+name = getString(name);
+date = getString(date);
+username = getString(username);
+
 const clearNetwork = name ? '&clearNetwork=true' : '';
 
 const Network = () => {
@@ -31,6 +30,7 @@ const init = () => {
     getSessions({
       name,
       date,
+      username,
     }, (data) => {
       if (!data) {
         return;

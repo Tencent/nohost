@@ -62,3 +62,7 @@ export const evalJson = (str) => {
     return eval(`(${str})`); // eslint-disable-line
   } catch (e) {}
 };
+
+export const getString = (str) => {
+  return typeof str === 'string' ? str : '';
+};
