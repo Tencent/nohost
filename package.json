@@ -74,6 +74,7 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
+    "async-limiter": "^2.0.0",
     "basic-auth": "^2.0.1",
     "colors": "^1.4.0",
     "cookie": "^0.4.0",
