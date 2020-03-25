@@ -60,7 +60,7 @@ class Network extends React.Component {
       } else {
         msg = status === 404 ? '数据不存在！' : '数据加载失败，请刷新页面重试！';
       }
-      alert(msg);
+      alert(msg); // eslint-disable-line
     });
   }
 
