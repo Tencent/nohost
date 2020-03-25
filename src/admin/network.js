@@ -27,6 +27,16 @@ class Network extends React.Component {
     };
   }
 
+  componentDidMount() {
+    if (encrypted) {
+      setTimeout(() => {
+        if (this.input) {
+          this.input.focus();
+        }
+      }, 666);
+    }
+  }
+
   loadSessions = () => {
     if (!this.api || (encrypted && !this.accessCode)) {
       return;
@@ -56,7 +66,7 @@ class Network extends React.Component {
     this.accessCode = value;
     this.loadSessions();
     this.setState({ visible: false });
-  };
+  }
 
   render() {
     const { disabled, value, visible } = this.state;
@@ -78,7 +88,13 @@ class Network extends React.Component {
               </Button>,
             ]}
           >
-            <Input value={value} onChange={this.onChange} placeholder="请输入四位提取码" maxLength={4} />
+            <Input
+              ref={input => (this.input = input)}
+              value={value}
+              onChange={this.onChange}
+              placeholder="请输入四位提取码"
+              maxLength={4}
+            />
           </Modal>
         ) : null}
         <Upload />
