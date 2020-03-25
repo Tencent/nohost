@@ -41,21 +41,32 @@ class Network extends React.Component {
     if (!this.api || (encrypted && !this.accessCode)) {
       return;
     }
+    const code = this.accessCode || '';
     getSessions({
       name,
       date,
       username,
-      code: this.accessCode || '',
-    }, (data) => {
+      code,
+    }, (data, xhr) => {
       if (data) {
         this.api.importSessions(data);
+        return this.setState({ visible: false });
       }
+      const status = xhr && xhr.status;
+      let msg;
+      if (code) {
+        msg = status === 404 ? '提取码错误或数据不存在，请稍后重试！' : '数据加载失败，请稍后重试！';
+        this.input.select();
+      } else {
+        msg = status === 404 ? '数据不存在！' : '数据加载失败，请刷新页面重试！';
+      }
+      alert(msg);
     });
   }
 
   onChange = (e) => {
-    const { value } = e.target;
-    this.setState({ value: value.replace(/\s+/g, ''), disabled: !ACCESS_CODE_RE.test(value) });
+    const value = e.target.value.replace(/\s+/g, '').substring(0, 4);
+    this.setState({ value, disabled: !ACCESS_CODE_RE.test(value) });
   }
 
   onConfirm = () => {
@@ -65,7 +76,6 @@ class Network extends React.Component {
     }
     this.accessCode = value;
     this.loadSessions();
-    this.setState({ visible: false });
   }
 
   render() {
@@ -90,6 +100,7 @@ class Network extends React.Component {
           >
             <Input
               ref={input => (this.input = input)}
+              onPressEnter={this.onConfirm}
               value={value}
               onChange={this.onChange}
               placeholder="请输入四位提取码"
