@@ -38,7 +38,7 @@ class Network extends React.Component {
   }
 
   loadSessions = () => {
-    if (!this.api || (encrypted && !this.accessCode)) {
+    if (this.loaded || !this.api || (encrypted && !this.accessCode)) {
       return;
     }
     const code = this.accessCode || '';
@@ -49,6 +49,7 @@ class Network extends React.Component {
       code,
     }, (data, xhr) => {
       if (data) {
+        this.loaded = true;
         this.api.importSessions(data);
         return this.setState({ visible: false });
       }
