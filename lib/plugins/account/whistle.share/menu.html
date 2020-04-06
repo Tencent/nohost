@@ -1,0 +1,115 @@
+<script>
+  var w2 = window.whistleBridge;
+  var showModal = w2.showModal;
+  var baseUrl = window.location.origin;
+  var codeList = [];
+
+  for (var c1 = 0; c1 < 10; c1++) {
+    codeList.push(c1 + '');
+  }
+
+  for (var c2 = 97; c2 <= 122; ++c2) {
+    codeList.push(String.fromCharCode(c2));
+  }
+
+  var codeLen = codeList.length;
+
+  function getExportList() {
+    var list = localStorage.nohostShareList;
+    try {
+      list = JSON.parse(list);
+      if (Array.isArray(list)) {
+        return list.filter(function (item) {
+          return item && item.name && item.date;
+        });
+      }
+    } catch (e) {}
+    return [];
+  }
+
+  function saveExportList(name, date, username, code)  {
+    var list = getExportList();
+    list.push({ name, date, username, code });
+    if (list.length > 100) {
+      list = list.slice(-30);
+    }
+    localStorage.nohostShareList = JSON.stringify(list);
+    return list;
+  }
+  // 如果有构建，可以用模板代替
+  function createTable(list) {
+    var highlight = list;
+    list = list || getExportList();
+    list = list.reverse().map(function(item, i) {
+      var username = item.username;
+      var code = item.code;
+      username = username ? '&username=' + encodeURIComponent(username) : '';
+      var url = baseUrl + '/network.html?name=' + encodeURIComponent(item.name) + '&date='
+        + encodeURIComponent(item.date) + username + (code ? '&encrypted=1' : '');
+      return '<tr' + (!i && highlight ? ' style="font-weight: bold;"' : '') + '><th>' + (i + 1)
+        + '</th><td style="overflow: hidden"><a style="font-size: 13px;" href="' + url + '" target="_blank">'
+          + url + '</a>' + (code ? '<div>提取码：' + code + '</div>' : '')
+            + '</td><td><a href="javascript:;" class="w-copy-text-with-tips" data-clipboard-text="'
+              + url + '">复制链接</a>' + (code ? '<br/><a href="javascript:;" class="w-copy-text-with-tips" data-clipboard-text="'
+                + code + '">复制提取码</a>' : '') + '</td>';
+    }).join('');
+    if (!list) {
+      list = '<tr><td colspan="2" style="text-align: center;">Empty</td></tr>';
+    }
+    var head = '<thead><th style="width: 60px">#</th><th>URL</th><th style="width: 120px">Operation</th></thead>';
+    return '<table class="table">' + head + '<tbody><tr>' + list + '</tbody></table>';
+  }
+
+  function showFeeds(list) {
+    w2.showModal({
+      width: 1024,
+      title: '抓包分享记录',
+      body: createTable(list)
+    });
+  }
+  function exportSessions(options, code) {
+    var selectedList = options.selectedList;
+    if (!selectedList.length) {
+      selectedList = [ options.activeItem ];
+    }
+    var name = Date.now() + '' + Math.floor(Math.random() * 10000);
+    w2.request({
+      url: baseUrl + '/cgi-bin/sessions/export',
+      crossDomain: true,
+      type: 'post',
+      data: {
+        code: code || '',
+        name: name,
+        sessions: JSON.stringify(selectedList)
+      }
+    }, function(data) {
+      if (!data) {
+        return w2.toast.error('分享失败，请稍后再试！');
+      }
+      showFeeds(saveExportList(name, data.date, data.username, code));
+    });
+  }
+  w2.addNetworkListener(function(options) {
+    if (options.name === '【分享】生成链接') {
+      w2.showModal({
+      width: 320,
+      body: '<p style="font-size: 18px; text-align: center;">是否设置提取码？</p><span style="color: #666;">设置提取码后，用户只有输入提取码才能查看。</span><button type="button" class="close" data-dismiss="modal" style="position: absolute; top: 3px; right: 5px;"><span aria-hidden="true">&times;</span></button>',
+      footer: '<button type="button" onclick="exportWithCode()" class="btn btn-primary" data-dismiss="modal"><span class="glyphicon glyphicon-lock" style="margin-right: 3px;"></span>设置提取码</button><button type="button"  onclick="exportWithoutCode()" class="btn btn-default" data-dismiss="modal">不设置</button>',
+      methods: {
+        exportWithoutCode: function() {
+          exportSessions(options);
+        },
+        exportWithCode: function() {
+          var code = [];
+          for (var i = 0; i < 4; i++) {
+            code[i] = codeList[Math.floor(Math.random() * 100000) % codeLen];
+          }
+          exportSessions(options, code.join(''));
+        }
+      }
+    });
+    } else {
+      showFeeds();
+    }
+  });
+</script>

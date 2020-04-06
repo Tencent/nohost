@@ -1,0 +1,20 @@
+{
+  "name": "whistle.share",
+  "version": "1.0.0",
+  "whistleConfig": {
+    "priority": 100,
+    "hideLongProtocol": true,
+    "hideShortProtocol": true,
+    "networkMenus": [
+      {
+        "name": "【分享】生成链接",
+        "page": "/menu.html",
+        "required": true
+      },
+      {
+        "name": "【分享】查看记录",
+        "page": "/menu.html"
+      }
+    ]
+  }
+}
