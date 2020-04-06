@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom';
 import { parse } from 'query-string';
 import { Cascader, Button, Modal, Checkbox, Icon, message } from 'antd';
 import QRCode from '../components/qrCode';
-import Upload from '../components/upload';
 import { getAllAccounts, getFollower, unfollow } from '../admin/cgi';
 import '../base.less';
 import './index.css';
@@ -356,7 +355,6 @@ class Capture extends Component {
             </div>
           </div>
         </div>
-        <Upload />
         <div className="action-bar" style={{ display: isDaemon ? 'none' : 'block' }}>
           <Cascader
             onChange={this.onChange}

@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { parse } from 'query-string';
 import { Modal, Button, Input } from 'antd';
-import Upload from '../components/upload';
 import { importSessions as getSessions } from './cgi';
 import { getString } from './util';
 import '../base.less';
@@ -109,7 +108,6 @@ class Network extends React.Component {
             />
           </Modal>
         ) : null}
-        <Upload />
         <iframe title="network" className="fill capture-win" src={`network/#network?ip=self${clearNetwork}`} />
       </div>
     );
