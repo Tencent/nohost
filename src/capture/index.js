@@ -13,7 +13,8 @@ const { search, href } = window.location;
 const query = parse(search);
 const PREFIX_LEN = 'x-nohost-'.length;
 const URL_DIR = href.replace(/[^/]+([?#].*)?$/, '');
-const { tab } = query;
+const isDaemon = /^\$\d+$/.test(query.name);
+const { tab, filter } = query;
 let pageName;
 
 if (['network', 'rules', 'values', 'plugins'].indexOf(tab) !== -1) {
@@ -48,6 +49,9 @@ $(window).on('blur', () => {
 });
 
 const getUrl = (name, envName) => {
+  if (isDaemon) {
+    return `account/${query.name}/index.html?${pageName}${filter ? `?${filter}` : ''}`;
+  }
   if (!name) {
     return;
   }
@@ -57,13 +61,16 @@ const getUrl = (name, envName) => {
     const env = encodeURIComponent(`${name}/${envName.trim() || ''}`);
     url = `${url}&name=x-whistle-nohost-env&value=${env}&mtype=exact`;
   }
-  return url;
+  return `${url}${filter ? `&${filter}` : ''}`;
 };
 /* eslint-disable react/no-access-state-in-setstate */
 class Capture extends Component {
-  state = {}
+  state = { url: isDaemon ? getUrl() : undefined }
 
   componentDidMount() {
+    if (isDaemon) {
+      return;
+    }
     this.loadData();
     let timer;
     const debounce = () => {
@@ -323,7 +330,7 @@ class Capture extends Component {
         qrcodeElem = <QRCode size="340" value={qrCode} />;
       }
     }
-    return !options ? null : (
+    return !isDaemon && !options ? null : (
       <div className="container fill vbox">
         <div
           style={{ display: showRules ? 'block' : 'none' }}
@@ -350,7 +357,7 @@ class Capture extends Component {
           </div>
         </div>
         <Upload />
-        <div className="action-bar">
+        <div className="action-bar" style={{ display: isDaemon ? 'none' : 'block' }}>
           <Cascader
             onChange={this.onChange}
             options={options}
