@@ -15,7 +15,7 @@
   var codeLen = codeList.length;
 
   function getExportList() {
-    var list = localStorage.nohostShareList;
+    var list = localStorage.exportInfoList;
     try {
       list = JSON.parse(list);
       if (Array.isArray(list)) {
@@ -33,7 +33,7 @@
     if (list.length > 100) {
       list = list.slice(-30);
     }
-    localStorage.nohostShareList = JSON.stringify(list);
+    localStorage.exportInfoList = JSON.stringify(list);
     return list;
   }
   // 如果有构建，可以用模板代替
