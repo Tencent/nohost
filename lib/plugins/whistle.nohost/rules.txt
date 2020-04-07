@@ -1,1 +1,2 @@
+* whistle.nohost://none includeFilter://reqH:x-whistle-nohost-env=/^\$\d+$/
 @whistle.nohost/cgi-bin/rules
