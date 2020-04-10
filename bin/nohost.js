@@ -86,6 +86,13 @@ if (/^([a-z]{1,2})?uni(nstall)?$/.test(cmd)) {
   removeItem(argv, '--global');
   plugin.install(cmd, argv);
 } else {
+  let index = argv.lastIndexOf('-n');
+  if (index === -1) {
+    index = argv.lastIndexOf('--username');
+  }
+  if (index === -1) {
+    argv.push('--username', '+');
+  }
   program
     .option('-p, --port [proxyPort]', 'set the listening port or host:port (8080 by default)', String, undefined)
     .option('-n, --username [username]', 'set the username to admin', String, undefined)
