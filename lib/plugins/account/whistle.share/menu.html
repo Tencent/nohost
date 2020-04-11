@@ -40,14 +40,16 @@
   function createTable(list) {
     var highlight = list;
     list = list || getExportList();
+    var len = (Date.now() + '').length;
     list = list.reverse().map(function(item, i) {
       var username = item.username;
       var code = item.code;
       username = username ? '&username=' + encodeURIComponent(username) : '';
       var url = baseUrl + '/network.html?name=' + encodeURIComponent(item.name) + '&date='
         + encodeURIComponent(item.date) + username + (code ? '&encrypted=1' : '');
+      var date = new Date(parseInt(item.name.substring(0, len), 10)).toLocaleString();
       return '<tr' + (!i && highlight ? ' style="font-weight: bold;"' : '') + '><th>' + (i + 1)
-        + '</th><td style="overflow: hidden"><a style="font-size: 13px;" href="' + url + '" target="_blank">'
+        + '</th><td>' + date + '</td><td style="overflow: hidden"><a style="font-size: 13px;" href="' + url + '" target="_blank">'
           + url + '</a>' + (code ? '<div>提取码：' + code + '</div>' : '')
             + '</td><td><a href="javascript:;" class="w-copy-text-with-tips" data-clipboard-text="'
               + url + '">复制链接</a>' + (code ? '<br/><a href="javascript:;" class="w-copy-text-with-tips" data-clipboard-text="'
@@ -56,13 +58,13 @@
     if (!list) {
       list = '<tr><td colspan="2" style="text-align: center;">Empty</td></tr>';
     }
-    var head = '<thead><th style="width: 60px">#</th><th>URL</th><th style="width: 120px">Operation</th></thead>';
+    var head = '<thead><th style="width: 60px">#</th><th style="width: 180px">Date</th><th>URL</th><th style="width: 120px">Operation</th></thead>';
     return '<table class="table">' + head + '<tbody><tr>' + list + '</tbody></table>';
   }
 
   function showFeeds(list) {
     w2.showModal({
-      width: 1024,
+      width: 1100,
       title: '抓包分享记录',
       body: createTable(list)
     });
