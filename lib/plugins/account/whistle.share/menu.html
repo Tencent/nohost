@@ -27,9 +27,9 @@
     return [];
   }
 
-  function saveExportList(name, date, username, code)  {
+  function saveExportList(name, date, username, code, env)  {
     var list = getExportList();
-    list.push({ name, date, username, code });
+    list.push({ name, date, username, code, env });
     if (list.length > 100) {
       list = list.slice(-30);
     }
@@ -46,7 +46,8 @@
       var code = item.code;
       username = username ? '&username=' + encodeURIComponent(username) : '';
       var url = baseUrl + '/network.html?name=' + encodeURIComponent(item.name) + '&date='
-        + encodeURIComponent(item.date) + username + (code ? '&encrypted=1' : '');
+        + encodeURIComponent(item.date) + username + (code ? '&encrypted=1' : '')
+        + (item.env ? '&env=' + item.env : '');
       var date = new Date(parseInt(item.name.substring(0, len), 10)).toLocaleString();
       return '<tr' + (!i && highlight ? ' style="font-weight: bold;"' : '') + '><th>' + (i + 1)
         + '</th><td>' + date + '</td><td style="overflow: hidden"><a style="font-size: 13px;" href="' + url + '" target="_blank">'
@@ -69,6 +70,12 @@
       body: createTable(list)
     });
   }
+
+  function getEnvName(item) {
+    var headers = item && item.req && item.req.headers;
+    return headers && headers['x-whistle-nohost-env'];
+  }
+
   function exportSessions(options, code) {
     var selectedList = options.selectedList;
     if (!selectedList.length) {
@@ -88,7 +95,8 @@
       if (!data) {
         return w2.toast.error('分享失败，请稍后再试！');
       }
-      showFeeds(saveExportList(name, data.date, data.username, code));
+      var env = getEnvName(selectedList[0]);
+      showFeeds(saveExportList(name, data.date, data.username, code, env));
     });
   }
   w2.addNetworkListener(function(options) {
