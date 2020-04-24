@@ -8,6 +8,7 @@
 
 ![image](https://user-images.githubusercontent.com/9802379/70115398-89268880-169a-11ea-8ad9-f0fab305b633.png)
 
+![image](https://user-images.githubusercontent.com/11450939/80209935-77ec1180-8665-11ea-909c-f45e0c6db636.png)
 入口配置的规则有三种（#xxx表示注释）：
 ```
 pattern #转发到nohost，如果是html页面则注入小圆点
