@@ -289,6 +289,10 @@ class Capture extends Component {
     this.loadQRCode();
   }
 
+  showTestDialog = () => {
+    this.setState({ showTestDialog: true });
+  }
+
   loadQRCode = () => {
     this.setState({ loadQRCodeError: false, followerIp: undefined });
     getFollower((data) => {
@@ -306,7 +310,7 @@ class Capture extends Component {
   }
 
   hideDialog = () => {
-    this.setState({ showQRCode: false });
+    this.setState({ showQRCode: false, showTestDialog: false });
   }
 
   handleMasker = (e) => {
@@ -349,7 +353,7 @@ class Capture extends Component {
   render() {
     const {
       options, value, viewOwn, rules, showRules, envName, testUrl,
-      showQRCode, qrCode, followerIp, redirectUrl, envValue,
+      showQRCode, qrCode, followerIp, redirectUrl, envValue, showTestDialog,
     } = this.state;
     let { url } = this.state;
     url = url && url.replace(/#\w*/, pageName);
@@ -427,6 +431,7 @@ class Capture extends Component {
               />
             ) : undefined}
           </span>
+          <Button onClick={this.showTestDialog} style={{ float: 'right' }} type="default">生成二维码</Button>
         </div>
         <iframe title="抓包界面" className="fill capture-win" src={url} />
         <div
@@ -456,10 +461,11 @@ class Capture extends Component {
         <Modal
           className="n-create-test-env-dialog"
           width={620}
-          visible
+          visible={showTestDialog}
           title="生成访问指定nohost环境的URL及二维码"
           footer={[
             <Button
+              key="close"
               onClick={this.hideDialog}
             >
               Close
@@ -469,7 +475,7 @@ class Capture extends Component {
         >
           <Input
             className="n-test-url"
-            maxLength="1024"
+            maxLength={512}
             value={testUrl}
             placeholder="请输入页面的URL"
             onChange={this.onTestUrlChange}

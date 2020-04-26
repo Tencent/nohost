@@ -161,7 +161,7 @@ body legend {
 }
 
 .n-test-env-qrcode canvas {
-  margin: 0 auto;
+  margin: 0 auto 10px;
   display: block;
 }
 .n-test-url {
