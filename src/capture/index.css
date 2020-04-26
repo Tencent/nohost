@@ -201,3 +201,9 @@ body legend {
 .n-qrcode-url-wrap {
   margin-top: 15px;
 }
+
+.n-qrcode-button {
+  float: right;
+  height: 26px;
+  margin-top: 3px;
+}

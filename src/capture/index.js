@@ -2,6 +2,7 @@ import $ from 'jquery';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { parse } from 'query-string';
+import ClipboardJS from 'clipboard';
 import { Cascader, Button, Modal, Checkbox, Input, Icon, message } from 'antd';
 import QRCode from '../components/qrCode';
 import { getAllAccounts, getFollower, unfollow } from '../admin/cgi';
@@ -82,6 +83,15 @@ const getUrl = (name, envName) => {
   }
   return `${url}${filter ? `&${filter}` : ''}`;
 };
+
+const clipboard = new ClipboardJS('.n-copy-btn');
+
+clipboard.on('error', function() {
+  message.error('Copy failed.');
+});
+clipboard.on('success', function() {
+  message.success('Copied clipboard.');
+});
 /* eslint-disable react/no-access-state-in-setstate */
 class Capture extends Component {
   state = {
@@ -431,7 +441,7 @@ class Capture extends Component {
               />
             ) : undefined}
           </span>
-          <Button onClick={this.showTestDialog} style={{ float: 'right' }} type="default">生成二维码</Button>
+          <Button onClick={this.showTestDialog} className="n-qrcode-button" type="default">生成二维码</Button>
         </div>
         <iframe title="抓包界面" className="fill capture-win" src={url} />
         <div
