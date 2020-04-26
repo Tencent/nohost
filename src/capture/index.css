@@ -184,3 +184,20 @@ body legend {
 .n-unfollow a:hover {
   text-decoration: underline;
 }
+
+.n-qrcode-url {
+  white-space: nowrap;
+  padding: 10px;
+}
+
+.n-qrcode-url {
+  width: 497px;
+  margin-right: 5px;
+  vertical-align: middle;
+  background-color: #f3f3f3;
+  cursor: not-allowed;
+}
+
+.n-qrcode-url-wrap {
+  margin-top: 15px;
+}
