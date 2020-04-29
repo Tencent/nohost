@@ -86,10 +86,10 @@ const getUrl = (name, envName) => {
 
 const clipboard = new ClipboardJS('.n-copy-btn');
 
-clipboard.on('error', function() {
+clipboard.on('error', () => {
   message.error('Copy failed.');
 });
-clipboard.on('success', function() {
+clipboard.on('success', () => {
   message.success('Copied clipboard.');
 });
 /* eslint-disable react/no-access-state-in-setstate */
