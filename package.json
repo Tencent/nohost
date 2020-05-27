@@ -83,6 +83,7 @@
     "hparser": "^0.3.0",
     "koa": "^2.8.2",
     "koa-bodyparser": "^4.2.1",
+    "koa-compress": "^4.0.1",
     "koa-onerror": "^4.1.0",
     "koa-router": "^7.4.0",
     "koa-static": "^5.0.0",
