@@ -1,3 +1,7 @@
+# v0.5
+1. feat: 添加 headless 模式
+2. fix: 内存泄露问题
+
 # v0.4
 1. feat: 支持通过命令行 `-n name -w pwd` 设置管理员的用户名和密码
 2. fix: 修复了一些bug
