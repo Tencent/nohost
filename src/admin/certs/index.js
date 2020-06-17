@@ -163,8 +163,8 @@ class Certs extends Component {
     let certs;
     for (let i = 0, len = fileList.length; i < len; i++) {
       const cert = fileList[i];
-      if (cert.size > 10 * 1024 || !(cert.size > 0)) {
-        message.error('上传的证书过大，请上传10K以内的证书！');
+      if (cert.size > 64 * 1024 || !(cert.size > 0)) {
+        message.error('上传的证书过大，请上传64K以内的证书！');
         return;
       }
       let { name } = cert;
