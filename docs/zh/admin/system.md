@@ -16,7 +16,7 @@
 
 这样以后就可以直接通过域名来访问Nohost相关页面（如管理员页面，选择环境/抓包页面等）。
 
-例如：可以设置 10.222.2.200 的域名为 imwebtest.oa.com，这样就可以直接访问[http://imwebtest.oa.com:8080/](http://imwebtest.oa.com:8080/)去选择环境了。
+例如：可以设置 10.222.2.200 的域名为 imwebtest.test.com，这样就可以直接访问[http://imwebtest.test.com:8080/](http://imwebtest.test.com:8080/)去选择环境了。
 
 **注意：设置的域名 DNS 一定要指向该IP，否则可能出现不可用状态。**
 

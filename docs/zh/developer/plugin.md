@@ -8,7 +8,7 @@ npm i -g whistle.xxxx
 ```
 > 或 `npm i -g @org/whistle.xxx`
 
-安装后可以通过设置对 nohost 域名及端口访问：`http://imwebtest.oa.com:8080/whistle.xxx/`
+安装后可以通过设置对 nohost 域名及端口访问：`http://imwebtest.test.com:8080/whistle.xxx/`
 
 ## 安装所有账号的插件（要求 `v0.3.5` 及以上版本）
 安装只针对所有账号生效对局部插件：
@@ -16,7 +16,7 @@ npm i -g whistle.xxxx
 n2 i whistle.xxx @tnpm/whistle.yyy
 ```
 > 如果使用 tnpm 或 cnpm 等第三方命令，可以用 `n2 ti whistle.xxx @tnpm/whistle.yyy` 或 `n2 ci whistle.xxx @tnpm/whistle.yyy`
-安装后可以通过 `http://imwebtest.oa.com:8080/account/account-name/whistle.xxx/`，`account-name` 表示某个账号的名称
+安装后可以通过 `http://imwebtest.test.com:8080/account/account-name/whistle.xxx/`，`account-name` 表示某个账号的名称
 
 ## 安装指定账号的插件（要求 `v0.3.5` 及以上版本）
 只对某个账号生效对插件：

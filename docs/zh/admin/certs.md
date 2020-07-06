@@ -19,8 +19,8 @@ nohost作为代理抓包服务器，如果用户希望nohost能抓包https请求
 **上传证书**
 
 nohost管理页面提供了上传业务域名证书功能, 地址为
-http://imwebtest.oa.com:8080/admin.html#certs
-> 其中 imwebtest.oa.com 表示nohost运行的域名
+http://imwebtest.test.com:8080/admin.html#certs
+> 其中 imwebtest.test.com 表示nohost运行的域名
 
 ![上传证书](https://user-images.githubusercontent.com/4689952/69628531-b4035200-1086-11ea-9935-7feb0cfd2df7.png)
 
