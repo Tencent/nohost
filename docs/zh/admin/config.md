@@ -32,6 +32,9 @@ ke.qq.com
 所有 localhost.xxx.yyy... 的请求都不转发到nohost，且不注入小圆点
 所有 qq.com 的子代域名请求都转发到nohost，但不注入小圆点，并优先级设为 -1 ，确保证书里面的 qq.com 子域名可以正常注入小圆点
 ```
+
+> 如果想通过代码决定是否将请求转到 nohost 账号，可以请求头里面注入 `x-whistle-nohost-policy: none` 或 `x-whistle-nohost-policy: 1`，后者如果是html页面会注入小圆点
+
 ## 账号规则
 每个接入nohost的团队都可以设置账号规则，其主要作用于你团队里的成员，规则分为默认规则和专属规则。
 
