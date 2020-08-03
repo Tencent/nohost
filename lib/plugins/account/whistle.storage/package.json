@@ -1,5 +1,5 @@
 {
-  "name": "whistle.history",
+  "name": "whistle.storage",
   "version": "1.0.0",
   "whistleConfig": {
     "hideLongProtocol": true,

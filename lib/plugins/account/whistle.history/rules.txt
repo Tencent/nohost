@@ -1,1 +1,0 @@
-* whistle.history:// includeFilter://reqH:x-whistle-nohost-history-uid
