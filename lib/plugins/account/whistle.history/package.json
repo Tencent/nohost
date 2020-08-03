@@ -1,0 +1,8 @@
+{
+  "name": "whistle.history",
+  "version": "1.0.0",
+  "whistleConfig": {
+    "hideLongProtocol": true,
+    "hideShortProtocol": true
+  }
+}
