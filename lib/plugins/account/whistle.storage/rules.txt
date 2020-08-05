@@ -1,1 +1,1 @@
-* whistle.storage:// includeFilter://reqH:x-whistle-nohost-storage-uid
+* whistle.storage:// includeFilter://reqH:x-whistle-nohost-storage-uid=/^[\w.-]{1,64}$/
