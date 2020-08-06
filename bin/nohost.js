@@ -3,6 +3,7 @@
 const program = require('starting');
 const path = require('path');
 const os = require('os');
+const w2 = require('whistle/bin/plugin');
 const pkg = require('../package.json');
 const util = require('./util');
 const plugin = require('./plugin');
@@ -77,14 +78,29 @@ const removeItem = (list, name) => {
   }
 };
 
+const isGlobal = (params) => {
+  if (params.indexOf('-g') !== -1 || params.indexOf('--global') !== -1) {
+    removeItem(params, '-g');
+    removeItem(params, '--global');
+    return true;
+  }
+};
+
 if (/^([a-z]{1,2})?uni(nstall)?$/.test(cmd)) {
-  plugin.uninstall(Array.prototype.slice.call(argv, 3));
+  argv = Array.prototype.slice.call(argv, 3);
+  if (isGlobal(argv)) {
+    w2.uninstall(argv);
+  } else {
+    plugin.uninstall(argv);
+  }
 } else if (/^([a-z]{1,2})?i(nstall)?$/.test(cmd)) {
   cmd = `${RegExp.$1 || ''}npm`;
   argv = Array.prototype.slice.call(argv, 3);
-  removeItem(argv, '-g');
-  removeItem(argv, '--global');
-  plugin.install(cmd, argv);
+  if (isGlobal(argv)) {
+    w2.install(cmd, argv);
+  } else {
+    plugin.install(cmd, argv);
+  }
 } else {
   let index = argv.lastIndexOf('-n');
   if (index === -1) {
