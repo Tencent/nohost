@@ -44,6 +44,10 @@ const CUR_SELECTED_USER = '__nohost_-_selected_user_id__';
 const LAST_SELECTED_ENV = '__nohost_-_last_selected_id__';
 // const CIRCLE_POS_X = '__nohost_-_circle_pos_x__';
 // const CIRCLE_POS_Y = '__nohost_-_circle_pos_y__';
+let customEntry;
+let customContext;
+let customEntryBtn;
+let customModal;
 
 const TEMP_ELEM = $(document.createElement('div'));
 const hideNohostBtn = /[?#&]nohost=hide(?:[?#&]|$)/.test(window.location.href);
@@ -323,6 +327,9 @@ function handleClickModal(event) {
   if (event.target === operationModal[0]) {
     operationModal.hide();
   }
+  if (event.target === customModal[0]) {
+    customModal.hide();
+  }
 }
 
 function sendSelect(data, callback) {
@@ -592,6 +599,47 @@ function handleFilterChange() {
   }, filterDelay);
 }
 
+function toggleCustomContextModal() {
+  customModal.show();
+  setTop('#w-nohost-custom-menu');
+}
+
+function initCustomContext() {
+  if (
+    window.nohostContextMenuExtensions
+    && Array.isArray(window.nohostContextMenuExtensions)
+    && window.nohostContextMenuExtensions.length !== 0
+  ) {
+    customEntry.show();
+    const container = document.createDocumentFragment();
+    const modalContainer = document.createDocumentFragment();
+    window.nohostContextMenuExtensions.map((item) => {
+      const div = document.createElement('div');
+      div.className = 'w-nohost-custom-item';
+      div.innerHTML = item.name;
+      div.title = item.title;
+      div.onclick = (e) => {
+        item.onClick(e);
+        circleContext.hide();
+      };
+      container.appendChild(div);
+      const btn = document.createElement('button');
+      btn.className = 'w-nohost-operation';
+      btn.innerHTML = item.name;
+      btn.onclick = (e) => {
+        item.onClick(e);
+        customModal.hide();
+      };
+      modalContainer.appendChild(btn);
+    });
+    customContext.html(container);
+    $('#w-nohost-custom-menu').append(modalContainer);
+  } else {
+    customEntry.hide();
+    customEntryBtn.addClass('w-nohost-custom-btn-hide');
+  }
+}
+
 function injectHTML() {
   if ($('#w-nohost').length !== 0) {
     return;
@@ -614,6 +662,10 @@ function injectHTML() {
   toast = $('#w-nohost-toast');
   circleLast = $('#w-nohost-circle-last');
   circleDefault = $('#w-nohost-circle-default');
+  customEntry = $('#w-nohost-custom');
+  customContext = $('#w-nohost-custom-context');
+  customEntryBtn = $('#w-nohost-custom-btn');
+  customModal = $('#w-nohost-custom-context-modal');
 
   $('.w-nohost-toast-close').click((event) => {
     if (timer) {
@@ -705,6 +757,10 @@ function injectHTML() {
         operationModal.hide();
         toggleModal();
         break;
+      case 'w-nohost-custom-btn':
+        operationModal.hide();
+        toggleCustomContextModal();
+        break;
       default:
         break;
     }
@@ -712,8 +768,12 @@ function injectHTML() {
   filter.on('input', handleFilterChange);
   selectModal.on('click', handleClickModal);
   operationModal.on('click', handleClickModal);
+  customModal.on('click', handleClickModal);
   $('#w-nohost-close-modal').on('click', () => {
     operationModal.hide();
+  });
+  $('#w-nohost-close-custom-modal').on('click', () => {
+    customModal.hide();
   });
   userUl.on('click', handleChooseUser);
   envUl.on('click', handleChooseEnv);
@@ -736,6 +796,7 @@ function injectHTML() {
   $(window).resize(handleResize);
 
   genUserList();
+  initCustomContext();
 }
 
 function init() {

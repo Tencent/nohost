@@ -19,6 +19,12 @@ export default `<div id="w-nohost">
     <button id="w-nohost-copy-env" class="w-nohost-operation w-nohost-copy-env">复制环境</button>
     <button id="w-nohost-copy-location" class="w-nohost-operation w-nohost-copy-link">复制地址</button>
     <button id="w-nohost-choose-env" class="w-nohost-operation">选择环境</button>
+    <button id="w-nohost-custom-btn" class="w-nohost-operation">自定义菜单</button>
+  </div>
+</div>
+<div class="w-nohost-modal" id="w-nohost-custom-context-modal">
+  <div id="w-nohost-custom-menu">
+    <h4>自定义菜单<span id="w-nohost-close-custom-modal">X</span></h4>
   </div>
 </div>
 <div id="w-nohost-toast" class="w-nohost-toast">
@@ -44,6 +50,11 @@ export default `<div id="w-nohost">
       </div>
       <div id="w-nohost-circle-open" class="w-nohost-circle-item">
         选择环境
+      </div>
+      <div id="w-nohost-custom" class="w-nohost-circle-item">
+        自定义菜单
+        <div id="w-nohost-custom-context">
+        </div>
       </div>
     </div>
   </div>
