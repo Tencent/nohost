@@ -65,6 +65,10 @@ module.exports = {
             title: '安装插件',
             path: '/zh/developer/plugin',
           },
+          {
+            title: '自定义菜单',
+            path: '/zh/developer/customMenu.md',
+          },
         ],
       },
       {
