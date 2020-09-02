@@ -619,16 +619,14 @@ function initCustomContext() {
       div.innerHTML = item.name;
       div.title = item.title;
       div.onclick = (e) => {
-        item.onClick(e);
-        circleContext.hide();
+        item.onClick(circleContext.hide, e);
       };
       container.appendChild(div);
       const btn = document.createElement('button');
       btn.className = 'w-nohost-operation';
       btn.innerHTML = item.name;
       btn.onclick = (e) => {
-        item.onClick(e);
-        customModal.hide();
+        item.onClick(customModal.hide, e);
       };
       modalContainer.appendChild(btn);
     });
