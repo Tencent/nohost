@@ -605,11 +605,7 @@ function toggleCustomContextModal() {
 }
 
 function initCustomContext() {
-  if (
-    window.nohostContextMenuExtensions
-    && Array.isArray(window.nohostContextMenuExtensions)
-    && window.nohostContextMenuExtensions.length !== 0
-  ) {
+  if ($.isArray(window.nohostContextMenuExtensions) && window.nohostContextMenuExtensions.length > 0) {
     customEntry.show();
     const container = document.createDocumentFragment();
     const modalContainer = document.createDocumentFragment();
