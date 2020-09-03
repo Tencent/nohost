@@ -365,18 +365,22 @@
   border-bottom: none !important;
 }
 
-#w-nohost-custom-context {
-  min-width: 130px !important;
+#w-nohost-custom-context-wrap {
   position: absolute !important;
-  left: 103% !important;
+  left: 100% !important;
+  display: none;
   transform: translate(0, -100%) !important;
+}
+
+#w-nohost-custom-context {
+  margin-left: 3px;
+  min-width: 130px !important;
   font-size: 14px !important;
   white-space: nowrap !important;
   background: #fff !important;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5) !important;
   line-height: 30px !important;
   border-radius: 5px !important;
-  display: none;
   user-select: none !important;
 }
 
@@ -403,7 +407,7 @@
   border-bottom-left-radius: 5px !important;
 }
 
-#w-nohost-custom:hover #w-nohost-custom-context{
+#w-nohost-custom:hover #w-nohost-custom-context-wrap {
   display: block !important;
 }
 
