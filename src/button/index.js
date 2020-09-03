@@ -614,19 +614,26 @@ function initCustomContext() {
     const container = document.createDocumentFragment();
     const modalContainer = document.createDocumentFragment();
     window.nohostContextMenuExtensions.map((item) => {
+      const { name, title, onClick, autoHide = true } = item;
       const div = document.createElement('div');
       div.className = 'w-nohost-custom-item';
-      div.innerHTML = item.name;
-      div.title = item.title;
+      div.innerHTML = name;
+      div.title = title;
       div.onclick = (e) => {
-        item.onClick(circleContext.hide, e);
+        onClick({ ...e, hide: circleContext.hide });
+        if (autoHide) {
+          circleContext.hide();
+        }
       };
       container.appendChild(div);
       const btn = document.createElement('button');
       btn.className = 'w-nohost-operation';
-      btn.innerHTML = item.name;
+      btn.innerHTML = name;
       btn.onclick = (e) => {
-        item.onClick(customModal.hide, e);
+        onClick({ ...e, hide: customModal.hide });
+        if (autoHide) {
+          customModal.hide();
+        }
       };
       modalContainer.appendChild(btn);
     });
