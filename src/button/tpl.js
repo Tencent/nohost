@@ -53,7 +53,9 @@ export default `<div id="w-nohost">
       </div>
       <div id="w-nohost-custom" class="w-nohost-circle-item">
         自定义菜单
-        <div id="w-nohost-custom-context">
+        <div id="w-nohost-custom-context-wrap">
+          <div id="w-nohost-custom-context">
+          </div>
         </div>
       </div>
     </div>
