@@ -67,7 +67,7 @@ function showUsage(isRunning, options, restart) {
   }).join('\n'));
 
   warn('     Note: If all the above URLs are unable to access, check the firewall settings');
-  warn(`           For help see ${colors.bold('https://github.com/nohosts/nohosts')}`);
+  warn(`           For help see ${colors.bold('https://github.com/nohosts/nohost')}`);
 
   if (parseInt(process.version.slice(1), 10) < 6) {
     warn(colors.bold('\nWarning: The current Node version is too low, access https://nodejs.org to install the latest version, or may not be able to Capture HTTPS CONNECTs\n'));
