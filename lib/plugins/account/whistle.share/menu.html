@@ -1,9 +1,8 @@
 <script>
   var w2 = window.whistleBridge;
   var showModal = w2.showModal;
-  var baseUrl = window.location.origin;
+  var baseUrl = window.parent.location.href.replace(/[?#].*$/, '').replace(/\/[^/]*$/, '');
   var codeList = [];
-  var HEADLESS_RE = /^\$\d+$/;
 
   for (var c1 = 0; c1 < 10; c1++) {
     codeList.push(c1 + '');
@@ -45,10 +44,8 @@
     list = list.reverse().map(function(item, i) {
       var username = item.username;
       var code = item.code;
-      var isHeadless = HEADLESS_RE.test(item.env);
       username = username ? '&username=' + encodeURIComponent(username) : '';
-      var url = baseUrl + (isHeadless ? '/account/' + item.env + '/share' : '')
-        + (isHeadless ? '/' : '/network.html') + '?name=' + encodeURIComponent(item.name)
+      var url = baseUrl + '/nohost_share/' + '?name=' + encodeURIComponent(item.name)
         + '&date=' + encodeURIComponent(item.date) + username + (code ? '&encrypted=1' : '');
       var date = new Date(parseInt(item.name.substring(0, len), 10)).toLocaleString();
       return '<tr' + (!i && highlight ? ' style="font-weight: bold;"' : '') + '><th>' + (i + 1)
@@ -85,7 +82,7 @@
     }
     var name = Date.now() + '' + Math.floor(Math.random() * 10000);
     w2.request({
-      url: baseUrl + '/cgi-bin/sessions/export',
+      url: baseUrl + '/export_sessions',
       crossDomain: true,
       type: 'post',
       data: {
