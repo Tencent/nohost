@@ -7,6 +7,7 @@ const initConfig = require('./lib/config');
 // 避免第三方模块没处理好异常导致程序crash
 require('whistle/lib/util/patch');
 
+const PROD_RE = /(^|\|)prod(uction)?($|\|)/;
 // 设置存储路径
 process.env.WHISTLE_PATH = process.env.NOHOST_PATH || getWhistlePath();
 fse.ensureDirSync(process.env.WHISTLE_PATH); // eslint-disable-line
@@ -49,7 +50,11 @@ module.exports = (options, cb) => {
     options = {};
   }
   if (options.debugMode) {
-    process.env.PFORK_MODE = 'bind';
+    if (PROD_RE.test(options.mode)) {
+      options.debugMode = false;
+    } else {
+      process.env.PFORK_MODE = 'bind';
+    }
   }
   initConfig(options);
   require('./lib')(options, cb); // eslint-disable-line

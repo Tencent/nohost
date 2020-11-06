@@ -116,5 +116,6 @@ if (/^([a-z]{1,2})?uni(nstall)?$/.test(cmd)) {
     .option('-o, --nohostDomain [domain]', 'set the nohost domain (as: nohost.oa.com,xxx.yyy.com)', String, undefined)
     .option('-a, --account <account>', 'set the account for installing the plugin (all accounts by default)', String, undefined)
     .option('-s, --storage <host:port>', 'set the host:port of server to save the request data', String, undefined)
+    .option('-M, --mode [mode]', 'set the starting mode (as: prod)', String, undefined)
     .parse(argv);
 }
