@@ -8,4 +8,4 @@ RUN npm install --registry=http://r.tnpm.oa.com
 
 RUN npm run dist
 
-CMD ["node", "bin/nohost", "run"]
+CMD ["node", "bin/nohost", "run", "-M", "prod"]
