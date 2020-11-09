@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { parse, stringify } from 'query-string';
+import { parse } from 'query-string';
 import ClipboardJS from 'clipboard';
 import { Cascader, Button, Modal, Checkbox, Input, Icon, message } from 'antd';
 import QRCode from '../components/qrCode';
@@ -15,17 +15,16 @@ const PREFIX_LEN = 'x-nohost-'.length;
 const URL_DIR = href.replace(/[^/]+([?#].*)?$/, '');
 const REDIRECT_URL = `${URL_DIR.replace(/:\d+/, '')}redirect`;
 const isDaemon = /^\$\d+$/.test(query.name);
-const filter = stringify(parse(query.filter));
-const getPageName = (name) => {
-  name = name || query.tab;
-  if (['network', 'rules', 'values', 'plugins'].indexOf(name) !== -1) {
-    return `#${name}`;
-  }
-  return (query.name && !query.env) ? '#rules' : '#network';
-};
-let pageName = getPageName();
+const { tab, filter } = query;
+let pageName;
 
-window.onWhistlePageChange = name => (pageName = `#${getPageName(name)}`);
+if (['network', 'rules', 'values', 'plugins'].indexOf(tab) !== -1) {
+  pageName = `#${tab}`;
+} else {
+  pageName = (query.name && !query.env) ? '#rules' : '#network';
+}
+
+window.onWhistlePageChange = name => (pageName = `#${name}`);
 
 const getRedirectUrl = (value, url) => {
   value = value || [];
