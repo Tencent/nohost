@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Icon, Button, message } from 'antd';
 import { getActiveTabFromHash, setActiveHash, evalJson } from '../util';
 import { getSettings, setJsonData, setTestRules, setDefaultRules, setRulesTpl, setEntryPatterns } from '../cgi';
-import TextAreaPanel from '../../components/textAreaPanel';
+import TextAreaPanel from '../../components/textareaPanel';
 import Tabs from '../../components/tab';
 import './index.css';
 
