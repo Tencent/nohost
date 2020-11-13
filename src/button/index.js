@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import ClipboardJS from 'clipboard';
 import tpl from './tpl';
-import getEnvData from './getEnvdata';
+import getEnvData from './getEnvData';
 import {
   clearCookie,
   clearStorage,
