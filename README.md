@@ -50,7 +50,7 @@ npm i -g @nohost/server --registry=https://r.npm.taobao.org
 ``` sh
 n2 start
 ```
-> 也可以启动时直接设置当前 nohost 服务到域名 `n2 restart -o nohost.oa.com`
+> 也可以启动时直接设置当前 nohost 服务到域名 `n2 restart -o nohost.imweb.io`
 > nohost 的默认端口为 8080，如果需要自定义端口，可以通过 `n2 restart -p 80` 设置。
 > 如果命令行提示没有对应命令，检查下系统环境变量 `PATH` 配置，看看 nohost 安装后生成的命令所在目录是否已添加到 `PATH`。
 
@@ -81,22 +81,22 @@ n2 restart --reset
 **Note: 设置的域名 DNS 一定要指向该IP，否则可能出现不可用状态，上述配置会自动重启服务，建议避免频繁操作**
 
 # <a href="#access" id="access">四. 访问</a>
-nohost 本身就是一个代理，可以直接配置浏览器或系统代理访问，也可以通过 Nginx反向代理访问，为方便大家使用，针对不同的人群可以使用不同的方案（以下用 `imwebtest.oa.com` 表示 nohost 的域名，具体域名需要自己申请及设置）。
+nohost 本身就是一个代理，可以直接配置浏览器或系统代理访问，也可以通过 Nginx反向代理访问，为方便大家使用，针对不同的人群可以使用不同的方案（以下用 `nohost.imweb.io` 表示 nohost 的域名，具体域名需要自己申请及设置）。
 
 #### 前端开发
 前端开发建议使用最新版的 [whistle](https://github.com/avwo/whistle)，可以通过以下两种方式访问 nohost：
 
 1. 直接在 whistle 上配置远程规则
     ``` txt
-    @http://imwebtest.oa.com:8080/whistle.nohost/cgi-bin/plugin-rules
+    @http://nohost.imweb.io:8080/whistle.nohost/cgi-bin/plugin-rules
     ```
-    > 上述配置表示 whistle 从 `http://imwebtest.oa.com:8080/whistle.nohost/cgi-bin/plugin-rules` 获取 nohost 的生成的入口规则，并且如果 nohost 规则有变会自动更新规则，这些规则是由 nohost 上传证书的域名及界面 `配置/入口配置` 配置的规则自动生成（具体参见后面的**配置**），这些规则可以自动过滤掉无关请求，只会把相关的请求转到nohost。
+    > 上述配置表示 whistle 从 `http://nohost.imweb.io:8080/whistle.nohost/cgi-bin/plugin-rules` 获取 nohost 的生成的入口规则，并且如果 nohost 规则有变会自动更新规则，这些规则是由 nohost 上传证书的域名及界面 `配置/入口配置` 配置的规则自动生成（具体参见后面的**配置**），这些规则可以自动过滤掉无关请求，只会把相关的请求转到nohost。
 
     当然这种直接手动配置在 whistle 上还不是最好的方式，更建议的方式是把这些规则集成到插件里面，这样开发者只需安装插件即可。
 2. **【强烈推荐】** 集成 whistle 插件，具体参考：[https://github.com/nohosts/whistle.nohost-imweb/blob/master/dev.md](https://github.com/nohosts/whistle.nohost-imweb/blob/master/dev.md)
 
 #### 后台开发
-后台开发推荐使用 Chrome 的 [SwitchyOmega](https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif) 配置代理规则 （如上述代理配置 `imwebtest.oa.com` + `8080`），如果不想所有请求都转到 nohost，可以配置 SwitchyOmega 的自动切换或者用PAC脚本代替，也可以参考 `nohost-client` 打包一个客户端：[https://github.com/nohosts/nohost-client](https://github.com/nohosts/nohost-client)。手机端可以直接配代理，或者通过 VPN App 设置代理，如 iPhone 可以用 `detour`。
+后台开发推荐使用 Chrome 的 [SwitchyOmega](https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif) 配置代理规则 （如上述代理配置 `nohost.imweb.io` + `8080`），如果不想所有请求都转到 nohost，可以配置 SwitchyOmega 的自动切换或者用PAC脚本代替，也可以参考 `nohost-client` 打包一个客户端：[https://github.com/nohosts/nohost-client](https://github.com/nohosts/nohost-client)。手机端可以直接配代理，或者通过 VPN App 设置代理，如 iPhone 可以用 `detour`。
 
 #### 其他人员
 非开发人员尽量使用客户端、APP、或通过外网转发的方式，减少他们的接入成本，如何打包客户端参考：[https://github.com/nohosts/nohost-client](https://github.com/nohosts/nohost-client)；手机等同后台开发的配置方式。
@@ -119,7 +119,7 @@ nohost 本身就是一个代理，可以直接配置浏览器或系统代理访�
 第一次打开小圆点只有一个 **正式环境**，需要管理员添加账号：
 ![添加账号](https://user-images.githubusercontent.com/11450939/69328087-93ec2100-0c89-11ea-83a6-c7914b3165a2.png)
 
-添加完账号后，打开独立的环境选择页面 `http://imwebtest.oa.com:8080`：
+添加完账号后，打开独立的环境选择页面 `http://nohost.imweb.io:8080`：
 
 ![选择环境页面](https://user-images.githubusercontent.com/11450939/69328692-a61a8f00-0c8a-11ea-8b14-61ecbaa47141.png)
 ![个人账号页面](https://user-images.githubusercontent.com/11450939/69358193-6fac3680-0cc1-11ea-9406-0f036d888d7c.png)
