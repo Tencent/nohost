@@ -57,7 +57,7 @@
                 + code + '">复制提取码</a>' : '') + '</td>';
     }).join('');
     if (!list) {
-      list = '<tr><td colspan="2" style="text-align: center;">Empty</td></tr>';
+      list = '<tr><td colspan="4" style="text-align: center;">Empty</td></tr>';
     }
     var head = '<thead><th style="width: 60px">#</th><th style="width: 180px">Date</th><th>URL</th><th style="width: 120px">Operation</th></thead>';
     return '<table class="table">' + head + '<tbody><tr>' + list + '</tbody></table>';
