@@ -1,7 +1,8 @@
 <script>
   var w2 = window.whistleBridge;
   var showModal = w2.showModal;
-  var baseUrl = window.parent.location.href.replace(/[?#].*$/, '').replace(/\/[^/]*$/, '');
+  var baseUrl = window.parent.location.href.replace(/\/nohost_share\/.*$/, '')
+    .replace(/[?#].*$/, '').replace(/\/[^/]*$/, '');
   var codeList = [];
 
   for (var c1 = 0; c1 < 10; c1++) {
