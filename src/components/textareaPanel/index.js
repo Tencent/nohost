@@ -45,7 +45,14 @@ class TextAreaPanel extends Component {
           {
             buttons
               ? [...buttons]
-              : <Button type="primary" onClick={this.handleSave} disabled={isSaveBtnDisabled}><Icon type="save" /> 保存</Button>
+              : (
+                <Button
+                  type="primary"
+                  onClick={this.handleSave}
+                  disabled={isSaveBtnDisabled}
+                ><Icon type="save" /> 保存
+                </Button>
+              )
             }
         </div>
         <TextArea

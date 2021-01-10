@@ -58,18 +58,19 @@ function showUsage(isRunning, options, restart) {
   } else {
     info(`[i] nohost@${pkg.version}${restart ? ' restarted' : ' started'}`);
   }
-  let [host, port] = resolveHost(options.port);
-  port = port ? options.port : pkg.port;
+  const [host, port] = resolveHost(options.port);
+  const curPort = port ? options.port : pkg.port;
   const list = host ? [host] : getIpList();
   info(`[i] use your device to visit the following URL list, gets the ${colors.bold('IP')} of the URL you can access:`);
   info(list.map((ip) => {
-    return `     http://${colors.bold(ip)}${port ? `:${port}` : ''}/`;
+    return `     http://${colors.bold(ip)}${curPort ? `:${curPort}` : ''}/`;
   }).join('\n'));
 
   warn('     Note: If all the above URLs are unable to access, check the firewall settings');
   warn(`           For help see ${colors.bold('https://github.com/nohosts/nohost')}`);
 
   if (parseInt(process.version.slice(1), 10) < 6) {
+    // eslint-disable-next-line
     warn(colors.bold('\nWarning: The current Node version is too low, access https://nodejs.org to install the latest version, or may not be able to Capture HTTPS CONNECTs\n'));
   }
 }

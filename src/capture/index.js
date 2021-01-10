@@ -24,7 +24,9 @@ if (['network', 'rules', 'values', 'plugins'].indexOf(tab) !== -1) {
   pageName = (query.name && !query.env) ? '#rules' : '#network';
 }
 
-window.onWhistlePageChange = name => (pageName = `#${name}`);
+window.onWhistlePageChange = name => {
+  pageName = `#${name}`;
+};
 
 const getRedirectUrl = (value, url) => {
   value = value || [];
@@ -46,13 +48,13 @@ const getRedirectUrl = (value, url) => {
 };
 
 const formatRules = (data) => {
-  let { rules, headers } = data;
-  headers = Object.keys(headers).map((name) => {
+  const { rules, headers } = data;
+  const curHeaders = Object.keys(headers).map((name) => {
     return `${name.substring(PREFIX_LEN)}: ${headers[name]}`;
   }).join('\n');
   const result = [];
-  if (headers) {
-    result.push(`# nohost配置\n${headers}`);
+  if (curHeaders) {
+    result.push(`# nohost配置\n${curHeaders}`);
   }
   if (rules) {
     result.push(`# whistle规则\n${rules}`);
