@@ -162,7 +162,9 @@ class Config extends Component {
                 value={entryPatterns}
                 handleSave={this.setEntryPatterns}
                 maxLength="5120"
-                ref={ref => this.entryPatternsPanel = ref}
+                ref={ref => {
+                  this.entryPatternsPanel = ref;
+                }}
               />
             </div>
           </TabPane>
@@ -181,14 +183,18 @@ class Config extends Component {
                 value={defaultRules}
                 handleSave={this.setDefaultRules}
                 maxLength="5120"
-                ref={ref => this.defaultRulesPanel = ref}
+                ref={ref => {
+                  this.defaultRulesPanel = ref;
+                }}
               />
               <TextAreaPanel
                 title="专属规则"
                 value={testRules}
                 handleSave={this.setTestRules}
                 maxLength="5120"
-                ref={ref => this.testRulesPanel = ref}
+                ref={ref => {
+                  this.testRulesPanel = ref;
+                }}
               />
             </div>
           </TabPane>
@@ -207,7 +213,9 @@ class Config extends Component {
                 value={rulesTpl}
                 handleSave={this.setRulesTpl}
                 maxLength="3072"
-                ref={ref => this.rulesTplPanel = ref}
+                ref={ref => {
+                  this.rulesTplPanel = ref;
+                }}
               />
             </div>
           </TabPane>
