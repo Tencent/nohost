@@ -28,6 +28,7 @@ function showStartupInfo(err, options, debugMode, restart) {
   if (!err || err === true) {
     return showUsage(err, options, restart);
   }
+  // 处理端口冲突错误
   if (/listen EADDRINUSE/.test(err)) {
     error(`[!] Failed to bind proxy port ${options.port || pkg.port}: The port is already in use`);
     info(`[i] Please check if nohost is already running, you can ${debugMode ? 'stop nohost with `nohost stop` first' : 'restart nohost with `nohost restart`'}`);
@@ -39,7 +40,7 @@ function showStartupInfo(err, options, debugMode, restart) {
 
   error(err.stack ? `Date: ${new Date().toLocaleString()}\n${err.stack}` : err);
 }
-
+// 设置默认启动参数
 program.setConfig({
   main: path.join(__dirname, '../index.js'),
   name: 'nohost',
@@ -70,11 +71,11 @@ program.setConfig({
     }
   },
 });
-
+// 安装插件命令
 program
   .command('install')
   .description('Install the plugin');
-
+// 卸载插件命令
 program.command('uninstall')
   .description('Uninstall the plugin');
 
@@ -94,7 +95,7 @@ const isGlobal = (params) => {
     return true;
   }
 };
-
+// 处理非 starting 内置的命令
 if (/^([a-z]{1,2})?uni(nstall)?$/.test(cmd)) {
   argv = Array.prototype.slice.call(argv, 3);
   if (isGlobal(argv)) {
