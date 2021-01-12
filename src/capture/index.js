@@ -98,15 +98,20 @@ const getUrl = (name, envName) => {
   if (!name) {
     return;
   }
-  const own = `?ip=${getLocalStorage('viewOwn') ? 'self' : ''}${envName ? `&ruleName=${encodeURIComponent(envName)}` : ''}`;
+  // whistle 支持通过 ip 过滤抓包数据
+  // 如果 ip=self 表示直接使用当前客户端 ip 过滤
+  const viewOwn = getLocalStorage('viewOwn') ? 'self' : '';
+  const own = `?ip=${viewOwn}${envName ? `&ruleName=${encodeURIComponent(envName)}` : ''}`;
   let url = `account/${name}/index.html?${pageName}${own}`;
   if (envName) {
     const env = encodeURIComponent(`${name}/${envName.trim() || ''}`);
+    // name=x-whistle-nohost-env：表示获取请求头 x-whistle-nohost-env 的值包含 ${env} 的请求
+    // mtype=exact：表示精确匹配，不填或其它表示不区分大小写的子字符串
     url = `${url}&name=x-whistle-nohost-env&value=${env}&mtype=exact`;
   }
   return `${url}${filter ? `&${filter}` : ''}`;
 };
-
+// 支持 copy
 const clipboard = new ClipboardJS('.n-copy-btn');
 
 clipboard.on('error', () => {
@@ -155,6 +160,7 @@ class Capture extends Component {
       redirectUrl: getRedirectUrl(envValue, this.state.testUrl),
     });
   }
+
   // input 框失焦更新测试环境 url
   onTestUrlBlur = () => {
     const { envValue, testUrl } = this.state;
@@ -420,7 +426,7 @@ class Capture extends Component {
       showQRCode, qrCode, followerIp, redirectUrl, envValue, showTestDialog,
     } = this.state;
     let { url } = this.state;
-    // 替换hash
+    // 切换抓包界面
     url = url && url.replace(/#\w*/, pageName);
     let qrCodeTips;
     if (!qrCode) {
@@ -475,6 +481,7 @@ class Capture extends Component {
             </div>
           </div>
         </div>
+        {/* 顶部操作栏，headless 默认隐藏 */}
         <div className="action-bar" style={{ display: isHeadless ? 'none' : 'block' }}>
           <Cascader
             onChange={this.onChange}
@@ -523,6 +530,8 @@ class Capture extends Component {
           {qrcodeElem}
           {qrCodeTips}
         </Modal>
+        {/* 生成包含环境信息的链接和二维码 */}
+        {/* 打开链接或扫描扫描二维码会自动切换到指定页面及环境 */}
         <Modal
           className="n-create-test-env-dialog"
           width={620}
