@@ -223,14 +223,14 @@ class Config extends Component {
             tab={(
               <span>
                 <Icon type="database" />
-                模板数据
+                模板配置
               </span>
             )}
             tabKey="tplData"
           >
             <div className="p-mid-con">
               <TextAreaPanel
-                title="模板数据"
+                title="模板配置"
                 value={jsonData}
                 handleChange={this.onJsonDataChange}
                 handleSave={this.setJsonData}

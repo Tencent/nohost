@@ -1,3 +1,7 @@
+.p-config {
+  padding-bottom: 60px;
+}
+
 .p-config .p-textarea {
   border: none;
 }

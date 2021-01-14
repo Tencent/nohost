@@ -1,9 +1,7 @@
 
 .p-container {
   overflow: auto;
-  max-width: 1680px;
   min-width: 1200px;
-  margin: 0 auto;
 }
 
 .p-full-container {
@@ -26,7 +24,8 @@
 }
 
 .p-mid-con {
-  width: 680px;
+  min-width: 720px;
+  max-width: 72%;
   margin: 0 auto;
 }
 
@@ -68,5 +67,5 @@
 }
 
 .p-textarea.ant-input {
-  height: 360px;
+  height: 420px;
 }
