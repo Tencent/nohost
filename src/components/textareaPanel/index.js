@@ -40,8 +40,9 @@ class TextAreaPanel extends Component {
     const { value, isSaveBtnDisabled } = this.state;
 
     return (
-      <Panel title={title}>
+      <Panel>
         <div className="p-action-bar">
+          {title}
           {
             buttons
               ? [...buttons]

@@ -7,6 +7,11 @@ import Tabs from '../../components/tab';
 import './index.css';
 
 const { TabPane } = Tabs;
+const WHITE_REQ_TITLE = <strong><Icon type="menu" /> 入口配置</strong>;
+const DEFAULT_ENV_TITLE = <strong><Icon type="file" /> 默认规则</strong>;
+const SPECIAL_ENV_TITLE = <strong><Icon type="file-text" /> 专属规则</strong>;
+const TPL_TITLE = <strong><Icon type="code" /> 规则模板</strong>;
+const DATA_TITLE = <strong><Icon type="database" /> 模板配置</strong>;
 
 class Config extends Component {
   constructor(props) {
@@ -158,7 +163,7 @@ class Config extends Component {
           >
             <div className="p-mid-con">
               <TextAreaPanel
-                title="入口配置"
+                title={WHITE_REQ_TITLE}
                 value={entryPatterns}
                 handleSave={this.setEntryPatterns}
                 maxLength="5120"
@@ -179,7 +184,7 @@ class Config extends Component {
           >
             <div className="p-mid-con">
               <TextAreaPanel
-                title="默认规则"
+                title={DEFAULT_ENV_TITLE}
                 value={defaultRules}
                 handleSave={this.setDefaultRules}
                 maxLength="5120"
@@ -188,7 +193,7 @@ class Config extends Component {
                 }}
               />
               <TextAreaPanel
-                title="专属规则"
+                title={SPECIAL_ENV_TITLE}
                 value={testRules}
                 handleSave={this.setTestRules}
                 maxLength="5120"
@@ -209,7 +214,7 @@ class Config extends Component {
           >
             <div className="p-mid-con">
               <TextAreaPanel
-                title="规则模板"
+                title={TPL_TITLE}
                 value={rulesTpl}
                 handleSave={this.setRulesTpl}
                 maxLength="3072"
@@ -230,7 +235,7 @@ class Config extends Component {
           >
             <div className="p-mid-con">
               <TextAreaPanel
-                title="模板配置"
+                title={DATA_TITLE}
                 value={jsonData}
                 handleChange={this.onJsonDataChange}
                 handleSave={this.setJsonData}
