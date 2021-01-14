@@ -21,9 +21,13 @@
   vertical-align: middle;
 }
 
-.p-nav-bar>button:hover, .p-nav-bar .p-active {
+.p-nav-bar .p-active {
   color: #1a79b9;
   border-bottom: 1px solid #1a79b9;
+}
+
+.p-nav-bar>button:hover {
+  color: #1a79b9;
 }
 
 .p-nav-bar .p-logo:hover {
