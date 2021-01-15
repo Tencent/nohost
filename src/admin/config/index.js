@@ -49,6 +49,7 @@ class Config extends Component {
     getSettings(this.setState.bind(this));
   }
 
+  // 处理菜单事件
   handleClick = activeKey => {
     this.setState({
       activeKey,
@@ -65,6 +66,7 @@ class Config extends Component {
       jsonDataDisabled: false,
     });
   }
+
   // 入口配置
   setEntryPatterns = (e, value) => {
     setEntryPatterns({ entryPatterns: value }, (data) => {
@@ -77,6 +79,7 @@ class Config extends Component {
       this.entryPatternsPanel.setBtnDisabled(true);
     });
   }
+
   // 特殊环境默认
   setTestRules = (e, value) => {
     setTestRules({ testRules: value }, (data) => {
@@ -89,6 +92,7 @@ class Config extends Component {
       this.testRulesPanel.setBtnDisabled(true);
     });
   }
+
   // 环境默认规则
   setDefaultRules = (e, value) => {
     setDefaultRules({ defaultRules: value }, (data) => {
@@ -102,6 +106,7 @@ class Config extends Component {
     });
   }
 
+  // 账号默认规则
   setAccountRules = (e, value) => {
     setAccountRules({ rules: value }, (data) => {
       if (!data) {
@@ -113,6 +118,7 @@ class Config extends Component {
       this.accountRulesPanel.setBtnDisabled(true);
     });
   }
+
   // 规则模板
   setRulesTpl = (e, value) => {
     setRulesTpl({ rulesTpl: value }, (data) => {
@@ -125,6 +131,7 @@ class Config extends Component {
       this.rulesTplPanel.setBtnDisabled(true);
     });
   }
+
   // 模板配置
   setJsonData = () => {
     const jsonData = this.formatJsonData();
@@ -187,6 +194,7 @@ class Config extends Component {
     return (
       <div className={`box p-config ${hide ? ' p-hide' : ''}`}>
         <Tabs defaultActiveKey="entrySettings" onChange={this.handleClick} activeKey={activeKey}>
+          {/* 入口配置 */}
           <TabPane
             tab={(
               <span>
@@ -208,6 +216,7 @@ class Config extends Component {
               />
             </div>
           </TabPane>
+          {/* 账号规则 */}
           <TabPane
             tab={(
               <span>
@@ -247,6 +256,7 @@ class Config extends Component {
               />
             </div>
           </TabPane>
+          {/* 规则模板 */}
           <TabPane
             tab={(
               <span>
@@ -268,6 +278,7 @@ class Config extends Component {
               />
             </div>
           </TabPane>
+          {/* 模板配置 */}
           <TabPane
             tab={(
               <span>
