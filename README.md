@@ -159,7 +159,7 @@ ke.qq.com
 # <a href="#whistle" id="whistle">七. 规则</a>
 这个是 nohost 主进程 whistle，所有请求都会通过该 whistle，并通过该进程的 whistle.nohost 插件进行账号管理及请求转发，主进程 whistle 在生产环境下无法查看抓包数据，可用于设置规则及全局插件管理，如：屏蔽一些请求等等，更多内容参见后面的文档。
 
-**详细内容参见文档：[https://nohosts.github.io/nohost/](https://nohosts.github.io/nohost/)**
+**详细内容参见文档：[https://nohost.pro/](https://nohost.pro/)**
 
 
 # License
