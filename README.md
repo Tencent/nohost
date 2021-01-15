@@ -1,8 +1,6 @@
 # nohost
 [![NPM version](https://img.shields.io/npm/v/@nohost/server.svg?style=flat-square)](https://npmjs.org/package/@nohost/server)
 [![node version](https://img.shields.io/badge/node.js-%3E=_8.0.0-green.svg?style=flat-square)](http://nodejs.org/download/)
-[![npm download](https://img.shields.io/npm/dm/@nohost/server.svg?style=flat-square)](https://npmjs.org/package/@nohost/server)
-[![NPM count](https://img.shields.io/npm/dt/@nohost/server.svg?style=flat-square)](https://www.npmjs.com/package/@nohost/server)
 [![License](https://img.shields.io/npm/l/@nohost/server.svg?style=flat-square)](https://www.npmjs.com/package/@nohost/server)
 
 nohost 是基于 [whistle](https://github.com/avwo/whistle) 实现的多用户多环境配置及抓包调试系统，不仅具备 whistle 的所有功能，并在 whistle 基础上扩展了一些功能，且支持多人多环境同时使用，主要用于部署在公共服务器上供整个部门（公司）的同事共同使用，具有以下功能：
@@ -159,7 +157,7 @@ ke.qq.com
 # <a href="#whistle" id="whistle">七. 规则</a>
 这个是 nohost 主进程 whistle，所有请求都会通过该 whistle，并通过该进程的 whistle.nohost 插件进行账号管理及请求转发，主进程 whistle 在生产环境下无法查看抓包数据，可用于设置规则及全局插件管理，如：屏蔽一些请求等等，更多内容参见后面的文档。
 
-**详细内容参见文档：[https://nohosts.github.io/nohost/](https://nohosts.github.io/nohost/)**
+**详细内容参见文档：[https://nohost.pro/](https://nohost.pro/)**
 
 
 # License

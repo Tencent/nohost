@@ -60,6 +60,7 @@ class Config extends Component {
       this.props.onItemChange(activeKey);
     }
   };
+
   // 处理模板配置数据变更
   onJsonDataChange = (e) => {
     this.setState({
@@ -149,6 +150,7 @@ class Config extends Component {
       message.success('配置模板配置成功！');
     });
   }
+
   // 格式化 json 数据
   formatJsonData = () => {
     let { jsonData } = this.state;

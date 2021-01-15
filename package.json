@@ -26,7 +26,7 @@
   "registry": "https://registry.npmjs.org/@nohost/server",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nohosts/nohost.git"
+    "url": "git+https://github.com/Tencent/nohost.git"
   },
   "keywords": [
     "whistle",
@@ -36,9 +36,9 @@
   "author": "avwu <avwu@qq.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/nohosts/nohost/issues"
+    "url": "https://github.com/Tencent/nohost/issues"
   },
-  "homepage": "https://github.com/nohosts/nohost#readme",
+  "homepage": "https://github.com/Tencent/nohost#readme",
   "devDependencies": {
     "antd": "^3.25.3",
     "babel-core": "^6.25.0",
