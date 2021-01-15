@@ -1,3 +1,4 @@
+// babel config
 module.exports = {
     presets: [
       [
@@ -13,6 +14,7 @@ module.exports = {
       ['@babel/plugin-proposal-decorators', { legacy: true }],
       ['@babel/plugin-proposal-clas s-properties', { loose: true }],
     ],
+    // jest config
     test: [
         "jest"
     ]

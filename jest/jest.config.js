@@ -5,6 +5,7 @@ module.exports = {
   rootDir: '..',
   transform: {
     // '^.+\\.(ts|tsx)$': 'ts-jest',
+    // 加载babel配置,
     '^.+\\.(t|j)s?$': ['babel-jest', { configFile: path.resolve(__dirname, 'babel.config.js') }],
   },
   testMatch: ['**/test/**/*.test.js'],
@@ -15,4 +16,3 @@ module.exports = {
   ],
   coverageReporters: ['json', 'json-summary', 'lcov', 'text', 'clover'],
 };
- 
