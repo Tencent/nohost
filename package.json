@@ -85,6 +85,7 @@
     "hagent": "^0.7.5",
     "hparser": "^0.3.1",
     "jest": "^26.5.2",
+    "kill-port": "^1.6.1",
     "koa": "^2.8.2",
     "koa-bodyparser": "^4.2.1",
     "koa-compress": "^4.0.1",

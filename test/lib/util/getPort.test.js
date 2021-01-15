@@ -1,18 +1,19 @@
-const getPort = require('../../../lib/util/getPort')
+const getPort = require('../../../lib/util/getPort');
 
-describe('util getPort',()=>{
+describe('util getPort', () => {
     
-    test('should server start', ()=>{
+  test('should server start', () => {
 
-        expect(getPort(()=>{
+    expect(getPort(() => {
 
-        }))
-    })
+    }));
+  });
 
-    test('should server error', ()=>{
+  test('should server error', () => {
+      
+    expect(getPort(() => {
         
-        expect(getPort(()=>{
-           
-        }))
-    })
-})
+    }));
+  });
+  
+});
