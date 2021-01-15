@@ -28,7 +28,13 @@ const DEFAULT_RULES_TITLE = <strong><Icon type="file" /> 环境默认规则</str
 const SPECIAL_RULES_TITLE = <strong><Icon type="file-text" /> 特殊环境默认规则</strong>;
 const TPL_TITLE = <strong><Icon type="code" /> 规则模板</strong>;
 const DATA_TITLE = <strong><Icon type="database" /> 模板配置</strong>;
-
+/**
+ * 配置菜单对应的内容
+ * 1. 入口配置
+ * 2. 账号配置
+ * 3. 规则模板
+ * 4. 模板配置
+ */
 class Config extends Component {
   constructor(props) {
     super(props);
@@ -59,7 +65,7 @@ class Config extends Component {
       jsonDataDisabled: false,
     });
   }
-
+  // 入口配置
   setEntryPatterns = (e, value) => {
     setEntryPatterns({ entryPatterns: value }, (data) => {
       if (!data) {
@@ -71,7 +77,7 @@ class Config extends Component {
       this.entryPatternsPanel.setBtnDisabled(true);
     });
   }
-
+  // 特殊环境默认
   setTestRules = (e, value) => {
     setTestRules({ testRules: value }, (data) => {
       if (!data) {
@@ -83,7 +89,7 @@ class Config extends Component {
       this.testRulesPanel.setBtnDisabled(true);
     });
   }
-
+  // 环境默认规则
   setDefaultRules = (e, value) => {
     setDefaultRules({ defaultRules: value }, (data) => {
       if (!data) {
@@ -107,7 +113,7 @@ class Config extends Component {
       this.accountRulesPanel.setBtnDisabled(true);
     });
   }
-
+  // 规则模板
   setRulesTpl = (e, value) => {
     setRulesTpl({ rulesTpl: value }, (data) => {
       if (!data) {
@@ -119,7 +125,7 @@ class Config extends Component {
       this.rulesTplPanel.setBtnDisabled(true);
     });
   }
-
+  // 模板配置
   setJsonData = () => {
     const jsonData = this.formatJsonData();
     if (jsonData === false) {

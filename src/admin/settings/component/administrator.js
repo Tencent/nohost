@@ -12,7 +12,9 @@ import { FORM_ITEM_LAYOUT, SUBMIT_BTN_LAYOUT } from '../../util';
 import { setAdmin } from '../../cgi';
 
 const ADMIN_TITLE = <span><Icon type="user" /> 设置管理员账号和密码</span>;
-
+/**
+ * 管理员账号配置组件
+ */
 class Administrator extends Component {
   submitAdmin = e => {
     e.preventDefault();
