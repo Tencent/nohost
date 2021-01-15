@@ -6,15 +6,17 @@ describe('util login shasum function', () => {
   });
 });
 
+const userrInfo = {
+  nameKey: 'admin',
+  authKey: '3ef9bf2e56995e386a026b29fa514e32234a5d8a',
+};
+
 const cookies = {
   get: name => userrInfo[name],
   set: key => key,
 };
 
-const userrInfo = {
-  nameKey: 'admin',
-  authKey: '3ef9bf2e56995e386a026b29fa514e32234a5d8a',
-};
+
 
 describe('util login', () => {
   test('should login success with username is empty', () => {
