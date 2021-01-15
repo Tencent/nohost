@@ -1,6 +1,7 @@
 # nohost
 [![NPM version](https://img.shields.io/npm/v/@nohost/server.svg?style=flat-square)](https://npmjs.org/package/@nohost/server)
 [![node version](https://img.shields.io/badge/node.js-%3E=_8.0.0-green.svg?style=flat-square)](http://nodejs.org/download/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/Tencent/nohost/pulls)
 [![License](https://img.shields.io/npm/l/@nohost/server.svg?style=flat-square)](https://www.npmjs.com/package/@nohost/server)
 
 nohost 是基于 [whistle](https://github.com/avwo/whistle) 实现的多用户多环境配置及抓包调试系统，不仅具备 whistle 的所有功能，并在 whistle 基础上扩展了一些功能，且支持多人多环境同时使用，主要用于部署在公共服务器上供整个部门（公司）的同事共同使用，具有以下功能：
