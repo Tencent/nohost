@@ -15,7 +15,7 @@ import Tabs from '../../components/tab';
 import './index.css';
 
 const { TabPane } = Tabs;
-const WHITE_REQ_TITLE = <strong><Icon type="menu" /> 入口配置</strong>;
+const WHITE_REQ_TITLE = <strong><Icon type="filter" /> 入口配置</strong>;
 const ACCOUNT_RULES_TITLE = <strong><Icon type="user" /> 账号默认规则</strong>;
 const DEFAULT_RULES_TITLE = <strong><Icon type="file" /> 环境默认规则</strong>;
 const SPECIAL_RULES_TITLE = <strong><Icon type="file-text" /> 特殊环境默认规则</strong>;
@@ -177,7 +177,7 @@ class Config extends Component {
           <TabPane
             tab={(
               <span>
-                <Icon type="menu" />
+                <Icon type="filter" />
                 入口配置
               </span>
             )}
