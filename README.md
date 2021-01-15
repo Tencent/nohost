@@ -4,9 +4,9 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/Tencent/nohost/pulls)
 [![License](https://img.shields.io/npm/l/@nohost/server.svg?style=flat-square)](https://www.npmjs.com/package/@nohost/server)
 
-Nohost 是基于 [whistle](https://github.com/avwo/whistle) 实现的多用户多环境配置及抓包调试系统，不仅具备 whistle 的所有功能，并在 whistle 基础上扩展了一些功能，且支持多人多环境同时使用，主要用于部署在公共服务器上供整个部门（公司）的同事共同使用，具有以下功能：
+Nohost 是基于 [whistle](https://github.com/avwo/whistle) 实现的多用户多环境配置及抓包调试系统，不仅具备 Whistle 的所有功能，并在 Whistle 基础上扩展了一些功能，且支持多人多环境同时使用，主要用于部署在公共服务器上供整个部门（公司）的同事共同使用，具有以下功能：
 1. 环境共享：前端无需配后台环境，后台无需配前端环境，其他人无需配任何环境
-2. 抓包调试：远程实时抓包调试，支持各种 whistle 规则，以及通过链接分享抓包数据
+2. 抓包调试：远程实时抓包调试，支持各种 Whistle 规则，以及通过链接分享抓包数据
 3. 历史记录：可以把环境配置及抓包数据沉淀下来，供后续随时切换查看
 4. 插件扩展：可以通过插件扩展实现诸如 [inspect](https://github.com/whistle-plugins/whistle.inspect)，[vase](https://github.com/whistle-plugins/whistle.vase)，[autosave](https://github.com/whistle-plugins/whistle.autosave) 等功能
 5. 对外接口：提供对外接口，可供发布系统、CI等工具操作，实现自动化增删查改环境配置
@@ -83,16 +83,16 @@ n2 restart --reset
 Nohost 本身就是一个代理，可以直接配置浏览器或系统代理访问，也可以通过 Nginx反向代理访问，为方便大家使用，针对不同的人群可以使用不同的方案（以下用 `nohost.imweb.io` 表示 Nohost 的域名，具体域名需要自己申请及设置）。
 
 #### 前端开发
-前端开发建议使用最新版的 [whistle](https://github.com/avwo/whistle)，可以通过以下两种方式访问 Nohost：
+前端开发建议使用最新版的 [Whistle](https://github.com/avwo/whistle)，可以通过以下两种方式访问 Nohost：
 
-1. 直接在 whistle 上配置远程规则
+1. 直接在 Whistle 上配置远程规则
     ``` txt
     @http://nohost.imweb.io:8080/whistle.nohost/cgi-bin/plugin-rules
     ```
-    > 上述配置表示 whistle 从 `http://nohost.imweb.io:8080/whistle.nohost/cgi-bin/plugin-rules` 获取 Nohost 的生成的入口规则，并且如果 Nohost 规则有变会自动更新规则，这些规则是由 Nohost 上传证书的域名及界面 `配置/入口配置` 配置的规则自动生成（具体参见后面的**配置**），这些规则可以自动过滤掉无关请求，只会把相关的请求转到Nohost。
+    > 上述配置表示 Whistle 从 `http://nohost.imweb.io:8080/whistle.nohost/cgi-bin/plugin-rules` 获取 Nohost 的生成的入口规则，并且如果 Nohost 规则有变会自动更新规则，这些规则是由 Nohost 上传证书的域名及界面 `配置/入口配置` 配置的规则自动生成（具体参见后面的**配置**），这些规则可以自动过滤掉无关请求，只会把相关的请求转到Nohost。
 
-    当然这种直接手动配置在 whistle 上还不是最好的方式，更建议的方式是把这些规则集成到插件里面，这样开发者只需安装插件即可。
-2. **【强烈推荐】** 集成 whistle 插件，具体参考：[https://github.com/nohosts/whistle.nohost-imweb/blob/master/dev.md](https://github.com/nohosts/whistle.nohost-imweb/blob/master/dev.md)
+    当然这种直接手动配置在 Whistle 上还不是最好的方式，更建议的方式是把这些规则集成到插件里面，这样开发者只需安装插件即可。
+2. **【强烈推荐】** 集成 Whistle 插件，具体参考：[https://github.com/nohosts/whistle.nohost-imweb/blob/master/dev.md](https://github.com/nohosts/whistle.nohost-imweb/blob/master/dev.md)
 
 #### 后台开发
 后台开发推荐使用 Chrome 的 [SwitchyOmega](https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif) 配置代理规则 （如上述代理配置 `nohost.imweb.io` + `8080`），如果不想所有请求都转到 Nohost，可以配置 SwitchyOmega 的自动切换或者用PAC脚本代替，也可以参考 `nohost-client` 打包一个客户端：[https://github.com/nohosts/client](https://github.com/nohosts/client)。手机端可以直接配代理，或者通过 VPN App 设置代理，如 iPhone 可以用 `detour`。
@@ -108,7 +108,7 @@ Nohost 本身就是一个代理，可以直接配置浏览器或系统代理访�
 
 ![证书列表](https://user-images.githubusercontent.com/29788452/104725825-9652e980-576d-11eb-980c-69cdade67da4.png)
 
-![whistle插件列表](https://user-images.githubusercontent.com/11450939/69324924-4ae59e00-0c84-11ea-994c-7c3914257470.png)
+![Whistle插件列表](https://user-images.githubusercontent.com/11450939/69324924-4ae59e00-0c84-11ea-994c-7c3914257470.png)
 
 ![打开页面](https://user-images.githubusercontent.com/11450939/69325133-9b5cfb80-0c84-11ea-8213-8c64d5365538.png)
 
@@ -124,7 +124,7 @@ Nohost 本身就是一个代理，可以直接配置浏览器或系统代理访�
 ![个人账号页面](https://user-images.githubusercontent.com/11450939/69358193-6fac3680-0cc1-11ea-9406-0f036d888d7c.png)
 ![image](https://user-images.githubusercontent.com/11450939/69358459-d92c4500-0cc1-11ea-8263-08bb216fc357.png)
 
-创建完环境后，可以在环境里面配置任何 whistle 规则，跟普通到本地 whistle 功能一模一样，甚至更多。每个实例可以建立上百个账号，每个账号可以建立上百个环境，具体取决于你到机器性能。
+创建完环境后，可以在环境里面配置任何 Whistle 规则，跟普通到本地 Whistle 功能一模一样，甚至更多。每个实例可以建立上百个账号，每个账号可以建立上百个环境，具体取决于你到机器性能。
 
 # <a href="#config" id="config">六. 配置</a>
 默认情况下，只有证书里面域名的请求才会被转发到各个账号，且 html 类型的内容会自动注入小圆点，但在实际应用中你可能会遇到以下问题：
