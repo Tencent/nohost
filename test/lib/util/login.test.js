@@ -16,8 +16,6 @@ const cookies = {
   set: key => key,
 };
 
-
-
 describe('util login', () => {
   test('should login success with username is empty', () => {
     const authConf = {

@@ -20,7 +20,7 @@ describe('lib main certsMgr', () => {
         expect(content.toString()).toBe('213');
       });
     } catch (err) {
-      
+      console.log(err); // eslint-disable-line
     }
   });
 
