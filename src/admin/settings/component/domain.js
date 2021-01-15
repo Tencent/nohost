@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { Form, Input, Button, message, Popconfirm } from 'antd';
+import { Form, Input, Button, Icon, message, Popconfirm } from 'antd';
 import Panel from '../../../components/panel';
 import { FORM_ITEM_LAYOUT, SUBMIT_BTN_LAYOUT } from '../../util';
 import { setDomain } from '../../cgi';
+
+const DOMAIN_TITLE = <span><Icon type="global" /> 设置访问管理页面的域名</span>;
 
 class Domain extends Component {
   handleSubmit = e => {
@@ -27,7 +29,7 @@ class Domain extends Component {
 
     return (
       <div className="p-mid-con">
-        <Panel title="设置域名">
+        <Panel title={DOMAIN_TITLE}>
           <Form {...FORM_ITEM_LAYOUT}>
             <Form.Item label="域名">
               {getFieldDecorator('domain', {

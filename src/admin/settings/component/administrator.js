@@ -4,6 +4,8 @@ import Panel from '../../../components/panel';
 import { FORM_ITEM_LAYOUT, SUBMIT_BTN_LAYOUT } from '../../util';
 import { setAdmin } from '../../cgi';
 
+const ADMIN_TITLE = <span><Icon type="user" /> 设置管理员账号和密码</span>;
+
 class Administrator extends Component {
   submitAdmin = e => {
     e.preventDefault();
@@ -27,7 +29,7 @@ class Administrator extends Component {
     const { value = {} } = this.props;
     return (
       <div className="p-mid-con">
-        <Panel title="设置管理员账号和密码">
+        <Panel title={ADMIN_TITLE}>
           <Form {...FORM_ITEM_LAYOUT}>
             <Form.Item label="管理员账号">
               {getFieldDecorator('username', {

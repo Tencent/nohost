@@ -1,12 +1,26 @@
 import React, { Component } from 'react';
 import { Icon, Button, message } from 'antd';
 import { getActiveTabFromHash, setActiveHash, evalJson } from '../util';
-import { getSettings, setJsonData, setTestRules, setDefaultRules, setRulesTpl, setEntryPatterns } from '../cgi';
+import {
+  getSettings,
+  setJsonData,
+  setTestRules,
+  setAccountRules,
+  setDefaultRules,
+  setRulesTpl,
+  setEntryPatterns,
+} from '../cgi';
 import TextAreaPanel from '../../components/textareaPanel';
 import Tabs from '../../components/tab';
 import './index.css';
 
 const { TabPane } = Tabs;
+const WHITE_REQ_TITLE = <strong><Icon type="filter" /> 入口配置</strong>;
+const ACCOUNT_RULES_TITLE = <strong><Icon type="user" /> 账号默认规则</strong>;
+const DEFAULT_RULES_TITLE = <strong><Icon type="file" /> 环境默认规则</strong>;
+const SPECIAL_RULES_TITLE = <strong><Icon type="file-text" /> 特殊环境默认规则</strong>;
+const TPL_TITLE = <strong><Icon type="code" /> 规则模板</strong>;
+const DATA_TITLE = <strong><Icon type="database" /> 模板配置</strong>;
 
 class Config extends Component {
   constructor(props) {
@@ -70,8 +84,20 @@ class Config extends Component {
         this.defaultRulesPanel.setBtnDisabled(false);
         return;
       }
-      message.success('配置默认规则成功！');
+      message.success('配置环境默认规则成功！');
       this.defaultRulesPanel.setBtnDisabled(true);
+    });
+  }
+
+  setAccountRules = (e, value) => {
+    setAccountRules({ rules: value }, (data) => {
+      if (!data) {
+        message.error('操作失败，请稍后重试');
+        this.accountRulesPanel.setBtnDisabled(false);
+        return;
+      }
+      message.success('配置账号默认规则成功！');
+      this.accountRulesPanel.setBtnDisabled(true);
     });
   }
 
@@ -99,7 +125,7 @@ class Config extends Component {
         this.setState({ jsonDataDisabled: false });
         return;
       }
-      message.success('配置数据对象成功！');
+      message.success('配置模板配置成功！');
     });
   }
 
@@ -137,6 +163,7 @@ class Config extends Component {
       rulesTpl,
       jsonDataDisabled,
       entryPatterns,
+      accountRules,
       defaultRules,
       testRules,
     } = this.state;
@@ -150,7 +177,7 @@ class Config extends Component {
           <TabPane
             tab={(
               <span>
-                <Icon type="menu" />
+                <Icon type="filter" />
                 入口配置
               </span>
             )}
@@ -158,11 +185,13 @@ class Config extends Component {
           >
             <div className="p-mid-con">
               <TextAreaPanel
-                title="入口配置"
+                title={WHITE_REQ_TITLE}
                 value={entryPatterns}
                 handleSave={this.setEntryPatterns}
                 maxLength="5120"
-                ref={ref => this.entryPatternsPanel = ref}
+                ref={ref => {
+                  this.entryPatternsPanel = ref;
+                }}
               />
             </div>
           </TabPane>
@@ -177,18 +206,31 @@ class Config extends Component {
           >
             <div className="p-mid-con">
               <TextAreaPanel
-                title="默认规则"
+                title={ACCOUNT_RULES_TITLE}
+                value={accountRules}
+                handleSave={this.setAccountRules}
+                maxLength="5120"
+                ref={ref => {
+                  this.accountRulesPanel = ref;
+                }}
+              />
+              <TextAreaPanel
+                title={DEFAULT_RULES_TITLE}
                 value={defaultRules}
                 handleSave={this.setDefaultRules}
                 maxLength="5120"
-                ref={ref => this.defaultRulesPanel = ref}
+                ref={ref => {
+                  this.defaultRulesPanel = ref;
+                }}
               />
               <TextAreaPanel
-                title="专属规则"
+                title={SPECIAL_RULES_TITLE}
                 value={testRules}
                 handleSave={this.setTestRules}
                 maxLength="5120"
-                ref={ref => this.testRulesPanel = ref}
+                ref={ref => {
+                  this.testRulesPanel = ref;
+                }}
               />
             </div>
           </TabPane>
@@ -203,11 +245,13 @@ class Config extends Component {
           >
             <div className="p-mid-con">
               <TextAreaPanel
-                title="规则模板"
+                title={TPL_TITLE}
                 value={rulesTpl}
                 handleSave={this.setRulesTpl}
                 maxLength="3072"
-                ref={ref => this.rulesTplPanel = ref}
+                ref={ref => {
+                  this.rulesTplPanel = ref;
+                }}
               />
             </div>
           </TabPane>
@@ -215,14 +259,14 @@ class Config extends Component {
             tab={(
               <span>
                 <Icon type="database" />
-                模板数据
+                模板配置
               </span>
             )}
             tabKey="tplData"
           >
             <div className="p-mid-con">
               <TextAreaPanel
-                title="模板数据"
+                title={DATA_TITLE}
                 value={jsonData}
                 handleChange={this.onJsonDataChange}
                 handleSave={this.setJsonData}

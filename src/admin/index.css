@@ -1,9 +1,7 @@
 
 .p-container {
   overflow: auto;
-  max-width: 1680px;
   min-width: 1200px;
-  margin: 0 auto;
 }
 
 .p-full-container {
@@ -26,7 +24,8 @@
 }
 
 .p-mid-con {
-  width: 680px;
+  min-width: 720px;
+  max-width: 72%;
   margin: 0 auto;
 }
 
@@ -36,11 +35,8 @@
   font-weight: normal;
 }
 .p-mid-ctn {
-  border-radius: 4px;
-  -webkit-box-shadow: 0 1px 3px rgba(26,26,26,.1);
-  box-shadow: 0 1px 3px rgba(26,26,26,.1);
-  border: 1px solid #f0f0f0;
   background: #fff;
+  margin-bottom: 30px;
 }
 
 .p-left-menu > ul {
@@ -49,14 +45,18 @@
 }
 
 .p-action-bar {
-  padding: 15px 20px;
+  padding: 22px 0 8px;
   text-align: right;
   width: 100%;
-  top: 60px;
   z-index: 1;
   background: #f8f9fa;
-  border-bottom: 1px solid #e8e8e8;
   line-height: 2.6;
+  position: relative;
+}
+
+.p-action-bar>strong {
+  position: absolute;
+  left: 0;
 }
 
 .p-action-bar>span {
@@ -68,5 +68,5 @@
 }
 
 .p-textarea.ant-input {
-  height: 360px;
+  height: 420px;
 }

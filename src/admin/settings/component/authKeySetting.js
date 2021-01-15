@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Form, Input, Button, message } from 'antd';
+import { Form, Input, Icon, Button, message } from 'antd';
 import Panel from '../../../components/panel';
 import { FORM_ITEM_LAYOUT, SUBMIT_BTN_LAYOUT } from '../../util';
 import { setAuthKey } from '../../cgi';
 
 const AUTH_KEY_RE = /^[\w.@-]{1,32}$/;
+const AUTH_TITLE = <span><Icon type="setting" /> 设置 Auth Key</span>;
 
 class AuthKeySetting extends Component {
   handleSubmit = e => {
@@ -29,7 +30,7 @@ class AuthKeySetting extends Component {
 
     return (
       <div className="p-mid-con">
-        <Panel title="设置 Auth Key">
+        <Panel title={AUTH_TITLE}>
           <Form {...FORM_ITEM_LAYOUT} onSubmit={this.handleSubmit}>
             <Form.Item label="Auth Key">
               {getFieldDecorator('authKey', {

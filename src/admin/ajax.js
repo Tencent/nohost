@@ -1,5 +1,13 @@
-const $ = require('jquery');
+/**
+ * Tencent is pleased to support the open source community by making nohost-环境配置与抓包调试平台 available.
+ * Copyright (C) 2020 THL A29 Limited, a Tencent company.  All rights reserved. The below software in
+ * this distribution may have been modified by THL A29 Limited ("Tencent Modifications").
+ * All Tencent Modifications are Copyright (C) THL A29 Limited.
+ * nohost-环境配置与抓包调试平台 is licensed under the MIT License except for the third-party components listed below.
+ */
 
+const $ = require('jquery');
+// 生成调用后台接口的方法
 function createCgi(url, settings) {
   const self = this;
   if (typeof url === 'string') {
@@ -22,6 +30,7 @@ function createCgi(url, settings) {
 
     options = $.extend(true, {}, settings, options, opts);
     if (jqXhr) {
+      // 处理请求类型
       const { mode } = options;
       if (mode === 'ignore') {
         return;
