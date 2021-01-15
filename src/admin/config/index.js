@@ -46,6 +46,7 @@ class Config extends Component {
   }
 
   componentDidMount() {
+    // 组件加载时初始化数据，后续需要刷新页面才能更新
     getSettings(this.setState.bind(this));
   }
 
@@ -59,7 +60,7 @@ class Config extends Component {
       this.props.onItemChange(activeKey);
     }
   };
-
+  // 处理模板配置数据变更
   onJsonDataChange = (e) => {
     this.setState({
       jsonData: e.target.value,
@@ -148,7 +149,7 @@ class Config extends Component {
       message.success('配置模板配置成功！');
     });
   }
-
+  // 格式化 json 数据
   formatJsonData = () => {
     let { jsonData } = this.state;
     jsonData = jsonData && jsonData.trim();
@@ -160,6 +161,7 @@ class Config extends Component {
       jsonData = JSON.parse(jsonData);
     } catch (e) {
       err = e;
+      // 支持特殊 json 格式
       jsonData = evalJson(jsonData);
     }
     if (jsonData && typeof jsonData === 'object') {
