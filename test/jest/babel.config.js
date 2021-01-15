@@ -10,10 +10,10 @@ module.exports = {
     [
       '@babel/preset-env',
       {
-        targets: {    
+        targets: {
           node: 'current',
         },
-      }
+      },
     ],
   ],
   plugins: [
@@ -22,6 +22,6 @@ module.exports = {
   ],
   // jest config
   test: [
-      "jest"
-  ]
+    'jest',
+  ],
 };

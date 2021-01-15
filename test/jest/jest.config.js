@@ -19,7 +19,7 @@ module.exports = {
   testEnvironment: 'node',
   reporters: ['default'],
   coveragePathIgnorePatterns: [
-    '/node_modules/'
+    '/node_modules/',
   ],
   coverageReporters: ['json', 'json-summary', 'lcov', 'text', 'clover'],
 };
