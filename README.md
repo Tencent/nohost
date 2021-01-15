@@ -156,7 +156,7 @@ ke.qq.com
 4. 所有 `qq.com` 的子代域名请求都转发到Nohost，但不注入小圆点，并优先级设为 `-1` ，确保证书里面的 `qq.com` 子域名可以正常注入小圆点
 
 # <a href="#whistle" id="whistle">七. 规则</a>
-这个是 Nohost 主进程 whistle，所有请求都会通过该 whistle，并通过该进程的 whistle.nohost 插件进行账号管理及请求转发，主进程 whistle 在生产环境下无法查看抓包数据，可用于设置规则及全局插件管理，如：屏蔽一些请求等等，更多内容参见后面的文档。
+这个是 Nohost 主进程 Whistle，所有请求都会通过该 Whistle，并通过该进程的 whistle.nohost 插件进行账号管理及请求转发，主进程 Whistle 在生产环境下无法查看抓包数据，可用于设置规则及全局插件管理，如：屏蔽一些请求等等，更多内容参见后面的文档。
 
 **详细内容参见文档：[https://nohost.pro/](https://nohost.pro/)**
 
