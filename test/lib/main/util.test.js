@@ -1,43 +1,40 @@
 const path = require('path');
-const filePath = path.join(process.cwd(),'test');
+
+const filePath = path.join(process.cwd(), 'test');
 process.env.WHISTLE_PATH = filePath;
 
-process.on('unhandledRejection', function (err) {
-  console.log(err);
-}); 
+// process.on('unhandledRejection', function (err) {
 
-const { 
-  removeIPV6Prefix,  
-  getClientIp, 
-  destroy, 
-  onClose, 
-  getWhistleData, 
-  passToWhistle, 
-  passToService,
+// });
+
+const {
+  removeIPV6Prefix,
+  getClientIp,
+  destroy,
+  onClose,
 } = require('../../../lib/main/util');
 
-describe('main util', ()=> {
+describe('main util', () => {
   test('should removeIPV6Prefix return empty', () => {
     expect(removeIPV6Prefix(123)).toBe('');
   });
 
   test('should removeIPV6Prefix return empty', () => {
     const req = {
-      headers:{
-        "XFF": "::ffff:192.1.56.10",
+      headers: {
+        XFF: '::ffff:192.1.56.10',
       },
-      socket:{
-        remoteAddress:'192.168.1.1',
+      socket: {
+        remoteAddress: '192.168.1.1',
       },
     };
-
     expect(getClientIp(req)).toEqual('192.168.1.1');
-  })
+  });
 
   test('should destory be called', () => {
     const destroyFn = jest.fn();
     const req = {
-      destroy:destroyFn,
+      destroy: destroyFn,
     };
 
     destroy(req);
@@ -47,7 +44,7 @@ describe('main util', ()=> {
   test('should abort be called', () => {
     const abortFn = jest.fn();
     const req = {
-      abort:abortFn,
+      abort: abortFn,
     };
 
     destroy(req);
@@ -56,12 +53,12 @@ describe('main util', ()=> {
 
   test('should onClose return undefined', () => {
     const req = {
-      _hasError:false,
+      _hasError: false,
       on: (type, cb) => cb(),
-      once: (type,cb) => cb(),
+      once: (type, cb) => cb(),
     };
     const res = jest.fn();
-    expect(onClose(req,res)).toBe(undefined);
+    expect(onClose(req, res)).toBe(undefined);
   });
 
   // test('should getWhistleData return promise ',()=>{
@@ -80,5 +77,4 @@ describe('main util', ()=> {
   //   const res = jest.fn()
   //   expect(getWhistleData(req)).toBeInstanceOf(Promise)
   // })
-
 });
