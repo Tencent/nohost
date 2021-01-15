@@ -12,11 +12,11 @@ type nohostContextMenuExtensions = MenuItem[];
 ```
 ***默认点击菜单会自动关闭菜单的，如果要手动关闭菜单，需要设置item.autoHide为false，并手动调用e.hide方法进行关闭***
 
-可以通过 whistle 插件或者 rule 的形式，注入 `window.nohostContextMenuExtensions`。
+可以通过 Whistle 插件或者 rule 的形式，注入 `window.nohostContextMenuExtensions`。
 > 建议不要直接对该属性赋值,不然可能存在覆盖其他插件的自定义菜单的可能。
 
 ***例子***
-通过whistle rule直接注入
+通过Whistle rule直接注入
 ```` ts
 * jsAppend://{test.js}
 
@@ -61,7 +61,7 @@ type nohostContextMenuExtensions = MenuItem[];
     <script src="/...whistle-path.5b6af7b9884e1165...///whistle.xxx/path/to/menus.js"></script>
     ```
     ````
-    `/...whistle-path.5b6af7b9884e1165.../` 是whistle内部路径，要修改的是后面/whistle.xxx/path/to/menus.js的部分
+    `/...whistle-path.5b6af7b9884e1165.../` 是Whistle内部路径，要修改的是后面/whistle.xxx/path/to/menus.js的部分
 
 效果：
 
