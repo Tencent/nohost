@@ -23,7 +23,7 @@
 
 .p-nav-bar .p-active {
   color: #1a79b9;
-  border-bottom: 1px solid #1a79b9;
+  border-top: 1px solid #1a79b9;
 }
 
 .p-nav-bar>button:hover {
@@ -42,7 +42,6 @@
   padding: 0 25px;
   font-size: 15px;
   cursor: pointer;
-  border-bottom: 1px solid transparent;
 }
 
 .p-nav-bar .p-help {
