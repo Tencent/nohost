@@ -1,4 +1,5 @@
 const path = require('path');
+
 const filePath = path.join(process.cwd(), 'test');
 process.env.WHISTLE_PATH = filePath;
 
@@ -20,14 +21,14 @@ const ctx = {
 
 ctx.whistleMgr = whistleMgr;
 
-describe('main cgi setAdmin',() => {
+describe('main cgi setAdmin', () => {
   test('admin name is not equal old admin name', async () => {
     await setAdmin(ctx);
-    expect(ctx.body).toMatchObject({ec:0});
+    expect(ctx.body).toMatchObject({ ec: 0 });
   });
 
   test('admin name is equal old admin name', async () => {
     await setAdmin(ctx);
-    expect(ctx.body).toMatchObject({ec:0});
+    expect(ctx.body).toMatchObject({ ec: 0 });
   });
 });

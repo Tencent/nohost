@@ -1,4 +1,5 @@
 const path = require('path');
+
 const filePath = path.join(process.cwd(), 'test');
 process.env.WHISTLE_PATH = filePath;
 
@@ -14,6 +15,6 @@ ctx.whistleMgr = whistleMgr;
 describe('main cgi restart', () => {
   test('ctx.body is {ec:0} after restart', () => {
     restart(ctx);
-    expect(ctx.body).toMatchObject({ec:0});
+    expect(ctx.body).toMatchObject({ ec: 0 });
   });
 });

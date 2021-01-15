@@ -1,11 +1,12 @@
 const path = require('path');
 const kill = require('kill-port');
-const filePath = path.join(process.cwd(),'test');
+
+const filePath = path.join(process.cwd(), 'test');
 process.env.WHISTLE_PATH = filePath;
 
 const createServer = require('../../lib/index');
 
-let options = {
+const options = {
   username: '',
   password: '',
   port: '8081',

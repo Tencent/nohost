@@ -1,6 +1,6 @@
-const {isLocalAddress} =  require('../../../lib/util/address');
+const { isLocalAddress } = require('../../../lib/util/address');
 
-describe('util address',()=>{     
+describe('util address', () => {
   test('should isLocalAddress be true with empty', () => {
     expect(isLocalAddress()).toBeTruthy();
   });
@@ -9,7 +9,7 @@ describe('util address',()=>{
     expect(isLocalAddress('127')).toBeTruthy();
   });
 
-  test('should isLocalAddress be true with params 0:0:0:0:0:0:0:1', ()=>{
+  test('should isLocalAddress be true with params 0:0:0:0:0:0:0:1', () => {
     expect(isLocalAddress('0:0:0:0:0:0:0:1')).toBeTruthy();
   });
 

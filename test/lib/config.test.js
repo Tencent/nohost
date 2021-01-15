@@ -1,10 +1,10 @@
-const initConfig =  require('../../lib/config');
+const initConfig = require('../../lib/config');
 
-initConfig({mode:'product'});
+initConfig({ mode: 'product' });
 
 describe('lib config test', () => {
-  const options =  require('../../lib/config');
+  const options = require('../../lib/config');
   test('should option.mode a be equal product', () => {
-      expect(options.mode).toBe('product');
+    expect(options.mode).toBe('product');
   });
 });
