@@ -75,7 +75,7 @@ function showUsage(isRunning, options, restart) {
   }).join('\n'));
 
   warn('     Note: If all the above URLs are unable to access, check the firewall settings');
-  warn(`           For help see ${colors.bold('https://github.com/nohosts/nohost')}`);
+  warn(`           For help see ${colors.bold('https://nohost.pro/')}`);
 
   if (parseInt(process.version.slice(1), 10) < 6) {
     // eslint-disable-next-line
