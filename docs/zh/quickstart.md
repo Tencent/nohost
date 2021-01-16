@@ -19,7 +19,7 @@ npm i -g @nohost/server --registry=https://r.npm.taobao.org
 n2 start
 ```
 > Nohost 的默认端口为 8080，如果需要自定义端口，可以通过 `n2 restart -p 80` 设置。
-> 如果命令行提示没有对应命令，检查下系统环境变量 `PATH` 配置，看看 nohost 安装后生成的命令所在目录是否已添加到 `PATH`。
+> 如果命令行提示没有对应命令，检查下系统环境变量 `PATH` 配置，看看 Nohost 安装后生成的命令所在目录是否已添加到 `PATH`。
 
 重启 `Nohost`：
 ``` sh
@@ -39,7 +39,7 @@ n2 restart --reset
 ## 配置
 
 安装启动成功后，打开管理员页面 `http://10.1.2.3:8080/admin.html#system/administrator`，输入默认用户名（`admin`）和密码（`123456`），打开系统配置后：
-> 其中 `10.1.2.3` 表示nohost运行的服务器IP，具体根据实际 ServerIP 替换
+> 其中 `10.1.2.3` 表示Nohost运行的服务器IP，具体根据实际 ServerIP 替换
 1. 修改管理员的默认账号名和密码（**不建议使用默认账号及密码，如果忘记管理员账号名或密码，可以通过 `n2 restart --reset` 重置**）
 2. 设置Nohost的域名（将申请的域名填上，如果需要设置多个域名，可以通过逗号 `,` 分隔）
 3. 上传涉及的 key 和证书（证书只支持 `.crt` 格式）
@@ -66,4 +66,4 @@ Nohost 本身就是一个代理，可以直接配置浏览器或系统代理访�
 非开发人员尽量使用客户端、APP、或通过外网转发的方式，减少他们的接入成本，如何打包客户端参考：[https://github.com/nohosts/client](https://github.com/nohosts/client)；手机等同后台开发的配置方式。
 
 #### 外网访问
-一般 nohost 是部署在公司内网，外网是不可以直接访问，需要通过接入层（如：Nginx）转发。
+一般 Nohost 是部署在公司内网，外网是不可以直接访问，需要通过接入层（如：Nginx）转发。

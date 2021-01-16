@@ -2,7 +2,7 @@
 
 Nohost 是基于 Whistle 实现的多用户环境配置及抓包调试服务。小圆点里面出现的账号，需要到Nohost管理平台配置。
 地址为http://imwebtest.test.com:8080/admin.html#accounts
-> 其中 imwebtest.test.com 表示nohost运行的域名
+> 其中 imwebtest.test.com 表示Nohost运行的域名
 
 页面如下图所示：
 
@@ -13,7 +13,7 @@ Nohost 是基于 Whistle 实现的多用户环境配置及抓包调试服务。�
 
 新添加的账号可以设置独立的规则，地址为：
 http://imwebtest.test.com:8080/data.html?name={新建的账号}
-> 其中 imwebtest.test.com 表示nohost运行的域名
+> 其中 imwebtest.test.com 表示Nohost运行的域名
 
 ![账号规则](https://user-images.githubusercontent.com/4689952/69627831-62f35e00-1086-11ea-8a37-95647c392242.png)
 

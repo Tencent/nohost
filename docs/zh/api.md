@@ -4,7 +4,7 @@ Nohost 也对外提供了接口，方便第三方平台（如：发布部署系�
 > 以下假设当前 Nohost 部署对域名和端口为 `imwebtest.test.com:8080`
 
 首先，需要在管理员页面设置 `Auth Key` ：
-![image](https://user-images.githubusercontent.com/11450939/69726792-3a3d9800-115c-11ea-841d-d2bb5922d089.png)
+![image](https://user-images.githubusercontent.com/29788452/104795699-5cc0c380-57eb-11eb-80fd-645ecaae8670.png)
 
 假设设置的 `Auth Key`  为：`test@imweb`。
 
