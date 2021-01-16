@@ -1,6 +1,6 @@
 # 证书
 
-nohost作为代理抓包服务器，如果用户希望nohost能抓包https请求，则需要用到“中间人攻击”原理。
+Nohost作为代理抓包服务器，如果用户希望Nohost能抓包https请求，则需要用到“中间人攻击”原理。
 
 ![中间人](https://user-images.githubusercontent.com/4689952/69628380-a3eb7280-1086-11ea-9863-cbdc4ab0be85.png)
 
@@ -8,19 +8,19 @@ nohost作为代理抓包服务器，如果用户希望nohost能抓包https请求
 
 
 让客户端信任中间人的证书有2种方案：
-1. 客户端安装whistle的根证书
-2. 客户端不需要安装whistle的根证书，nohost服务器安装业务域名真实的证书，这样nohost服务器可以充当“真实”服务器
+1. 客户端安装Whistle的根证书
+2. 客户端不需要安装Whistle的根证书，Nohost服务器安装业务域名真实的证书，这样Nohost服务器可以充当“真实”服务器
 
-> 这里的**中间人** 就是nohost代理。
+> 这里的**中间人** 就是Nohost代理。
 
-如果希望https的页面能注入**环境选择小圆点**，也是有必要实施上面的2种方案，否则nohost代理是没法拦截页面然后在页面注入脚本的。用户体验上，第二种方案nohost代理上传证书，可以省去让用户安装whistle根证书的麻烦。
+如果希望https的页面能注入**环境选择小圆点**，也是有必要实施上面的2种方案，否则Nohost代理是没法拦截页面然后在页面注入脚本的。用户体验上，第二种方案Nohost代理上传证书，可以省去让用户安装Whistle根证书的麻烦。
 
 
 **上传证书**
 
-nohost管理页面提供了上传业务域名证书功能, 地址为
+Nohost管理页面提供了上传业务域名证书功能, 地址为
 http://imwebtest.test.com:8080/admin.html#certs
-> 其中 imwebtest.test.com 表示nohost运行的域名
+> 其中 imwebtest.test.com 表示Nohost运行的域名
 
 ![上传证书](https://user-images.githubusercontent.com/4689952/69628531-b4035200-1086-11ea-9935-7feb0cfd2df7.png)
 
