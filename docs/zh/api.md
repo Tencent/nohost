@@ -1,7 +1,7 @@
 # API
-nohost 也对外提供了接口，方便第三方平台（如：发布部署系统）对接 nohost，可以对 nohost 账号对环境进行增删查改。
+Nohost 也对外提供了接口，方便第三方平台（如：发布部署系统）对接 Nohost，可以对 Nohost 账号对环境进行增删查改。
 
-> 以下假设当前 nohost 部署对域名和端口为 `imwebtest.test.com:8080`
+> 以下假设当前 Nohost 部署对域名和端口为 `imwebtest.test.com:8080`
 
 首先，需要在管理员页面设置 `Auth Key` ：
 ![image](https://user-images.githubusercontent.com/11450939/69726792-3a3d9800-115c-11ea-841d-d2bb5922d089.png)
