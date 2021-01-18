@@ -21,5 +21,7 @@ module.exports = {
   coveragePathIgnorePatterns: [
     '/node_modules/',
   ],
+  clearMocks: true,
   coverageReporters: ['json', 'json-summary', 'lcov', 'text', 'clover'],
+  coverageDirectory: 'coverage',
 };
