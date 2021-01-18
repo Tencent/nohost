@@ -1,3 +1,7 @@
+# v0.6
+1. style: 调整界面样式
+2. refactor: 调整 GC 参数
+
 # v0.5
 1. feat: 添加 headless 模式
 2. fix: 内存泄露问题

@@ -9,6 +9,9 @@ import { getAdministratorSettings, restart } from '../cgi';
 import './index.css';
 import Tabs from '../../components/tab';
 
+
+const RESTART_TITLE = <span><Icon type="redo" /> 重启服务</span>;
+
 /* eslint-disable no-alert */
 const { TabPane } = Tabs;
 class Settings extends Component {
@@ -114,13 +117,13 @@ class Settings extends Component {
             tab={(
               <span>
                 <Icon type="redo" />
-                重启操作
+                重启服务
               </span>
             )}
             tabKey="restart"
           >
             <div className="p-mid-con">
-              <Panel title="重启操作">
+              <Panel title={RESTART_TITLE}>
                 <Button type="danger" disabled={this.restarting} onClick={this.restart}>重启</Button>
               </Panel>
             </div>

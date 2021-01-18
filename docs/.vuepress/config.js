@@ -8,7 +8,7 @@ module.exports = {
   ],
   themeConfig: {
     logo: '/logo.png',
-    repo: 'https://github.com/nohosts/nohost.git',
+    repo: 'https://github.com/Tencent/nohost.git',
     repoLabel: 'GitHub',
     displayAllHeaders: true,
     sidebarDepth: 1,

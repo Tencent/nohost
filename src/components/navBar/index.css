@@ -1,16 +1,17 @@
 .p-nav-bar {
-  background: #1084d4;
-  color: #fff;
+  background: #f1f3f4;
+  color: rgba(0,0,0,.85);
   min-width: 1200px;
   height: 60px;
   position: relative;
+  border-bottom: 1px solid #ddd;
 }
 
 .p-logo {
   display: inline-block;
   line-height: 60px;
   padding: 0 30px 0 65px;
-  color: #fff;
+  color: rgba(0,0,0,.85);
   font-size: 20px;
   background: url(../../img/logo.png) 10px center no-repeat;
   background-size: 42px;
@@ -20,22 +21,28 @@
   vertical-align: middle;
 }
 
-.p-nav-bar>button:hover, .p-nav-bar .p-active {
-  background-color: #1a79b9;
+.p-nav-bar .p-active {
+  color: #1a79b9;
+  border-bottom: 1px solid #1a79b9;
+}
+
+.p-nav-bar>button:hover {
+  color: #1a79b9;
 }
 
 .p-nav-bar .p-logo:hover {
-  color: #fff;
+  color: rgba(0,0,0,.85);
 }
 
 .p-nav-bar button {
   background-color: transparent;
   border: 0;
-  line-height: 60px;
+  line-height: 59px;
   outline: none;
   padding: 0 25px;
   font-size: 15px;
   cursor: pointer;
+  border-bottom: 1px solid transparent;
 }
 
 .p-nav-bar .p-help {
@@ -49,7 +56,7 @@
 }
 
 .p-nav-bar .p-help a {
-  color: #fff;
+  color: rgba(0,0,0,.85);
 }
 .p-nav-bar .p-help-menu {
   margin-left: 5px;

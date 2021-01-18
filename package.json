@@ -1,6 +1,6 @@
 {
   "name": "@nohost/server",
-  "version": "0.5.34",
+  "version": "0.6.0",
   "description": "Multi-user & multi-env web debugging proxy based on whistle",
   "main": "index.js",
   "bin": {
@@ -13,18 +13,20 @@
   },
   "port": 8080,
   "scripts": {
-    "lint": "eslint *.js lib src bin",
-    "lintfix": "eslint --fix *.js lib src bin",
+    "lint": "eslint *.js lib test src bin",
+    "lintfix": "eslint --fix *.js lib test src bin",
     "dev": "rimraf public && webpack --config ./src/config/webpack.dev.js -w",
     "dist": "rimraf public && webpack --config ./src/config/webpack.prod.js",
     "start": "node bin/nohost run",
     "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs"
+    "docs:build": "vuepress build docs",
+    "test": "jest --config=./test/jest/jest.config.js --coverage",
+    "test:watch": "jest --config=./test/jest/jest.config.js --watchAll --coverage"
   },
   "registry": "https://registry.npmjs.org/@nohost/server",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nohosts/nohost.git"
+    "url": "git+https://github.com/Tencent/nohost.git"
   },
   "keywords": [
     "whistle",
@@ -34,9 +36,9 @@
   "author": "avwu <avwu@qq.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/nohosts/nohost/issues"
+    "url": "https://github.com/Tencent/nohost/issues"
   },
-  "homepage": "https://github.com/nohosts/nohost#readme",
+  "homepage": "https://github.com/Tencent/nohost#readme",
   "devDependencies": {
     "antd": "^3.25.3",
     "babel-core": "^6.25.0",
@@ -56,7 +58,9 @@
     "eslint-config-imweb": "^0.2.19",
     "file-loader": "^4.2.0",
     "html-webpack-plugin": "^3.2.0",
+    "jest": "^26.5.2",
     "jquery": "3.3.1",
+    "kill-port": "^1.6.1",
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
     "prop-types": "^15.5.10",

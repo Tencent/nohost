@@ -1,10 +1,18 @@
+/* Tencent is pleased to support the open source community by making nohost-环境配置与抓包调试平台 available.
+* Copyright (C) 2020 THL A29 Limited, a Tencent company.  All rights reserved. The below software in
+* this distribution may have been modified by THL A29 Limited ("Tencent Modifications").
+* All Tencent Modifications are Copyright (C) THL A29 Limited.
+* nohost-环境配置与抓包调试平台 is licensed under the MIT License except for the third-party components listed below.
+*/
+
 import React, { Component } from 'react';
-import { Form, Input, Button, message } from 'antd';
+import { Form, Input, Icon, Button, message } from 'antd';
 import Panel from '../../../components/panel';
 import { FORM_ITEM_LAYOUT, SUBMIT_BTN_LAYOUT } from '../../util';
 import { setAuthKey } from '../../cgi';
 
 const AUTH_KEY_RE = /^[\w.@-]{1,32}$/;
+const AUTH_TITLE = <span><Icon type="setting" /> 设置 Auth Key</span>;
 
 class AuthKeySetting extends Component {
   handleSubmit = e => {
@@ -29,7 +37,7 @@ class AuthKeySetting extends Component {
 
     return (
       <div className="p-mid-con">
-        <Panel title="设置 Auth Key">
+        <Panel title={AUTH_TITLE}>
           <Form {...FORM_ITEM_LAYOUT} onSubmit={this.handleSubmit}>
             <Form.Item label="Auth Key">
               {getFieldDecorator('authKey', {

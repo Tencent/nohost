@@ -14,6 +14,7 @@ const {
   setJsonData,
   setRulesTpl,
   setTestRules,
+  setAccountRules,
   setDefaultRules,
   setAuthKey,
   getFollower,
@@ -51,6 +52,10 @@ const {
   },
   setDefaultRules: {
     url: 'cgi-bin/admin/set-default-rules',
+    type: 'post',
+  },
+  setAccountRules: {
+    url: 'cgi-bin/admin/set-account-rules',
     type: 'post',
   },
   setAuthKey: {
@@ -140,6 +145,7 @@ export {
   setJsonData,
   setRulesTpl,
   setTestRules,
+  setAccountRules,
   setDefaultRules,
   setAuthKey,
   getFollower,

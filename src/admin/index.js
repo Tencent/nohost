@@ -76,7 +76,13 @@ class App extends Component {
         <NavBar active={active} onChange={this.onTabChange} />
         <div className={`fill vbox p-container${showWhistle ? ' p-full-container' : ''}`}>
           { accounts ? <Accounts hide={active !== 'accounts'} /> : null }
-          { whistle ? <iframe title="全局规则" className={`fill capture-win ${showWhistle ? '' : 'p-hide'}`} src="whistle/" /> : null }
+          { whistle ? (
+            <iframe
+              title="全局规则"
+              className={`fill capture-win ${showWhistle ? '' : 'p-hide'}`}
+              src="whistle/"
+            />
+          ) : null }
           { config ? <Config onItemChange={this.onConfigChange} hide={active !== 'config'} /> : null }
           { certs ? <Certs hide={active !== 'certs'} /> : null }
           { system ? <Settings onItemChange={this.onSettingsChange} hide={active !== 'system'} /> : null }

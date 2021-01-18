@@ -7,10 +7,10 @@ import { getString } from './util';
 import '../base.less';
 
 const ACCESS_CODE_RE = /^[a-z\d]{4}$/i;
-let { name, date, username, encrypted } = parse(window.location.search);
-name = getString(name);
-date = getString(date);
-username = getString(username);
+const { name: n, date: d, username: u, encrypted } = parse(window.location.search);
+const name = getString(n);
+const date = getString(d);
+const username = getString(u);
 
 const clearNetwork = name ? '&clearNetwork=true' : '';
 

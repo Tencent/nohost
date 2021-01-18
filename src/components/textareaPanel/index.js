@@ -40,12 +40,20 @@ class TextAreaPanel extends Component {
     const { value, isSaveBtnDisabled } = this.state;
 
     return (
-      <Panel title={title}>
+      <Panel>
         <div className="p-action-bar">
+          {title}
           {
             buttons
               ? [...buttons]
-              : <Button type="primary" onClick={this.handleSave} disabled={isSaveBtnDisabled}><Icon type="save" /> 保存</Button>
+              : (
+                <Button
+                  type="primary"
+                  onClick={this.handleSave}
+                  disabled={isSaveBtnDisabled}
+                ><Icon type="save" /> 保存
+                </Button>
+              )
             }
         </div>
         <TextArea

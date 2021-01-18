@@ -1,3 +1,11 @@
+/**
+ * Tencent is pleased to support the open source community by making nohost-环境配置与抓包调试平台 available.
+ * Copyright (C) 2020 THL A29 Limited, a Tencent company.  All rights reserved. The below software in
+ * this distribution may have been modified by THL A29 Limited ("Tencent Modifications").
+ * All Tencent Modifications are Copyright (C) THL A29 Limited.
+ * nohost-环境配置与抓包调试平台 is licensed under the MIT License except for the third-party components listed below.
+ */
+
 import $ from 'jquery';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
@@ -14,18 +22,33 @@ const query = parse(search);
 const PREFIX_LEN = 'x-nohost-'.length;
 const URL_DIR = href.replace(/[^/]+([?#].*)?$/, '');
 const REDIRECT_URL = `${URL_DIR.replace(/:\d+/, '')}redirect`;
-const isDaemon = /^\$\d+$/.test(query.name);
+const isHeadless = /^\$\d+$/.test(query.name);
 const { tab, filter } = query;
 let pageName;
-
+// 通过请求参数获取当前显示的页面
 if (['network', 'rules', 'values', 'plugins'].indexOf(tab) !== -1) {
   pageName = `#${tab}`;
 } else {
   pageName = (query.name && !query.env) ? '#rules' : '#network';
 }
-
-window.onWhistlePageChange = name => (pageName = `#${name}`);
-
+// iframe 切换页面时的回调
+window.onWhistlePageChange = name => {
+  pageName = `#${name}`;
+};
+// localStorage
+const setLocalStorage = (key, value) => {
+  try {
+    localStorage[key] = value;
+  } catch (e) {}
+};
+// localStorage
+const getLocalStorage = (key) => {
+  try {
+    return localStorage[key];
+  } catch (e) {}
+};
+// 获取抓包url
+// 打开该 url 可以选择好指定环境并切换到选中到环境
 const getRedirectUrl = (value, url) => {
   value = value || [];
   value = value.filter(v => v);
@@ -44,15 +67,15 @@ const getRedirectUrl = (value, url) => {
   }
   return value.length ? `${REDIRECT_URL}?${value.join('&')}` : REDIRECT_URL;
 };
-
+// 显示详细规则
 const formatRules = (data) => {
-  let { rules, headers } = data;
-  headers = Object.keys(headers).map((name) => {
+  const { rules, headers } = data;
+  const curHeaders = Object.keys(headers).map((name) => {
     return `${name.substring(PREFIX_LEN)}: ${headers[name]}`;
   }).join('\n');
   const result = [];
-  if (headers) {
-    result.push(`# nohost配置\n${headers}`);
+  if (curHeaders) {
+    result.push(`# nohost配置\n${curHeaders}`);
   }
   if (rules) {
     result.push(`# whistle规则\n${rules}`);
@@ -69,21 +92,26 @@ $(window).on('blur', () => {
 });
 
 const getUrl = (name, envName) => {
-  if (isDaemon) {
+  if (isHeadless) {
     return `account/${query.name}/index.html?${pageName}${filter ? `?${filter}` : ''}`;
   }
   if (!name) {
     return;
   }
-  const own = `?ip=${localStorage.viewOwn ? 'self' : ''}${envName ? `&ruleName=${encodeURIComponent(envName)}` : ''}`;
+  // whistle 支持通过 ip 过滤抓包数据
+  // 如果 ip=self 表示直接使用当前客户端 ip 过滤
+  const viewOwn = getLocalStorage('viewOwn') ? 'self' : '';
+  const own = `?ip=${viewOwn}${envName ? `&ruleName=${encodeURIComponent(envName)}` : ''}`;
   let url = `account/${name}/index.html?${pageName}${own}`;
   if (envName) {
     const env = encodeURIComponent(`${name}/${envName.trim() || ''}`);
+    // name=x-whistle-nohost-env：表示获取请求头 x-whistle-nohost-env 的值包含 ${env} 的请求
+    // mtype=exact：表示精确匹配，不填或其它表示不区分大小写的子字符串
     url = `${url}&name=x-whistle-nohost-env&value=${env}&mtype=exact`;
   }
   return `${url}${filter ? `&${filter}` : ''}`;
 };
-
+// 支持 copy
 const clipboard = new ClipboardJS('.n-copy-btn');
 
 clipboard.on('error', () => {
@@ -92,16 +120,26 @@ clipboard.on('error', () => {
 clipboard.on('success', () => {
   message.success('Copied clipboard.');
 });
+
+
 /* eslint-disable react/no-access-state-in-setstate */
+/**
+ * 抓包界面
+ * 存在两种情况：
+ * 1. 普通模式
+ * 2. headless
+ */
 class Capture extends Component {
+  // 需要注意 headless 模式
   state = {
-    url: isDaemon ? getUrl() : undefined,
+    url: isHeadless ? getUrl() : undefined,
     redirectUrl: REDIRECT_URL,
-    testUrl: localStorage.nohostTestUrl || '',
+    testUrl: getLocalStorage('nohostTestUrl') || '',
   }
 
   componentDidMount() {
-    if (isDaemon) {
+    // headless 无需加载账号列表
+    if (isHeadless) {
       return;
     }
     this.loadData();
@@ -110,7 +148,9 @@ class Capture extends Component {
       clearTimeout(timer);
       timer = setTimeout(this.loadData, 5000);
     };
+    // iframe 里面到规则发生变化时触发该方法
     window.onWhistleRulesChange = debounce;
+    // iframe 初始化完成
     window.onWhistleReady = debounce;
   }
 
@@ -121,6 +161,7 @@ class Capture extends Component {
     });
   }
 
+  // input 框失焦更新测试环境 url
   onTestUrlBlur = () => {
     const { envValue, testUrl } = this.state;
     this.setState({
@@ -129,12 +170,13 @@ class Capture extends Component {
   }
 
   onTestUrlChange = (e) => {
+    // 生成对应url的二维码
     clearTimeout(this.timer);
     const testUrl = e.target.value;
     const { envValue } = this.state;
     this.timer = setTimeout(() => {
       this.setState({ redirectUrl: getRedirectUrl(envValue, testUrl) });
-      localStorage.nohostTestUrl = testUrl;
+      setLocalStorage('nohostTestUrl', testUrl);
     }, 600);
     this.setState({ testUrl });
   }
@@ -147,7 +189,7 @@ class Capture extends Component {
         value.push(curEnv.envName || '');
       }
     }
-    localStorage.curEnvValue = JSON.stringify(value);
+    setLocalStorage('curEnvValue', JSON.stringify(value));
     this.setState({
       value,
       url: getUrl(value[0], value[1]),
@@ -155,6 +197,7 @@ class Capture extends Component {
   }
 
   getEnvValue(envMap, curEnv) {
+    // 格式化环境信息，确保对应环境存在
     const formatEnvValue = (name, envName) => {
       if (!name || !envMap[name]) {
         return;
@@ -172,12 +215,14 @@ class Capture extends Component {
     const { name, envName } = curEnv || '';
     result = formatEnvValue(name, envName);
     try {
-      const localEnv = JSON.parse(localStorage.curEnvValue) || [];
+      // 如果没有选择环境，则从本地存储获取
+      const localEnv = JSON.parse(getLocalStorage('curEnvValue')) || [];
       result = formatEnvValue(...localEnv) || result;
     } catch (e) {}
     return result;
   }
 
+  // 自动补全功能
   initHints = (data) => {
     const list = [];
     const rulesMap = {};
@@ -189,6 +234,7 @@ class Capture extends Component {
         list.push(envName);
       });
     });
+    // 给通过 iframe 引入的 whistle 提供 @ 自动补全的数据
     window.getAtValueListForWhistle = (keyword) => {
       keyword = keyword && keyword.trim();
       if (!keyword) {
@@ -207,10 +253,12 @@ class Capture extends Component {
       return result;
     };
     const getEnvName = (name, url) => {
+      // 通过路径获取账号名称
       url = url.replace(/\/[^/]*([?#].*)?$/, '');
       const accountName = url.substring(url.lastIndexOf('/') + 1);
       return `${accountName}/${name}`;
     };
+    // 添加帮助链接
     const getAtHelpUrlForWhistle = (name, options) => {
       if (options && options.name === 'Default') {
         return;
@@ -231,7 +279,10 @@ class Capture extends Component {
       this.setState({ rules, showRules: true, envName: name });
       return false;
     };
+    // 给 iframe 的回调
+    // 点击帮助时触发回调该方法
     window.getAtHelpUrlForWhistle = getAtHelpUrlForWhistle;
+    // 按快捷键时触发回调该方法
     window.onWhistleRulesEditorKeyDown = (e, { name, url }) => {
       const { keyCode } = e;
       if (keyCode === 13 || keyCode === 27) {
@@ -250,6 +301,7 @@ class Capture extends Component {
   }
 
   loadData = () => {
+    // 加载所有账号，不包括内容
     getAllAccounts((data) => {
       const envMap = {};
       const options = data.list.map((user) => {
@@ -261,6 +313,9 @@ class Capture extends Component {
             value: name,
           };
         });
+        // All 选项用于查看账号的所有请求
+        // 默认环境 用于查看账号默认环境的请求
+        // 默认环境一般可作为正式环境
         children.unshift({
           label: 'All',
           value: '',
@@ -276,7 +331,7 @@ class Capture extends Component {
       });
       const state = { options };
       if (!this.state.options) {
-        state.viewOwn = localStorage.viewOwn === '1';
+        state.viewOwn = getLocalStorage('viewOwn') === '1';
         const value = this.getEnvValue(envMap, data.curEnv);
         state.value = value;
         state.envValue = value;
@@ -288,6 +343,7 @@ class Capture extends Component {
       this.setState(state);
       this.initHints(data);
       this.envData = data;
+      // 给 iframe 页面提供获取账号数据的方法
       if (!window.getNohostEnvData) {
         window.getNohostEnvData = cb => (cb && cb(this.envData));
       }
@@ -295,6 +351,7 @@ class Capture extends Component {
   }
 
   showQRCode = () => {
+    // 关联手机端请求
     this.setState({ showQRCode: true, qrCode: undefined });
     this.loadQRCode();
   }
@@ -304,6 +361,7 @@ class Capture extends Component {
   }
 
   loadQRCode = () => {
+    // 生成二维码
     this.setState({ loadQRCodeError: false, followerIp: undefined });
     getFollower((data) => {
       if (!data) {
@@ -333,9 +391,10 @@ class Capture extends Component {
     });
   }
 
+  // 只看本机请求
   viewOwn = (e) => {
     const { checked } = e.target;
-    localStorage.viewOwn = checked ? '1' : '';
+    setLocalStorage('viewOwn', checked ? '1' : '');
     const url = (this.state.url || '').replace(/\?ip=[^&]*/, checked ? '?ip=self' : '?ip=');
     this.setState({
       url,
@@ -343,6 +402,7 @@ class Capture extends Component {
     });
   }
 
+  // 去掉关联的ip（关联 IP 后该 IP 的所有请求也会被当成本机请求）
   unfollow = () => {
     unfollow();
     this.confirmQRCode();
@@ -366,6 +426,7 @@ class Capture extends Component {
       showQRCode, qrCode, followerIp, redirectUrl, envValue, showTestDialog,
     } = this.state;
     let { url } = this.state;
+    // 切换抓包界面
     url = url && url.replace(/#\w*/, pageName);
     let qrCodeTips;
     if (!qrCode) {
@@ -394,7 +455,7 @@ class Capture extends Component {
         qrcodeElem = <QRCode size="340" value={qrCode} />;
       }
     }
-    return !isDaemon && !options ? null : (
+    return !isHeadless && !options ? null : (
       <div className="container fill vbox">
         <div
           style={{ display: showRules ? 'block' : 'none' }}
@@ -420,7 +481,8 @@ class Capture extends Component {
             </div>
           </div>
         </div>
-        <div className="action-bar" style={{ display: isDaemon ? 'none' : 'block' }}>
+        {/* 顶部操作栏，headless 默认隐藏 */}
+        <div className="action-bar" style={{ display: isHeadless ? 'none' : 'block' }}>
           <Cascader
             onChange={this.onChange}
             options={options}
@@ -468,6 +530,8 @@ class Capture extends Component {
           {qrcodeElem}
           {qrCodeTips}
         </Modal>
+        {/* 生成包含环境信息的链接和二维码 */}
+        {/* 打开链接或扫描扫描二维码会自动切换到指定页面及环境 */}
         <Modal
           className="n-create-test-env-dialog"
           width={620}
