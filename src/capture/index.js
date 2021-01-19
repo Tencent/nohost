@@ -146,7 +146,7 @@ class Capture extends Component {
     let timer;
     const debounce = () => {
       clearTimeout(timer);
-      timer = setTimeout(this.loadData, 5000);
+      timer = setTimeout(this.loadData, 3000);
     };
     // iframe 里面到规则发生变化时触发该方法
     window.onWhistleRulesChange = debounce;
