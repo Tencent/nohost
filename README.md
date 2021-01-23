@@ -28,6 +28,8 @@ Nohost 是基于 [Whistle](https://github.com/avwo/whistle) 实现的多用户�
 
 [七. 规则](#Whistle)
 
+[八. 加群](#add)
+
 
 # <a href="#prepare" id="prepare">一. 准备</a>
 安装 Nohost 之前，建议先做好以下工作：
@@ -159,6 +161,10 @@ ke.qq.com
 这个是 Nohost 主进程 Whistle，所有请求都会通过该 Whistle，并通过该进程的 whistle.nohost 插件进行账号管理及请求转发，主进程 Whistle 在生产环境下无法查看抓包数据，可用于设置规则及全局插件管理，如：屏蔽一些请求等等，更多内容参见后面的文档。
 
 **详细内容参见文档：[https://nohost.pro/](https://nohost.pro/)**
+
+# <a href="#add" id="add">八. 加群</a>
+欢迎大家加入Nohost交流群。
+![二维码](https://user-images.githubusercontent.com/29788452/105123328-d0780e80-5b12-11eb-8704-4bacc603b140.png)
 
 
 # License
