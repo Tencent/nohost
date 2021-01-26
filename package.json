@@ -78,7 +78,7 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
-    "@nohost/connect": "^1.0.0",
+    "@nohost/connect": "^1.0.1",
     "async-limiter": "^2.0.0",
     "basic-auth": "^2.0.1",
     "colors": "^1.4.0",
