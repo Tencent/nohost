@@ -163,8 +163,8 @@ ke.qq.com
 **详细内容参见文档：[https://nohost.pro/](https://nohost.pro/)**
 
 # <a href="#add" id="add">八. 加群</a>
-欢迎大家加入Nohost交流群。
-![二维码](https://user-images.githubusercontent.com/29788452/105123328-d0780e80-5b12-11eb-8704-4bacc603b140.png)
+欢迎大家加入Nohost交流群。考虑到群二维码有时效限制，请大家扫码加好友，验证回复 `Nohost` ，会统一将大家拉进群。
+![二维码](https://user-images.githubusercontent.com/29788452/105933529-8bf7f000-6089-11eb-9e0a-6ab40604e355.png)
 
 
 # License
