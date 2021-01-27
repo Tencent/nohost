@@ -123,6 +123,7 @@ if (/^([a-z]{1,2})?uni(nstall)?$/.test(cmd)) {
     .option('-p, --port [proxyPort]', 'set the listening port or host:port (8080 by default)', String, undefined)
     .option('-n, --username [username]', 'set the username to admin', String, undefined)
     .option('-w, --password [password]', 'set the password to admin', String, undefined)
+    .option('-k, --authKey [authKey]', 'set the authKey to admin', String, undefined)
     .option('-o, --nohostDomain [domain]', 'set the nohost domain (as: nohost.imweb.io,xxx.yyy.com)', String, undefined)
     .option('-a, --account <account>', 'set the account for installing the plugin (all accounts by default)', String, undefined)
     .option('-s, --storage <host:port>', 'set the host:port of server to save the request data', String, undefined)

@@ -17,6 +17,7 @@ const {
   setAccountRules,
   setDefaultRules,
   setAuthKey,
+  getAuthKey,
   getFollower,
   unfollow,
   restart,
@@ -34,6 +35,7 @@ const {
     mode: 'cancel',
   },
   loadSettings: 'cgi-bin/admin/get-settings',
+  getAuthKey: 'cgi-bin/admin/get-auth-key',
   setEntryPatterns: {
     url: 'cgi-bin/admin/set-entry-patterns',
     type: 'post',
@@ -117,12 +119,41 @@ const getSettings = (cb) => {
 };
 
 const getAdministratorSettings = (cb) => {
-  getAdminSettings((data) => {
-    if (!data) {
-      return setTimeout(() => getAdministratorSettings(cb), 1000);
+  let count = 2;
+  let authData;
+  let settings;
+  let handleCb = null;
+  const loadData = () => {
+    if (authData) {
+      handleCb();
+    } else {
+      getAuthKey((data) => {
+        authData = data;
+        handleCb();
+      });
     }
-    cb(data);
-  });
+    if (settings) {
+      handleCb();
+    } else {
+      getAdminSettings((data) => {
+        settings = data;
+        handleCb();
+      });
+    }
+  };
+  handleCb = () => {
+    if (--count > 0) {
+      return;
+    }
+    if (!authData || !settings) {
+      count = 2;
+      setTimeout(loadData, 1000);
+      return;
+    }
+    settings.authKey = authData.authKey;
+    cb(settings);
+  };
+  loadData();
 };
 
 const {
