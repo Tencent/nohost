@@ -23,5 +23,6 @@ module.exports = {
   ],
   clearMocks: true,
   coverageReporters: ['json', 'json-summary', 'lcov', 'text', 'clover'],
-  coverageDirectory: 'coverage',
+  coverageDirectory: 'test/coverage',
+  rootDir:'../../',
 };
