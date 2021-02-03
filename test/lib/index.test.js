@@ -9,8 +9,9 @@ const createServer = require('../../lib/index');
 const options = {
   username: '',
   password: '',
-  port: '8081',
+  port: '3002',
 };
+// kill(8080, 'tcp');
 
 describe('lib index', () => {
   test('', () => {

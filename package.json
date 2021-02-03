@@ -20,7 +20,7 @@
     "start": "node bin/nohost run",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
-    "test": "jest --config=./test/jest/jest.config.js --coverage",
+    "test": "jest --config=./test/jest/jest.config.js --coverage --detectOpenHandles --forceExit",
     "test:watch": "jest --config=./test/jest/jest.config.js --watchAll --coverage"
   },
   "registry": "https://registry.npmjs.org/@nohost/server",

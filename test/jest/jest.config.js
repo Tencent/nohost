@@ -9,7 +9,6 @@ const path = require('path');
 
 module.exports = {
   moduleFileExtensions: ['js'],
-  rootDir: '..',
   transform: {
     // '^.+\\.(ts|tsx)$': 'ts-jest',
     // 加载babel配置,
@@ -24,5 +23,6 @@ module.exports = {
   clearMocks: true,
   coverageReporters: ['json', 'json-summary', 'lcov', 'text', 'clover'],
   coverageDirectory: 'test/coverage',
-  rootDir:'../../',
+  rootDir: '../../',
+  testTimeout: 30000,
 };
