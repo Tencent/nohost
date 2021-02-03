@@ -490,7 +490,7 @@ class Capture extends Component {
             placeholder="选择抓包环境"
             showSearch
           />
-          <Icon type="copy" data-clipboard-text={value ? alue.join('/') : '正式环境'} className="n-copy-btn n-copy-env" title="点击复制环境名称" />
+          <Icon type="copy" data-clipboard-text={value ? value.join('/') : '正式环境'} className="n-copy-btn n-copy-env" title="点击复制环境名称" />
           <span className="view-self-only">
             <Checkbox onChange={this.viewOwn} checked={viewOwn}>
               只看本机请求
