@@ -4,6 +4,16 @@ const filePath = path.join(process.cwd(), 'test');
 process.env.WHISTLE_PATH = filePath;
 const kill = require('kill-port');
 
+const {
+  removeIPV6Prefix,
+  getClientIp,
+  destroy,
+  onClose,
+  getWhistleData,
+  passToWhistle,
+  passToService,
+} = require('../../../lib/main/util');
+
 jest.mock('http', () => {
   return {
     request: (opts, cb) => {
@@ -15,6 +25,7 @@ jest.mock('http', () => {
         },
         statusCode: 200,
         setEncoding: () => '',
+        pipe: () => '',
       };
       cb(obj);
       return obj;
@@ -34,6 +45,7 @@ const socket = {
   once: () => true,
   removeAllListeners: () => true,
   destroy: () => true,
+  write: () => true,
 };
 jest.mock('net', () => {
   return {
@@ -46,23 +58,17 @@ jest.mock('net', () => {
     },
   };
 });
-// process.on('unhandledRejection', function (err) {
 
-// });
-
-const {
-  removeIPV6Prefix,
-  getClientIp,
-  destroy,
-  onClose,
-  getWhistleData,
-  passToWhistle,
-  passToService,
-} = require('../../../lib/main/util');
+const reqSock = {
+  on: type => type,
+  once: type => type,
+  pipe: () => reqSock,
+};
 
 const whistleReq = {
   headers: {
     'content-length': 10,
+    'x-forwarded-for': 'localhost:9001',
   },
   _hasError: false,
   dispatch(name) {
@@ -151,40 +157,71 @@ describe('main util', () => {
   });
 
   kill(30013, 'tcp');
-  test('passToService', async () => {
-    const cb = jest.fn();
-    const ctx = {
-      set: name => name,
-      req: {
-        url: 'ke.qq.com',
-        method: 'GET',
-        headers: {
-          'x-forwarded-for': 'localhost:9001',
-        },
-        _hasError: false,
-        on: (type, callback) => callback(),
-        once: (name, callback) => callback(),
-        pipe: client => {
-          client.on('data', () => {});
-          client.on('end', () => {
-          });
-        },
-        socket: {
-          remoteAddress: 'nohost.com',
-        },
-      },
-      res: {
-        writeHead: cb,
-      },
-    };
 
+  const cb = jest.fn();
+  const ctx = {
+    set: name => name,
+    req: {
+      url: 'ke.qq.com',
+      method: 'GET',
+      headers: {
+        'x-forwarded-for': 'localhost:9001',
+      },
+      _hasError: false,
+      on: (type, callback) => callback(),
+      once: (name, callback) => callback(),
+      pipe: client => {
+        client.on('data', () => {});
+        client.on('end', () => {
+        });
+      },
+      socket: {
+        remoteAddress: 'nohost.com',
+      },
+    },
+    res: {
+      writeHead: cb,
+    },
+  };
+
+  test('passToService', async () => {
     await passToService(ctx);
     expect(ctx.status).toBe(200);
   }, 30000);
 
+  test('passToService with error', async () => {
+    let time = 0;
+    socket.on = (type, cbFunc) => {
+      if (type === 'error' && time < 1) {
+        cbFunc();
+        time++;
+      }
+    };
+    try {
+      await passToService(ctx);
+    } catch (e) {
+      expect(e.toString()).toBe('Error: Closed');
+    }
+  });
 
-  test('passToWhistle', () => {
-    whistleReq.req._hasError = false;
-    expect(passToWhistle(whistleReq, false)).toBeInstanceOf(Promise);
+
+  test('passToWhistle', async () => {
+    whistleReq.req.writeHead = false;
+    const res = await passToWhistle(whistleReq, reqSock);
+    expect(res).toBe(undefined);
+  });
+
+  test('passToWhistle with writeHead false', async () => {
+    whistleReq._hasError = false;
+    whistleReq.req.writeHead = false;
+    const res = await passToWhistle(whistleReq, reqSock);
+    expect(res).toBe(undefined);
+  });
+
+  test('passToWhistle with writeHead true', async () => {
+    whistleReq._hasError = false;
+    reqSock.writeHead = () => true;
+    const res = await passToWhistle(whistleReq, reqSock);
+    expect(res).toBe(undefined);
   });
 });
