@@ -320,7 +320,7 @@ function showEnvList(user) {
 }
 
 function handleClickModal(event) {
-  circleIcon.removeClass('active');
+  circleIcon.removeClass('w-nohost-active');
   if (event.target === selectModal[0]) {
     selectModal.hide();
   }
@@ -449,7 +449,7 @@ function showOperationModal() {
   }
 }
 function handleLongTouchInMobile() {
-  circleIcon.removeClass('active');
+  circleIcon.removeClass('w-nohost-active');
   timer = setInterval(showOperationModal, 800);
 }
 
@@ -524,7 +524,7 @@ function handleCircleMoved() {
 function handleMoveEndInMobile() {
   handleCircleMoved();
   if (operationModal.is(':visible') || selectModal.is(':visible')) {
-    circleIcon.addClass('active'); // 结束长按
+    circleIcon.addClass('w-nohost-active'); // 结束长按
   }
   clearTimer();
 }
@@ -537,7 +537,7 @@ function toggleModal() {
   circleContext.hide();
   if (selectModal.is(':visible')) {
     selectModal.hide();
-    circleIcon.removeClass('active');
+    circleIcon.removeClass('w-nohost-active');
   } else if (!operationModal.is(':visible')) {
     showUserList();
     const id = getLocalStorage(CUR_SELECTED_USER);
@@ -546,7 +546,7 @@ function toggleModal() {
     }
     operationModal.hide();
     showSelectModal();
-    circleIcon.addClass('active');
+    circleIcon.addClass('w-nohost-active');
     filter.focus();
   }
 }
@@ -555,7 +555,7 @@ function toggleModal() {
 function handleClickCircle() {
   if (circleMoved) {
     selectModal.hide();
-    circleIcon.removeClass('active');
+    circleIcon.removeClass('w-nohost-active');
   } else {
     toggleModal();
     showContextMenu();
@@ -720,10 +720,10 @@ function injectHTML() {
     .on('mousedown', circleWillMove)
     .on('click', handleClickCircle)
     .hover(() => {
-      circleIcon.addClass('active');
+      circleIcon.addClass('w-nohost-active');
     }, () => {
       if (!selectModal.is(':visible')) {
-        circleIcon.removeClass('active');
+        circleIcon.removeClass('w-nohost-active');
       }
     });
 

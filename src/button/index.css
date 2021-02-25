@@ -283,7 +283,7 @@
   border: 4px solid rgba(84, 189, 221, 0.3) !important;
 }
 
-#w-nohost-circle-icon.active {
+#w-nohost-circle-icon.w-nohost-active {
   background-color: #008cba !important;
   color: white !important;
 }
