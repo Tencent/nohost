@@ -11,6 +11,7 @@ import Settings from './settings';
 
 const { location } = window;
 const query = parse(location.search);
+const hideNavBar = query.hideNohostNavBar === 'true';
 const TABS = [
   'accounts',
   'config',
@@ -42,12 +43,27 @@ class App extends Component {
     this.state = { active };
   }
 
+  componentDidMount() {
+    const changeTab = (name) => {
+      if (TABS.indexOf(name) === -1) {
+        name = 'accounts';
+      }
+      this.onTabChange(name);
+    };
+    try {
+      const { onNohostPageReady } = window.parent;
+      if (typeof onNohostPageReady === 'function') {
+        onNohostPageReady({ changeTab });
+      }
+    } catch (e) {}
+  }
+
   onTabChange = (active) => {
     this.tabStatus[active] = 1;
+    location.hash = subMenu[active];
     this.setState({
       active,
     });
-    location.hash = subMenu[active];
   }
 
   onConfigChange = (key) => {
@@ -73,7 +89,7 @@ class App extends Component {
 
     return (
       <Fragment>
-        <NavBar active={active} onChange={this.onTabChange} />
+        <NavBar active={active} onChange={this.onTabChange} hide={hideNavBar} />
         <div className={`fill vbox p-container${showWhistle ? ' p-full-container' : ''}`}>
           { accounts ? <Accounts hide={active !== 'accounts'} /> : null }
           { whistle ? (

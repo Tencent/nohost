@@ -77,10 +77,10 @@ class NavBar extends Component {
   }
 
   render() {
-    const { active } = this.props;
+    const { active, hide } = this.props;
     const { displayAboutMenu } = this.state;
     return (
-      <div className="p-nav-bar" onClick={this.onChange}>
+      <div className="p-nav-bar" style={{ display: hide ? 'none' : undefined }} onClick={this.onChange}>
         <a href="https://nohost.pro/" target="_blank" rel="noopener noreferrer" className="p-logo">
           Nohost
         </a>
