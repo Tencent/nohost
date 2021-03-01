@@ -17,7 +17,7 @@
     "lintfix": "eslint --fix *.js lib test src bin",
     "dev": "rimraf public && webpack --config ./src/config/webpack.dev.js -w",
     "dist": "rimraf public && webpack --config ./src/config/webpack.prod.js",
-    "start": "node bin/nohost run",
+    "start": "node bin/nohost run -b dev",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "test": "jest --config=./test/jest/jest.config.js --coverage",
