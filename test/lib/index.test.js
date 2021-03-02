@@ -30,6 +30,7 @@ const whistleReq = {
   once: (type, cb) => cb(),
   socket: {
     remoteAddress: 'nohost.com',
+    end: () => true,
   },
   set: () => true,
   pipe: client => {
@@ -45,6 +46,7 @@ const whistleReq = {
     },
     socket: {
       remoteAddress: 'nohost.com',
+      end: () => true,
     },
     pipe: client => {
       client.on('data', () => {});
@@ -100,7 +102,7 @@ describe('lib index', () => {
 });
 
 describe('lib index with storage is 127.0.0.1:9001', () => {
-  test('', () => {
+  test('createServer', () => {
     const cb = jest.fn();
     options.storage = '127.0.0.1:9001';
     createServer(options, cb);
@@ -110,10 +112,23 @@ describe('lib index with storage is 127.0.0.1:9001', () => {
 });
 
 describe('lib index with storage is abc', () => {
-  test('', () => {
+  test('createServer', () => {
     const cb = jest.fn();
     whistleReq.headers.host = '';
     options.storage = 'abc';
+    createServer(options, cb);
+    expect(cb).toBeCalled();
+    kill(30017, 'tcp');
+  });
+});
+
+describe('lib index with headers', () => {
+  test('createServer', () => {
+    const cb = jest.fn();
+    whistleReq.headers['x-whistle-nohost-env'] = '$123';
+    whistleReq.headers['x-whistle-nohost-rule'] = '$123';
+    whistleReq.headers['x-whistle-nohost-value'] = '$123';
+
     createServer(options, cb);
     expect(cb).toBeCalled();
     kill(30017, 'tcp');

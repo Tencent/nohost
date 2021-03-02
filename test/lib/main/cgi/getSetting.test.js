@@ -1,8 +1,6 @@
-const path = require('path');
+const { setPath } = require('../../../utils');
 
-const filePath = path.join(process.cwd(), 'test');
-process.env.WHISTLE_PATH = filePath;
-
+setPath();
 const getSetting = require('../../../../lib/main/cgi/getSettings');
 
 const storage = {

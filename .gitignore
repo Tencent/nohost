@@ -39,3 +39,4 @@ jspm_packages
 .DS_Store
 .idea
 /public
+/test/.nohost/

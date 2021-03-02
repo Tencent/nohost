@@ -1,227 +1,89 @@
-const path = require('path');
+const url = require('url');
+const { createServer } = require('http');
+const { httpRequire, setPath } = require('../../utils');
 
-const filePath = path.join(process.cwd(), 'test');
-process.env.WHISTLE_PATH = filePath;
-const kill = require('kill-port');
-
+setPath();
 const {
-  removeIPV6Prefix,
-  getClientIp,
-  destroy,
-  onClose,
-  getWhistleData,
   passToWhistle,
   passToService,
 } = require('../../../lib/main/util');
 
-jest.mock('http', () => {
+jest.mock('@nohost/connect', () => {
   return {
-    request: (opts, cb) => {
-      const obj = {
-        on: (type, callback) => {
-          if (type === 'end') {
-            callback();
-          }
-        },
-        statusCode: 200,
-        setEncoding: () => '',
-        pipe: () => '',
-      };
-      cb(obj);
-      return obj;
-    },
-    createServer: () => {
+    request: () => {
       return {
-        on: () => true,
-        listen: (port, host, cb) => cb(),
-        removeAllListeners: () => true,
-        close: (cb) => cb(),
+        statusCode: 200,
+        pipe: () => true,
       };
     },
-  };
-});
-const socket = {
-  on: () => true,
-  once: () => true,
-  removeAllListeners: () => true,
-  destroy: () => true,
-  write: () => true,
-};
-jest.mock('net', () => {
-  return {
-    isIP: () => true,
-    connect: (options, cb) => {
-      Promise.resolve().then(() => {
-        cb();
-      });
-      return socket;
-    },
+    getRawHeaders: () => true,
+    tunnel: () => true,
+    upgrade: () => true,
   };
 });
 
-const reqSock = {
-  on: type => type,
-  once: type => type,
-  pipe: () => reqSock,
+
+const cb = jest.fn();
+
+// debug mode
+const options = {
+  port: 10011,
+  debugMode: 'product',
 };
 
-const whistleReq = {
-  headers: {
-    'content-length': 10,
-    'x-forwarded-for': 'localhost:9001',
-  },
-  _hasError: false,
-  dispatch(name) {
-    this.dispatchList[name]();
-  },
-  dispatchList: [],
-  on (type, cb) {
-    this.dispatchList[type] = cb();
-  },
-  once: (type, cb) => cb(),
-  socket: {
-    remoteAddress: 'nohost.com',
-  },
-  set: () => true,
-  pipe: client => {
-    client.on('data', () => {});
-    client.on('end', () => {
-    });
-  },
-  req: {
-    on: () => true,
-    once: () => true,
-    headers: {
-      'x-forwarded-for': 'localhost:9001',
-    },
-    socket: {
-      remoteAddress: 'nohost.com',
-    },
-    pipe: client => {
-      client.on('data', () => {});
-      client.on('end', () => {
-      });
-    },
-  },
-};
+// passToService 使用
+let ctx = null;
+
+const testUrl = ['/head', '/upgrade', '/tunnel', '/error'];
+const server = createServer(options, async (req, res) => {
+  const { pathname } = url.parse(req.url);
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  if (pathname === '/tunnel') {
+    res.writeHead = '';
+  } else if (pathname === '/upgrade') {
+    res.writeHead = '';
+    req.isUpgrade = false;
+  } else if (pathname === '/service') {
+    ctx = { req, res };
+  }
+
+  await passToWhistle(req, res);
+  if (testUrl.includes(pathname)) {
+    res.write('Hello World!');
+    res.end();
+  }
+  // app.callback()(req, res);
+});
+
+server.listen(options.port, '127.0.0.1', cb);
 
 describe('main util', () => {
-  test('should removeIPV6Prefix return empty', () => {
-    expect(removeIPV6Prefix(123)).toBe('');
+  test('passToWhistle', done => {
+    httpRequire(`http://127.0.0.1:${options.port}/head`).then(res => {
+      expect(res).toBe('Hello World!');
+      done();
+    });
   });
 
-  test('should removeIPV6Prefix return empty', () => {
-    const req = {
-      headers: {
-        XFF: '::ffff:192.1.56.10',
-      },
-      socket: {
-        remoteAddress: '192.168.1.1',
-      },
-    };
-    expect(getClientIp(req)).toEqual('192.168.1.1');
+
+  test('passToWhistle tunnel test', done => {
+    httpRequire(`http://127.0.0.1:${options.port}/tunnel`).then(res => {
+      expect(res).toBe('Hello World!');
+      done();
+    });
   });
 
-  test('should destory be called', () => {
-    const destroyFn = jest.fn();
-    const req = {
-      destroy: destroyFn,
-    };
-
-    destroy(req);
-    expect(destroyFn).toBeCalled();
+  test('passToWhistle upgrade test', done => {
+    httpRequire(`http://127.0.0.1:${options.port}/upgrade`).then(res => {
+      expect(res).toBe('Hello World!');
+      done();
+    });
   });
 
-  test('should abort be called', () => {
-    const abortFn = jest.fn();
-    const req = {
-      abort: abortFn,
-    };
-
-    destroy(req);
-    expect(abortFn).toBeCalled();
-  });
-
-  test('should onClose return undefined', () => {
-    const req = {
-      _hasError: false,
-      on: (type, cb) => cb(),
-      once: (type, cb) => cb(),
-    };
-    const res = jest.fn();
-    expect(onClose(req, res)).toBe(undefined);
-  });
-
-  test('should getWhistleData return promise ', () => {
-    expect(getWhistleData(whistleReq)).toBeInstanceOf(Promise);
-  });
-
-  kill(30013, 'tcp');
-
-  const cb = jest.fn();
-  const ctx = {
-    set: name => name,
-    req: {
-      url: 'ke.qq.com',
-      method: 'GET',
-      headers: {
-        'x-forwarded-for': 'localhost:9001',
-      },
-      _hasError: false,
-      on: (type, callback) => callback(),
-      once: (name, callback) => callback(),
-      pipe: client => {
-        client.on('data', () => {});
-        client.on('end', () => {
-        });
-      },
-      socket: {
-        remoteAddress: 'nohost.com',
-      },
-    },
-    res: {
-      writeHead: cb,
-    },
-  };
-
-  test('passToService', async () => {
-    await passToService(ctx);
-    expect(ctx.status).toBe(200);
-  }, 30000);
-
-  test('passToService with error', async () => {
-    let time = 0;
-    socket.on = (type, cbFunc) => {
-      if (type === 'error' && time < 1) {
-        cbFunc();
-        time++;
-      }
-    };
-    try {
+  test('passToService upgrade test', async() => {
+    httpRequire(`http://127.0.0.1:${options.port}/service`).then(async() => {
       await passToService(ctx);
-    } catch (e) {
-      expect(e.toString()).toBe('Error: Closed');
-    }
-  });
-
-
-  test('passToWhistle', async () => {
-    whistleReq.req.writeHead = false;
-    const res = await passToWhistle(whistleReq, reqSock);
-    expect(res).toBe(undefined);
-  });
-
-  test('passToWhistle with writeHead false', async () => {
-    whistleReq._hasError = false;
-    whistleReq.req.writeHead = false;
-    const res = await passToWhistle(whistleReq, reqSock);
-    expect(res).toBe(undefined);
-  });
-
-  test('passToWhistle with writeHead true', async () => {
-    whistleReq._hasError = false;
-    reqSock.writeHead = () => true;
-    const res = await passToWhistle(whistleReq, reqSock);
-    expect(res).toBe(undefined);
+      expect(ctx.body).toBe('');
+    });
   });
 });

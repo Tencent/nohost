@@ -19,6 +19,7 @@ module.exports = {
   reporters: ['default'],
   coveragePathIgnorePatterns: [
     '/node_modules/',
+    '/test/',
   ],
   clearMocks: true,
   coverageReporters: ['json', 'json-summary', 'lcov', 'text', 'clover'],
