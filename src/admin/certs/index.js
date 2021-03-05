@@ -229,7 +229,7 @@ class Certs extends Component {
 
     return (
       <div className={`fill vbox p-certs${hide ? ' p-hide' : ''}`}>
-        <div className="p-action-bar">
+        <div className="p-action-bar p-certs-bar">
           {
             this.state.invalidList ? (
               <Popconfirm

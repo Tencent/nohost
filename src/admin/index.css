@@ -54,6 +54,10 @@
   position: relative;
 }
 
+.p-certs-bar {
+  padding: 15px 20px!important;
+}
+
 .p-action-bar>strong {
   position: absolute;
   left: 0;

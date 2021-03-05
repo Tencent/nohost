@@ -1,6 +1,6 @@
 {
   "name": "@nohost/server",
-  "version": "0.6.4",
+  "version": "0.6.5",
   "description": "Multi-user & multi-env web debugging proxy based on whistle",
   "main": "index.js",
   "bin": {
@@ -83,7 +83,7 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
-    "@nohost/connect": "^1.2.0",
+    "@nohost/connect": "^1.2.1",
     "async-limiter": "^2.0.0",
     "basic-auth": "^2.0.1",
     "colors": "^1.4.0",
@@ -103,6 +103,6 @@
     "simpleproto": "^1.1.0",
     "socketx": "^1.1.0",
     "starting": "^7.0.1",
-    "whistle": "^2.6.6"
+    "whistle": "^2.6.7"
   }
 }
