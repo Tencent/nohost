@@ -59,8 +59,4 @@ describe('lib main router', () => {
       done();
     });
   });
-
-  // test('pass direct', () => {
-  //   expect(httpRequire(`${REQUEST_URL}/cgi-bin/get-custom-certs-info`)).toBeInstanceOf(Promise);
-  // });
 });
