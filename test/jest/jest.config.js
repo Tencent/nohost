@@ -5,15 +5,10 @@
 * nohost-环境配置与抓包调试平台 is licensed under the MIT License except for the third-party components listed below.
 */
 
-const path = require('path');
+// const path = require('path');
 
 module.exports = {
   moduleFileExtensions: ['js'],
-  transform: {
-    // '^.+\\.(ts|tsx)$': 'ts-jest',
-    // 加载babel配置,
-    '^.+\\.(t|j)s?$': ['babel-jest', { configFile: path.resolve(__dirname, 'babel.config.js') }],
-  },
   testMatch: ['**/test/**/*.test.js'],
   testEnvironment: 'node',
   reporters: ['default'],
