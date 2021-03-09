@@ -32,10 +32,10 @@ describe('index', () => {
   });
 
   test('should response be matched index html', done => {
-    options.port = 3002;
+    options.port = 3013;
     startServer(options, cb);
 
-    httpRequire('http://127.0.0.1:3002').then(str => {
+    httpRequire('http://127.0.0.1:3013').then(str => {
       expect(str).toContain('选择环境');
       done();
     });

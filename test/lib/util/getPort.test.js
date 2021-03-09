@@ -1,10 +1,5 @@
-const getPort = require('../../../lib/util/getPort');
 
-let mockPort;
 
-function portCb(port) {
-  mockPort = port;
-}
 jest.mock('http', () => {
   return {
     createServer: () => {
@@ -17,6 +12,14 @@ jest.mock('http', () => {
     },
   };
 });
+
+const getPort = require('../../../lib/util/getPort');
+
+let mockPort;
+
+function portCb(port) {
+  mockPort = port;
+}
 
 describe('util getPort', () => {
   test('should server start', () => {

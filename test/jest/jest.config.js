@@ -8,7 +8,9 @@
 // const path = require('path');
 
 module.exports = {
+  // verbose: true,
   moduleFileExtensions: ['js'],
+  transform: {},
   testMatch: ['**/test/**/*.test.js'],
   testEnvironment: 'node',
   reporters: ['default'],

@@ -40,3 +40,5 @@ jspm_packages
 .idea
 /public
 /test/.nohost/
+test/app/assets/.nohost/properties
+test/app/assets/.nohost/.backup/properties

@@ -52,20 +52,11 @@ const server = createServer(options, async (req, res) => {
     res.write('Hello World!');
     res.end();
   }
-  // app.callback()(req, res);
 });
 
 server.listen(options.port, '127.0.0.1', cb);
 
 describe('main util', () => {
-  test('passToWhistle', done => {
-    httpRequire(`http://127.0.0.1:${options.port}/head`).then(res => {
-      expect(res).toBe('Hello World!');
-      done();
-    });
-  });
-
-
   test('passToWhistle tunnel test', done => {
     httpRequire(`http://127.0.0.1:${options.port}/tunnel`).then(res => {
       expect(res).toBe('Hello World!');

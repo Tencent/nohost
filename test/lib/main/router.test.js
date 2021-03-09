@@ -48,7 +48,7 @@ describe('lib main router', () => {
 
   test('/p/wonder', done => {
     httpRequire(`${REQUEST_URL}/p/wonder`).then((res) => {
-      expect(res).toContain('<a href=\"/p/wonder/\">/p/wonder/</a>');
+      expect(res).toContain('<a href="/p/wonder/">/p/wonder/</a>');
       done();
     });
   });

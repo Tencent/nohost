@@ -1,13 +1,13 @@
 {
   "presets": [
-    "@babel/preset-env",
-    "@babel/preset-react"
+    "es2015",
+    "react",
+    "env",
+    "stage-0"
   ],
   "plugins": [
     ["import", { "libraryName": "antd" }],
-    ["@babel/plugin-proposal-class-properties",{"loose": true}],
     ["transform-class-properties", { "spec": true }],
-    "@babel/transform-runtime",
     "transform-object-assign"
   ]
 }

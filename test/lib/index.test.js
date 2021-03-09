@@ -1,69 +1,88 @@
-const path = require('path');
-const kill = require('kill-port');
+const { setPath } = require('../utils');
 
-const filePath = path.join(process.cwd(), 'test');
-process.env.WHISTLE_PATH = filePath;
+setPath();
 
-const createServer = require('../../lib/index');
+jest.mock('../../lib/main/util', () => {
+  return {
+    passToWhistle: () => true,
+    passToService: () => true,
+  };
+});
 
-const options = {
-  username: 'admin',
-  password: '123456',
-  port: '3002',
-  storage: '127.0.0.1:9001~9999',
-};
+jest.mock('http', () => {
+  let i = 0;
+  const reqSock = {
+    on: type => type,
+    once: type => type,
+    pipe: () => reqSock,
+    setHeader: () => jest.fn(),
+    end: () => jest.fn(),
+  };
 
-const whistleReq = {
-  headers: {
-    'content-length': 10,
-    'x-forwarded-for': 'localhost:9001',
-    host: 'admin.nohost.pro',
-  },
-  _hasError: false,
-  dispatch(name) {
-    this.dispatchList[name]();
-  },
-  dispatchList: [],
-  on (type, cb) {
-    this.dispatchList[type] = cb();
-  },
-  once: (type, cb) => cb(),
-  socket: {
-    remoteAddress: 'nohost.com',
-    end: () => true,
-  },
-  set: () => true,
-  pipe: client => {
-    client.on('data', () => {});
-    client.on('end', () => {
-    });
-  },
-  req: {
-    on: () => true,
-    once: () => true,
+  const whistleReq = {
     headers: {
+      'content-length': 10,
       'x-forwarded-for': 'localhost:9001',
+      host: 'admin.nohost.pro',
     },
+    _hasError: false,
+    dispatch(name) {
+      this.dispatchList[name]();
+    },
+    dispatchList: [],
+    on (type, cb) {
+      this.dispatchList[type] = cb();
+    },
+    once: (type, cb) => cb(),
     socket: {
       remoteAddress: 'nohost.com',
       end: () => true,
     },
+    set: () => true,
     pipe: client => {
       client.on('data', () => {});
       client.on('end', () => {
       });
     },
-  },
-};
+    setHeader: () => jest.fn(),
+    req: {
+      on: () => true,
+      once: () => true,
+      setHeader: () => jest.fn(),
+      headers: {
+        'x-forwarded-for': 'localhost:9001',
+      },
+      socket: {
+        remoteAddress: 'nohost.com',
+        end: () => true,
+      },
+      pipe: client => {
+        client.on('data', () => {});
+        client.on('end', () => {
+        });
+      },
+    },
+  };
 
-const reqSock = {
-  on: type => type,
-  once: type => type,
-  pipe: () => reqSock,
-};
+  const runConfig = ['', '',
+    () => {
+      whistleReq.headers.host = '';
+    },
+    () => {
+      whistleReq.headers = {
+        host: null,
+        'x-whistle-nohost-env': '$123',
+        'x-whistle-nohost-rule': '$123',
+        'x-whistle-nohost-value': '$123',
+      };
+    },
+  ];
 
-jest.mock('../../lib/main/index');
-jest.mock('http', () => {
+  function changeReq() {
+    const fn = runConfig[i];
+    if (fn) { fn(); }
+    i++;
+  }
   return {
     request: (opts, cb) => {
       const obj = {
@@ -79,7 +98,8 @@ jest.mock('http', () => {
       return obj;
     },
     createServer: (callback) => {
-      Promise.resolve().then(() => callback(whistleReq, reqSock));
+      changeReq();
+      callback(whistleReq, reqSock);
       return {
         on: (type, cb) => cb(whistleReq, reqSock),
         listen: (port, host, cb) => cb(),
@@ -90,47 +110,50 @@ jest.mock('http', () => {
   };
 });
 
-// kill(8080, 'tcp');
+const createServer = require('../../lib/index');
+
+const options = {
+  username: 'admin',
+  password: '123456',
+  port: '3032',
+  storage: '127.0.0.1:9001~9999',
+};
+
 
 describe('lib index', () => {
   test('createServer', () => {
     const cb = jest.fn();
-    createServer(options, cb);
-    expect(cb).toBeCalled();
-    kill(30017, 'tcp');
+    const server = createServer(options, cb);
+    expect(server.timeout).toBe(360000);
   });
 });
 
-describe('lib index with storage is 127.0.0.1:9001', () => {
-  test('createServer', () => {
+describe('lib index with storage is 127.0.0.1:10021', () => {
+  test('should option return array and port is 10021', () => {
     const cb = jest.fn();
-    options.storage = '127.0.0.1:9001';
+    options.port = '10021';
+    options.storage = '127.0.0.1:10021';
     createServer(options, cb);
-    expect(cb).toBeCalled();
-    kill(30017, 'tcp');
+    expect(options.storage[0].port).toBe(10021);
   });
 });
 
 describe('lib index with storage is abc', () => {
   test('createServer', () => {
     const cb = jest.fn();
-    whistleReq.headers.host = '';
+    options.port = '10009';
     options.storage = 'abc';
     createServer(options, cb);
-    expect(cb).toBeCalled();
-    kill(30017, 'tcp');
+    expect(options.storage).toBeUndefined();
   });
 });
 
 describe('lib index with headers', () => {
-  test('createServer', () => {
+  test('should whistleReq.header.host', () => {
     const cb = jest.fn();
-    whistleReq.headers['x-whistle-nohost-env'] = '$123';
-    whistleReq.headers['x-whistle-nohost-rule'] = '$123';
-    whistleReq.headers['x-whistle-nohost-value'] = '$123';
-
+    options.port = '10031';
+    options.storage = '127.0.0.1:9001~9999';
     createServer(options, cb);
-    expect(cb).toBeCalled();
-    kill(30017, 'tcp');
+    expect(options.port).toBe(10031);
   });
 });
