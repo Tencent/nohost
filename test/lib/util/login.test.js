@@ -16,18 +16,19 @@ const cookies = {
   set: key => key,
 };
 
+const ctx = {
+  cookies,
+  req: {
+    headers: {},
+  },
+  set: name => name,
+};
+
 describe('util login', () => {
   test('should login success with username is empty', () => {
     const authConf = {
       username: '',
       password: 'da39a3ee5e6b4b0d3255bfef95601890afd80709',
-    };
-    const ctx = {
-      cookies,
-      req: {
-        headers: {},
-      },
-      set: name => name,
     };
     expect(checkLogin(ctx, authConf)).toBeTruthy();
   });
@@ -39,15 +40,7 @@ describe('util login', () => {
       username: 'admin',
       password: '7c4a8d09ca3762af61e59520943dc26494f8941b',
     };
-    const ctx = {
-      cookies,
-      req: {
-        headers: {
-          authorization: 'Basic YWRtaW46MTIzNDU2',
-        },
-      },
-      set: name => name,
-    };
+    ctx.req.headers.authorization = 'Basic YWRtaW46MTIzNDU2';
     expect(checkLogin(ctx, authConf)).toBeTruthy();
   });
 });
@@ -58,15 +51,7 @@ describe('util login', () => {
       username: 'admin2',
       password: '7c4a8d09ca3762af61e59520943dc26494f8941b',
     };
-    const ctx = {
-      cookies,
-      req: {
-        headers: {
-          authorization: 'Basic YWRtaW46MTIzNDU2',
-        },
-      },
-      set: name => name,
-    };
+    ctx.req.headers.authorization = 'Basic YWRtaW46MTIzNDU2';
     expect(checkLogin(ctx, authConf)).toBeFalsy();
   });
 });

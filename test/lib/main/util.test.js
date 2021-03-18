@@ -1,80 +1,80 @@
-const path = require('path');
+const url = require('url');
+const { createServer } = require('http');
+const { httpRequire, setPath } = require('../../utils');
 
-const filePath = path.join(process.cwd(), 'test');
-process.env.WHISTLE_PATH = filePath;
-
-// process.on('unhandledRejection', function (err) {
-
-// });
-
+setPath();
 const {
-  removeIPV6Prefix,
-  getClientIp,
-  destroy,
-  onClose,
+  passToWhistle,
+  passToService,
 } = require('../../../lib/main/util');
 
+jest.mock('@nohost/connect', () => {
+  return {
+    request: () => {
+      return {
+        statusCode: 200,
+        pipe: () => true,
+      };
+    },
+    getRawHeaders: () => true,
+    tunnel: () => true,
+    upgrade: () => true,
+  };
+});
+
+
+const cb = jest.fn();
+
+// debug mode
+const options = {
+  port: 10011,
+  debugMode: 'product',
+};
+
+// passToService 使用
+let ctx = null;
+
+const testUrl = ['/head', '/upgrade', '/tunnel', '/error'];
+const server = createServer(options, async (req, res) => {
+  const { pathname } = url.parse(req.url);
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  if (pathname === '/tunnel') {
+    res.writeHead = '';
+  } else if (pathname === '/upgrade') {
+    res.writeHead = '';
+    req.isUpgrade = false;
+  } else if (pathname === '/service') {
+    ctx = { req, res };
+  }
+
+  await passToWhistle(req, res);
+  if (testUrl.includes(pathname)) {
+    res.write('Hello World!');
+    res.end();
+  }
+});
+
+server.listen(options.port, '127.0.0.1', cb);
+
 describe('main util', () => {
-  test('should removeIPV6Prefix return empty', () => {
-    expect(removeIPV6Prefix(123)).toBe('');
+  test('passToWhistle tunnel test', done => {
+    httpRequire(`http://127.0.0.1:${options.port}/tunnel`).then(res => {
+      expect(res).toBe('Hello World!');
+      done();
+    });
   });
 
-  test('should removeIPV6Prefix return empty', () => {
-    const req = {
-      headers: {
-        XFF: '::ffff:192.1.56.10',
-      },
-      socket: {
-        remoteAddress: '192.168.1.1',
-      },
-    };
-    expect(getClientIp(req)).toEqual('192.168.1.1');
+  test('passToWhistle upgrade test', done => {
+    httpRequire(`http://127.0.0.1:${options.port}/upgrade`).then(res => {
+      expect(res).toBe('Hello World!');
+      done();
+    });
   });
 
-  test('should destory be called', () => {
-    const destroyFn = jest.fn();
-    const req = {
-      destroy: destroyFn,
-    };
-
-    destroy(req);
-    expect(destroyFn).toBeCalled();
+  test('passToService upgrade test', async() => {
+    httpRequire(`http://127.0.0.1:${options.port}/service`).then(async() => {
+      await passToService(ctx);
+      expect(ctx.body).toBe('');
+    });
   });
-
-  test('should abort be called', () => {
-    const abortFn = jest.fn();
-    const req = {
-      abort: abortFn,
-    };
-
-    destroy(req);
-    expect(abortFn).toBeCalled();
-  });
-
-  test('should onClose return undefined', () => {
-    const req = {
-      _hasError: false,
-      on: (type, cb) => cb(),
-      once: (type, cb) => cb(),
-    };
-    const res = jest.fn();
-    expect(onClose(req, res)).toBe(undefined);
-  });
-
-  // test('should getWhistleData return promise ',()=>{
-  //   const req = {
-  //     headers:{
-  //       'content-length': 10,
-  //     },
-  //     _hasError:false,
-  //     dispatch: name => dispatchList[name](),
-  //     dispatchList: [],
-  //     on: function (type, cb) {
-  //       this.dispatchList[type] = cb()
-  //     },
-  //     once: (type,cb) => cb(),
-  //   }
-  //   const res = jest.fn()
-  //   expect(getWhistleData(req)).toBeInstanceOf(Promise)
-  // })
 });

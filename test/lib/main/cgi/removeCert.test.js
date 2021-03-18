@@ -1,8 +1,6 @@
-const path = require('path');
+const { setPath } = require('../../../utils');
 
-const filePath = path.join(process.cwd(), 'test');
-process.env.WHISTLE_PATH = filePath;
-
+setPath();
 const removeCert = require('../../../../lib/main/cgi/removeCert');
 const certsMgr = require('../../../../lib/main/certsMgr');
 const whistleMgr = require('../../../../lib/main/whistleMgr');

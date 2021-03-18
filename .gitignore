@@ -39,3 +39,6 @@ jspm_packages
 .DS_Store
 .idea
 /public
+/test/.nohost/
+test/app/assets/.nohost/properties
+test/app/assets/.nohost/.backup/properties

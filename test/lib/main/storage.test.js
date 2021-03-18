@@ -1,8 +1,6 @@
-const path = require('path');
+const { setPath } = require('../../utils');
 
-const filePath = path.join(process.cwd(), 'test');
-process.env.WHISTLE_PATH = filePath;
-
+setPath();
 const { checkDomain, isUIRequest } = require('../../../lib/main/storage');
 
 const req = {
@@ -37,9 +35,13 @@ describe('lib main strage test', () => {
     expect(isUIRequest(req)).toBeTruthy();
   });
 
-  test('should isUIRequest result be true', () => {
+  test('should isUIRequest result be true', done => {
     req.headers['x-whistle-nohost-ui'] = 1;
     req.url = 'https://qq/.nohost-inner-path./com';
     expect(isUIRequest(req)).toBeTruthy();
+    // 覆盖回调
+    setTimeout(() => {
+      done();
+    }, 3000);
   });
 });

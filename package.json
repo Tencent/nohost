@@ -20,7 +20,7 @@
     "start": "node bin/nohost run -b dev",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
-    "test": "jest --config=./test/jest/jest.config.js --coverage",
+    "test": "jest --config=./test/jest/jest.config.js --coverage --detectOpenHandles --forceExit",
     "test:watch": "jest --config=./test/jest/jest.config.js --watchAll --coverage"
   },
   "registry": "https://registry.npmjs.org/@nohost/server",
@@ -43,6 +43,7 @@
     "antd": "^3.25.3",
     "babel-core": "^6.25.0",
     "babel-eslint": "^10.0.3",
+    "babel-jest": "^26.6.3",
     "babel-loader": "^7.1.1",
     "babel-plugin-import": "^1.2.1",
     "babel-plugin-transform-class-properties": "^6.24.1",
