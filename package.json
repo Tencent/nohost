@@ -34,7 +34,7 @@
       "eslint --fix --quiet",
       "git add"
     ],
-    "*.{css,scss,less,sss,json,md,html,yml,graphql,gql}": [
+    "*.{css,scss,less,sss,json,html,yml,graphql,gql}": [
       "prettier --write",
       "git add"
     ]
