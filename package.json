@@ -23,6 +23,22 @@
     "test": "jest --config=./test/jest/jest.config.js --coverage",
     "test:watch": "jest --config=./test/jest/jest.config.js --watchAll --coverage"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,tsx,ts}": [
+      "eslint --fix --quiet",
+      "git add"
+    ],
+    "*.{css,scss,less,sss,json,md,html,yml,graphql,gql}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
   "registry": "https://registry.npmjs.org/@nohost/server",
   "repository": {
     "type": "git",
@@ -40,6 +56,8 @@
   },
   "homepage": "https://github.com/Tencent/nohost#readme",
   "devDependencies": {
+    "@commitlint/cli": "^12.0.1",
+    "@commitlint/config-conventional": "^12.0.1",
     "antd": "^3.25.3",
     "babel-core": "^6.25.0",
     "babel-eslint": "^10.0.3",
@@ -58,11 +76,13 @@
     "eslint-config-imweb": "^0.2.19",
     "file-loader": "^4.2.0",
     "html-webpack-plugin": "^3.2.0",
+    "husky": "^3.0.1",
     "jest": "^26.5.2",
     "jquery": "3.3.1",
     "kill-port": "^1.6.1",
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
+    "lint-staged": "^10.5.4",
     "prop-types": "^15.5.10",
     "qrcode": "^1.2.0",
     "query-string": "^5.0.1",
