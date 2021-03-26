@@ -31,7 +31,7 @@ const {
   getVersion,
 } = createCgi({
   loadAllAccounts: {
-    url: 'cgi-bin/list?parsed=1',
+    url: 'cgi-bin/list?parsed=1&notice=1',
     mode: 'cancel',
   },
   loadSettings: 'cgi-bin/admin/get-settings',

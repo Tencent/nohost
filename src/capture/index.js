@@ -304,10 +304,10 @@ class Capture extends Component {
     // 加载所有账号，不包括内容
     getAllAccounts((data) => {
       const envMap = {};
-      const options = data.list.map((user) => {
-        envMap[user.name] = 1;
-        const children = user.envList.map(({ name }) => {
-          envMap[`${user.name}/${name}`] = 1;
+      const options = data.list.map((account) => {
+        envMap[account.name] = 1;
+        const children = account.envList.map(({ name }) => {
+          envMap[`${account.name}/${name}`] = 1;
           return {
             label: name,
             value: name,
@@ -324,8 +324,9 @@ class Capture extends Component {
           value: ' ',
         });
         return {
-          label: user.name,
-          value: user.name,
+          label: account.name,
+          value: account.name,
+          notice: account.notice || data.notice,
           children,
         };
       });
@@ -422,7 +423,7 @@ class Capture extends Component {
   /* eslint-disable no-script-url, jsx-a11y/anchor-is-valid */
   render() {
     const {
-      options, value, viewOwn, rules, showRules, envName, testUrl,
+      options, value, viewOwn, rules, showRules, envName, testUrl, notice,
       showQRCode, qrCode, followerIp, redirectUrl, envValue, showTestDialog,
     } = this.state;
     let { url } = this.state;
@@ -504,6 +505,7 @@ class Capture extends Component {
               />
             ) : undefined}
           </span>
+          {notice ? <span className="n-notice-ctn">{ notice }</span> : null}
           <Button onClick={this.showTestDialog} className="n-qrcode-button" type="default">生成二维码</Button>
         </div>
         <iframe title="抓包界面" className="fill capture-win" src={url} />

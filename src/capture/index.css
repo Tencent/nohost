@@ -8,6 +8,12 @@
   height: 35px;
 }
 
+.n-notice-ctn {
+  color: red;
+  margin-left: 50px;
+  font-size: 15px;
+}
+
 .action-bar .ant-cascader-picker .ant-cascader-input {
   border-radius: 0;
 }
