@@ -31,7 +31,7 @@ Nohost 是基于 [Whistle](https://github.com/avwo/whistle) 实现的多用户�
 [八. 加群](#add)
 
 
-# <a href="#prepare" id="prepare">一. 准备</a>
+## <a href="#prepare" id="prepare">一. 准备</a>
 安装 Nohost 之前，建议先做好以下工作：
 
 1. 准备一台服务器，假设IP为：10.1.2.3（以你自己的服务器为准，建议4核8G以上的配置）
@@ -40,7 +40,7 @@ Nohost 是基于 [Whistle](https://github.com/avwo/whistle) 实现的多用户�
 
 > 申请域名的好处是可以直接用域名访问管理及账号页面，手机也可以通过域名设置代理访问 Nohost，方便记忆及输入
 
-# <a href="#install" id="install">二. 安装</a>
+## <a href="#install" id="install">二. 安装</a>
 首先，需要安装Node（建议使用最新的LTS版本）：[Node](https://nodejs.org/en/)
 
 Node安装成功后，通过npm安装 `nohost`：
@@ -70,7 +70,7 @@ n2 stop
 n2 restart --reset
 ```
 
-# <a href="#settings" id="settings">三. 设置</a>
+## <a href="#settings" id="settings">三. 设置</a>
 安装启动成功后，打开管理员页面 `http://10.1.2.3:8080/admin.html#system/administrator`，输入默认用户名（`admin`）和密码（`123456`），打开系统配置后：
 > 其中 `10.1.2.3` 表示Nohost运行的服务器IP，具体根据实际 ServerIP 替换
 1. 修改管理员的默认账号名和密码（**不建议使用默认账号及密码，如果忘记管理员账号名或密码，可以通过 `n2 restart --reset` 重置**）
@@ -81,7 +81,7 @@ n2 restart --reset
 
 **Note: 设置的域名 DNS 一定要指向该IP，否则可能出现不可用状态，上述配置会自动重启服务，建议避免频繁操作**
 
-# <a href="#access" id="access">四. 访问</a>
+## <a href="#access" id="access">四. 访问</a>
 Nohost 本身就是一个代理，可以直接配置浏览器或系统代理访问，也可以通过 Nginx反向代理访问，为方便大家使用，针对不同的人群可以使用不同的方案（以下用 `nohost.imweb.io` 表示 Nohost 的域名，具体域名需要自己申请及设置）。
 
 #### 前端开发
@@ -105,7 +105,7 @@ Nohost 本身就是一个代理，可以直接配置浏览器或系统代理访�
 #### 外网访问
 一般 Nohost 是部署在公司内网，外网是不可以直接访问，需要通过接入层（如：Nginx）转发。
 
-# <a href="#accounts" id="accounts">五. 账号</a>
+## <a href="#accounts" id="accounts">五. 账号</a>
 安装好插件或配置好代理后，打开相关页面（这些页面的域名必须在上面上传证书里面，如果没有需要额外配置，具体参考下方 **配置** 说明），即可看到页面左下脚出现一个小圆点，点击小圆点可以进行切换环境：
 
 ![证书列表](https://user-images.githubusercontent.com/29788452/104725825-9652e980-576d-11eb-980c-69cdade67da4.png)
@@ -128,7 +128,7 @@ Nohost 本身就是一个代理，可以直接配置浏览器或系统代理访�
 
 创建完环境后，可以在环境里面配置任何 Whistle 规则，跟普通到本地 Whistle 功能一模一样，甚至更多。每个实例可以建立上百个账号，每个账号可以建立上百个环境，具体取决于你到机器性能。
 
-# <a href="#config" id="config">六. 配置</a>
+## <a href="#config" id="config">六. 配置</a>
 默认情况下，只有证书里面域名的请求才会被转发到各个账号，且 html 类型的内容会自动注入小圆点，但在实际应用中你可能会遇到以下问题：
 
 #### 域名证书问题
@@ -157,15 +157,17 @@ ke.qq.com
 3. 所有 `localhost.xxx.yyy...` 的请求都不转发到Nohost，且不注入小圆点
 4. 所有 `qq.com` 的子代域名请求都转发到Nohost，但不注入小圆点，并优先级设为 `-1` ，确保证书里面的 `qq.com` 子域名可以正常注入小圆点
 
-# <a href="#whistle" id="whistle">七. 规则</a>
+## <a href="#whistle" id="whistle">七. 规则</a>
 这个是 Nohost 主进程 Whistle，所有请求都会通过该 Whistle，并通过该进程的 whistle.nohost 插件进行账号管理及请求转发，主进程 Whistle 在生产环境下无法查看抓包数据，可用于设置规则及全局插件管理，如：屏蔽一些请求等等，更多内容参见后面的文档。
 
 **详细内容参见文档：[https://nohost.pro/](https://nohost.pro/)**
 
-# <a href="#add" id="add">八. 加群</a>
+## <a href="#add" id="add">八. 加群</a>
 欢迎大家加入Nohost交流群。考虑到群二维码有时效限制，请大家扫码加好友，验证回复 `Nohost` ，会统一将大家拉进群。
 ![二维码](https://user-images.githubusercontent.com/29788452/105933529-8bf7f000-6089-11eb-9e0a-6ab40604e355.png)
 
-
+# 参与贡献
+如果你有好的意见或建议，欢迎给我们提 Issues 或 Pull Requests，为提升抓包调试体验贡献力量。
+[腾讯开源激励计划](https://opensource.tencent.com/contribution) 鼓励开发者的参与和贡献，期待你的加入。
 # License
 [MIT](./LICENSE)
