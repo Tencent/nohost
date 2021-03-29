@@ -3,6 +3,7 @@ import { Button, Modal, message, Checkbox, Tooltip } from 'antd';
 import $ from 'jquery';
 import UserTable from './components/UserTable';
 import AddUserForm from './components/AddUserForm';
+import AddNoticeForm from './components/AddNoticeForm';
 import AccountList from './components/AccountList';
 import { enableGuest } from '../cgi';
 import './index.css';
@@ -29,6 +30,7 @@ class Accounts extends Component {
       addUserModal: false,
       modUserModal: false,
       deleteUserModal: false,
+      addNoticeModal: false,
       deleteLoading: false,
       chosenUser: '',
     };
@@ -48,10 +50,11 @@ class Accounts extends Component {
           message.error('获取用户数据失败');
         }
         this.setState({
-          users: data.list.map(({ name, active }) => {
+          users: data.list.map(({ name, active, notice }) => {
             return {
               name,
               active,
+              notice,
             };
           }),
           enableGuest: data.enableGuest,
@@ -96,11 +99,45 @@ class Accounts extends Component {
     });
   };
 
+  hideAddNoticeModal = () => this.setState({ addNoticeModal: false });
+
+  // 修改通知弹窗，提交回调
+  handleAddAddNoticeSubmit = (notice) => {
+    $.post({
+      url: '/cgi-bin/admin/change-notice',
+      dataType: 'json',
+      data: {
+        name: this.state.chosenUser,
+        notice,
+      },
+      success: (data) => {
+        this.hideAddNoticeModal();
+        if (data.ec === 0) {
+          message.success('通知操作成功');
+          this.fetchAccounts();
+        } else {
+          message.error('通知操作失败！');
+        }
+      },
+      error() {
+        message.error('通知操作失败，网络错误！');
+      },
+    });
+  };
+
+  // 全局只有一个弹窗出现
   hideModModal = () => this.setState({ modUserModal: false });
 
   beforeModSubmit = username => this.setState({
     modUserModal: true,
     chosenUser: username,
+  })
+
+  // 新增/修改 通知
+  handleNoticeAdd = ({ name, notice }) => this.setState({
+    addNoticeModal: true,
+    chosenUser: name,
+    notice,
   })
 
   onEnableGuest = ({ target }) => {
@@ -255,6 +292,7 @@ class Accounts extends Component {
           onActivate={this.handleActivateSubmit}
           onModify={this.beforeModSubmit}
           onDrag={this.handleDrag}
+          onNoticeAdd={this.handleNoticeAdd}
         />
         {/* 添加账号弹窗 */}
         <Modal
@@ -283,6 +321,17 @@ class Accounts extends Component {
           confirmLoading={this.state.deleteLoading}
         >
           确定要删除账号{this.state.chosenUser}吗？
+        </Modal>
+        {/* 添加通知内容弹窗 */}
+        <Modal
+          title="添加通知"
+          visible={this.state.addNoticeModal}
+          onCancel={this.hideAddNoticeModal}
+          footer={null}
+          destroyOnClose
+          width={600}
+        >
+          <AddNoticeForm handleSubmit={this.handleAddAddNoticeSubmit} notice={this.state.notice} />
         </Modal>
       </div>
     );

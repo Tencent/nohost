@@ -15,13 +15,13 @@ class UserTable extends Component {
       ),
     },
     {
-      width: '50%',
+      width: '20%',
       title: '姓名',
       key: 'name',
       dataIndex: 'name',
     },
     {
-      width: '40%',
+      width: '30%',
       title: '操作',
       key: 'action',
       render: (text, user) => (
@@ -30,6 +30,18 @@ class UserTable extends Component {
           <a style={{ marginRight: 20 }} href={`data.html?name=${user.name}`} target="_blank">抓包配置</a>
           <a style={{ marginRight: 20 }} data-action="modify">修改密码</a>
           <a data-action="delete">删除</a>
+        </span>
+        /* eslint-enable */
+      ),
+    },
+    {
+      width: '40%',
+      title: '通知',
+      key: 'action',
+      render: (text, user) => (
+        /* eslint-disable*/
+        <span className="nohost-user-operation">
+          <a data-action="noticeAdd"> { user.notice ? '修改' : '新增'}</a>
         </span>
         /* eslint-enable */
       ),
@@ -100,6 +112,9 @@ class UserTable extends Component {
       case 'delete':
         this.props.onDelete(name);
         break;
+      case 'noticeAdd':
+        this.props.onNoticeAdd(record);
+        break;
       default:
         return;
     }
@@ -145,6 +160,7 @@ UserTable.propTypes = {
   onModify: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onDrag: PropTypes.func.isRequired,
+  onNoticeAdd: PropTypes.func.isRequired,
 };
 
 

@@ -121,6 +121,8 @@ clipboard.on('success', () => {
   message.success('Copied clipboard.');
 });
 
+// 保存通知内容与账号对的键值对
+const envNoticeMap = {};
 
 /* eslint-disable react/no-access-state-in-setstate */
 /**
@@ -193,6 +195,7 @@ class Capture extends Component {
     this.setState({
       value,
       url: getUrl(value[0], value[1]),
+      notice: envNoticeMap[value[0]],
     });
   }
 
@@ -306,6 +309,8 @@ class Capture extends Component {
       const envMap = {};
       const options = data.list.map((account) => {
         envMap[account.name] = 1;
+        envNoticeMap[account.name] = account.notice;
+
         const children = account.envList.map(({ name }) => {
           envMap[`${account.name}/${name}`] = 1;
           return {
@@ -338,6 +343,7 @@ class Capture extends Component {
         state.envValue = value;
         if (value) {
           state.url = getUrl(value[0], value[1]);
+          state.notice = envNoticeMap && envNoticeMap[value[0]];
         }
         state.redirectUrl = getRedirectUrl(value, this.state.testUrl);
       }
