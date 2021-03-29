@@ -3,6 +3,7 @@ import { Row, Col, Button, Form, Input } from 'antd';
 import PropTypes from 'prop-types';
 
 const FormItem = Form.Item;
+const MAXLENGTH = 32;
 
 class AddNoticeForm extends Component {
   constructor(props) {
@@ -38,8 +39,8 @@ class AddNoticeForm extends Component {
             initialValue: this.props.notice,
           })(<Input
             disabled={this.state.loading}
-            placeholder="请输入通知，最多32个字符"
-            maxLength={32}
+            placeholder={`请输入通知，最多${MAXLENGTH}个字符`}
+            maxLength={MAXLENGTH}
             autoComplete="off"
             onBlur={this.onBlur}
             allowClear
