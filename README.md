@@ -28,7 +28,9 @@ Nohost 是基于 [Whistle](https://github.com/avwo/whistle) 实现的多用户�
 
 [七. 规则](#Whistle)
 
-[八. 加群](#add)
+[八. 开发](#development)
+
+[九. 加群](#add)
 
 
 ## <a href="#prepare" id="prepare">一. 准备</a>
@@ -162,7 +164,23 @@ ke.qq.com
 
 **详细内容参见文档：[https://nohost.pro/](https://nohost.pro/)**
 
-## <a href="#add" id="add">八. 加群</a>
+## <a href="#development" id="development">八. 开发</a>
+开发环境搭建：
+```bash
+git clone git@github.com:Tencent/nohost.git
+# 切换到dev开发分支
+git checkout dev
+# 安装依赖
+npm install
+# 启动页面构建
+npm run dev
+# 启动 Nohost
+npm start
+```
+> 修改页面后需要手动刷新
+
+
+## <a href="#add" id="add">九. 加群</a>
 欢迎大家加入Nohost交流群。考虑到群二维码有时效限制，请大家扫码加好友，验证回复 `Nohost` ，会统一将大家拉进群。
 ![二维码](https://user-images.githubusercontent.com/29788452/105933529-8bf7f000-6089-11eb-9e0a-6ab40604e355.png)
 
