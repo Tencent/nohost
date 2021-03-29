@@ -331,7 +331,7 @@ class Accounts extends Component {
           destroyOnClose
           width={600}
         >
-          <AddNoticeForm handleSubmit={this.handleAddAddNoticeSubmit} notice={this.state.notice} />
+          <AddNoticeForm key={Date.now()} handleSubmit={this.handleAddAddNoticeSubmit} notice={this.state.notice} />
         </Modal>
       </div>
     );

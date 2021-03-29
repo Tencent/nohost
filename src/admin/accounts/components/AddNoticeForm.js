@@ -5,10 +5,6 @@ import PropTypes from 'prop-types';
 const FormItem = Form.Item;
 
 class AddNoticeForm extends Component {
-  formItemLayout = {
-    formLayout: 'vertical',
-  };
-
   constructor(props) {
     super(props);
     this.state = {
@@ -27,21 +23,26 @@ class AddNoticeForm extends Component {
     });
   };
 
+  // 失去焦点，清除前后空格
+  onBlur = ({ target }) => {
+    const { id, value } = target;
+    this.props.form.setFieldsValue({ [id]: value.trim() });
+  }
+
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
       <Form onSubmit={this.handelSubmit}>
-        <FormItem {...this.formItemLayout} label="内容" hasFeedback>
+        <FormItem>
           { getFieldDecorator('notice', {
-            rules: [
-              { required: true, message: '请输入通知文案' },
-            ],
             initialValue: this.props.notice,
           })(<Input
             disabled={this.state.loading}
-            placeholder="请输入1~32个字符"
+            placeholder="请输入通知，最多32个字符"
             maxLength={32}
             autoComplete="off"
+            onBlur={this.onBlur}
+            allowClear
           />)}
         </FormItem>
         <Row>
