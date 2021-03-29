@@ -324,7 +324,7 @@ class Accounts extends Component {
         </Modal>
         {/* 添加通知内容弹窗 */}
         <Modal
-          title={`设置${this.state.chosenUser}账号通知`}
+          title={`设置 ${this.state.chosenUser} 账号通知`}
           visible={this.state.addNoticeModal}
           onCancel={this.hideAddNoticeModal}
           footer={null}
