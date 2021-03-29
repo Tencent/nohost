@@ -40,6 +40,11 @@
       "git add"
     ]
   },
+  "nodemonConfig": {
+    "watch": [
+      "lib/"
+    ]
+  },
   "registry": "https://registry.npmjs.org/@nohost/server",
   "repository": {
     "type": "git",

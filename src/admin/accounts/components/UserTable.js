@@ -37,7 +37,7 @@ class UserTable extends Component {
     {
       width: '40%',
       title: '通知',
-      key: 'action',
+      key: 'notice',
       render: (text, user) => (
         /* eslint-disable*/
         <span className="nohost-user-operation nohost-user-notice">
