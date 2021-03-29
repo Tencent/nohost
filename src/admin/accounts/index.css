@@ -33,7 +33,7 @@ table {
   border-bottom-right-radius: 5px;
   color: #fff;
   background-color: #002240;
-  font-family: consolas,monospace!important;
+  font-family: consolas, monospace !important;
 }
 
 .n-settings fieldset {
@@ -60,13 +60,25 @@ table {
   border-bottom: 1px solid #ccc;
 }
 .n-auth-key-input {
-  border: none!important;
-  color: #fff!important;
-  background-color: #002240!important;
-  border-top-left-radius: 0!important;
-  border-top-right-radius: 0!important;
+  border: none !important;
+  color: #fff !important;
+  background-color: #002240 !important;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
 }
 
 .p-view-capture input {
   margin-right: 5px;
+}
+
+.nohost-user-notice {
+  display: flex;
+}
+
+.nohost-user-notice-content {
+  overflow: hidden;
+  flex: 1;
+  margin-left: 10px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
