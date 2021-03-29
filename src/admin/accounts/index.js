@@ -324,14 +324,14 @@ class Accounts extends Component {
         </Modal>
         {/* 添加通知内容弹窗 */}
         <Modal
-          title="添加通知"
+          title={`设置${this.state.chosenUser}账号通知`}
           visible={this.state.addNoticeModal}
           onCancel={this.hideAddNoticeModal}
           footer={null}
           destroyOnClose
           width={600}
         >
-          <AddNoticeForm key={Date.now()} handleSubmit={this.handleAddAddNoticeSubmit} notice={this.state.notice} />
+          <AddNoticeForm handleSubmit={this.handleAddAddNoticeSubmit} notice={this.state.notice} />
         </Modal>
       </div>
     );
