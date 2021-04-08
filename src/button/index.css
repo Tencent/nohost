@@ -9,25 +9,28 @@
   height: 100% !important;
   overflow: hidden !important;
   background-color: rgba(0, 0, 0, 0.6) !important;
-  font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", "Hiragino Sans GB W3", "WenQuanYi Micro Hei", sans-serif
+  font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB",
+    "Hiragino Sans GB W3", "WenQuanYi Micro Hei", sans-serif;
 }
 
-#w-nohost-operations, #w-nohost-custom-menu {
+#w-nohost-operations,
+#w-nohost-custom-menu {
   max-height: 80%;
   overflow-y: scroll;
   width: 250px !important;
-  margin-left: auto!important;
-  margin-right: auto!important;
+  margin-left: auto !important;
+  margin-right: auto !important;
   background: rgba(255, 255, 255, 0.9) !important;
   padding: 10px !important;
   transition: 0.3s !important;
   font-size: 12px !important;
   line-height: 14px !important;
-  border-radius: 5px!important;
+  border-radius: 5px !important;
   user-select: none !important;
 }
 
-#w-nohost-operation-modal h4, #w-nohost-custom-context-modal h4 {
+#w-nohost-operation-modal h4,
+#w-nohost-custom-context-modal h4 {
   font-weight: bold !important;
   text-align: center !important;
   margin: 5px !important;
@@ -35,7 +38,8 @@
   position: relative !important;
 }
 
-#w-nohost-close-modal, #w-nohost-close-custom-modal {
+#w-nohost-close-modal,
+#w-nohost-close-custom-modal {
   cursor: pointer !important;
   color: #aaa !important;
   position: absolute !important;
@@ -87,7 +91,9 @@
 #w-nohost-toolbar .tool-item {
   cursor: pointer !important;
 }
-#w-nohost-user-ul, #w-nohost-env-ul, #w-nohost-env-filter {
+#w-nohost-user-ul,
+#w-nohost-env-ul,
+#w-nohost-env-filter {
   display: none;
   list-style-type: none !important;
   padding: 0 !important;
@@ -110,7 +116,7 @@
   display: block !important;
   background: white !important;
   cursor: pointer !important;
-  transition: background-color .3s;
+  transition: background-color 0.3s;
   position: relative !important;
 }
 
@@ -121,7 +127,7 @@
 }
 
 #w-nohost-list .liWithSub:after {
-  content: ' ' !important;
+  content: " " !important;
   position: absolute !important;
   top: 16px !important;
   right: 24px !important;
@@ -133,7 +139,7 @@
   border-bottom: none !important;
 }
 #w-nohost-list .envSelected.liWithSub:after {
-  border-color: #000!important;
+  border-color: #000 !important;
 }
 
 #w-nohost-list li:hover:not(.envSelected) {
@@ -146,14 +152,15 @@
   background-color: #bdbdbd !important;
 }
 
-#w-nohost-list #w-nohost-user-ul #w-nohost-error-hint, #w-nohost-list #w-nohost-env-ul #w-nohost-error-hint {
+#w-nohost-list #w-nohost-user-ul #w-nohost-error-hint,
+#w-nohost-list #w-nohost-env-ul #w-nohost-error-hint {
   border: 1px solid #f6f6f6 !important;
   text-decoration: none !important;
   color: black !important;
   padding: 8px 12px 8px 36px !important;
   display: block !important;
   background: white !important;
-  cursor: pointer
+  cursor: pointer;
 }
 
 #w-nohost-btn--top {
@@ -178,7 +185,7 @@
 }
 
 #w-nohost-btn--top.back::after {
-  content: ' ' !important;
+  content: " " !important;
   position: absolute !important;
   top: 16px !important;
   left: 24px !important;
@@ -190,12 +197,13 @@
   border-right: none !important;
 }
 
-#w-nohost-list #w-nohost-btn--back:hover, #w-nohost-list #w-nohost-btn--back:focus {
+#w-nohost-list #w-nohost-btn--back:hover,
+#w-nohost-list #w-nohost-btn--back:focus {
   background-color: #4097e0 !important;
 }
 
 #w-nohost-list #w-nohost-btn--back:before {
-  content: ' ' !important;
+  content: " " !important;
   position: absolute !important;
   top: 17px !important;
   left: 12px !important;
@@ -246,7 +254,7 @@
 
 .w-nohost-circle-item {
   padding: 0 8px !important;
-  white-space:nowrap !important;
+  white-space: nowrap !important;
   cursor: pointer !important;
 }
 
@@ -276,7 +284,7 @@
 
 .w-nohost-loading-circle {
   border-top: 5px solid rgba(84, 189, 221, 0.3) !important;
-  animation: spin 1.6s linear infinite
+  animation: spin 1.6s linear infinite;
 }
 
 .w-nohost-loaded-circle {
@@ -302,15 +310,15 @@
   border: 8px solid #eee !important;
   border-top: 8px solid #008cba !important;
   border-radius: 50% !important;
-  animation: spin 1.6s linear infinite
+  animation: spin 1.6s linear infinite;
 }
 
 @keyframes spin {
   0% {
-    transform: rotate(0deg)
+    transform: rotate(0deg);
   }
   100% {
-    transform: rotate(360deg)
+    transform: rotate(360deg);
   }
 }
 
@@ -327,11 +335,11 @@
   background-color: #13ce66;
   color: white !important;
   text-align: center !important;
-  padding: 10px!important;
+  padding: 10px !important;
   transition: 0.3s !important;
   font-size: 16px !important;
-  border-radius: 3px!important;
-  line-height: 20px!important;
+  border-radius: 3px !important;
+  line-height: 20px !important;
 }
 
 .w-nohost-toast.w-nohost-toast-error {
@@ -347,13 +355,13 @@
   color: #fff;
 }
 
-#w-nohost-custom {
+.w-nohost-has-second {
   display: none;
   position: relative;
 }
 
-#w-nohost-custom::after {
-  content: ' ' !important;
+.w-nohost-has-second::after {
+  content: " " !important;
   position: absolute !important;
   top: 12px !important;
   right: 12px !important;
@@ -365,14 +373,14 @@
   border-bottom: none !important;
 }
 
-#w-nohost-custom-context-wrap {
+.w-nohost-second-content-wrap {
   position: absolute !important;
   left: 100% !important;
   display: none;
   transform: translate(0, -100%) !important;
 }
 
-#w-nohost-custom-context {
+.w-nohost-second-content-content {
   margin-left: 3px;
   min-width: 130px !important;
   font-size: 14px !important;
@@ -384,7 +392,7 @@
   user-select: none !important;
 }
 
-.w-nohost-custom-item {
+.w-nohost-second-item {
   max-width: 250px !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
@@ -393,21 +401,21 @@
   cursor: pointer !important;
 }
 
-.w-nohost-custom-item:hover {
+.w-nohost-second-item:hover {
   background: #f5f5f5 !important;
 }
 
-.w-nohost-custom-item:nth-child(1) {
+.w-nohost-second-item:nth-child(1) {
   border-top-left-radius: 5px !important;
   border-top-right-radius: 5px !important;
 }
 
-.w-nohost-custom-item:last-child {
+.w-nohost-second-item:last-child {
   border-bottom-right-radius: 5px !important;
   border-bottom-left-radius: 5px !important;
 }
 
-#w-nohost-custom:hover #w-nohost-custom-context-wrap {
+.w-nohost-has-second:hover .w-nohost-second-content-wrap {
   display: block !important;
 }
 
