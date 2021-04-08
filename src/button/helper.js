@@ -81,3 +81,11 @@ export function setLocalStorage(key, value) {
     localStorage[key] = value;
   } catch (e) {}
 }
+
+export function safeParse(param) {
+  try {
+    return JSON.parse(param);
+  } catch (e) {
+    return null;
+  }
+}

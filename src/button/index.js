@@ -12,6 +12,12 @@ import {
   setLocalStorage,
 } from './helper';
 import './index.css';
+import {
+  getEnvHistory,
+  setEnvHistory,
+  initEnvHistoryDom,
+} from './envHistory';
+import { CUR_SELECTED_USER } from './const';
 
 let curEnvData;
 let curEnvDataCallback;
@@ -25,7 +31,7 @@ let circle;
 let circleIcon;
 let circleContext;
 let circleEnv;
-let circleLast;
+let circleHistory;
 let circleDefault;
 let filter;
 let userUl;
@@ -40,10 +46,7 @@ const bound = 20; // 判断小圆点是否移动的上界
 let circleMoved = false; // 小圆点是否移动
 let envSelected = false; // 是否已选择环境
 let startPoint = { x: null, y: null }; // 小圆点开始坐标
-const CUR_SELECTED_USER = '__nohost_-_selected_user_id__';
-const LAST_SELECTED_ENV = '__nohost_-_last_selected_id__';
-// const CIRCLE_POS_X = '__nohost_-_circle_pos_x__';
-// const CIRCLE_POS_Y = '__nohost_-_circle_pos_y__';
+
 let customEntry;
 let customContext;
 let customEntryBtn;
@@ -159,12 +162,13 @@ function showEnv(username, envName) {
   circleEnv.text(curEnvName);
   circleEnv.attr('data-clipboard-text', `Nohost环境：${curEnvStr}`);
   $('#w-nohost-circle-copyUrl').attr('data-clipboard-text', getEnvLink());
-  const lastEnvStr = getLocalStorage(LAST_SELECTED_ENV);
-  if (lastEnvStr && lastEnvStr !== curEnvStr && inUserList(lastEnvStr)) {
-    circleLast.text(`上一环境: ${lastEnvStr}`);
-    circleLast.show();
+  const envHistory = getEnvHistory(inUserList);
+
+  if (envHistory.length > 0) {
+    initEnvHistoryDom();
+    circleHistory.show();
   } else {
-    circleLast.hide();
+    circleHistory.hide();
   }
   if (username) {
     circleDefault.show();
@@ -333,8 +337,9 @@ function handleClickModal(event) {
 }
 
 function sendSelect(data, callback) {
+  // 切换到新环境之前，将当前环境推入历史记录中
   if (curEnv && curEnv.name && curEnv.envName) {
-    setLocalStorage(LAST_SELECTED_ENV, `${curEnv.name}/${curEnv.envName}`);
+    setEnvHistory(`${curEnv.name}/${curEnv.envName}`);
   }
   data = data || { name: '~' };
   selectModal.hide();
@@ -612,7 +617,7 @@ function initCustomContext() {
     window.nohostContextMenuExtensions.map((item) => {
       const { name, title, onClick, autoHide = true } = item;
       const div = document.createElement('div');
-      div.className = 'w-nohost-custom-item';
+      div.className = 'w-nohost-second-item';
       div.innerHTML = name;
       div.title = title;
       div.onclick = (e) => {
@@ -661,7 +666,7 @@ function injectHTML() {
   envUl = $('#w-nohost-env-ul');
   topBtn = $('#w-nohost-btn--top');
   toast = $('#w-nohost-toast');
-  circleLast = $('#w-nohost-circle-last');
+  circleHistory = $('#w-nohost-circle-history');
   circleDefault = $('#w-nohost-circle-default');
   customEntry = $('#w-nohost-custom');
   customContext = $('#w-nohost-custom-context');
@@ -707,8 +712,13 @@ function injectHTML() {
   });
 
   $('#w-nohost-circle-user').on('click', openCurrentUser);
-  circleLast.on('click', () => {
-    const lastEnv = getLocalStorage(LAST_SELECTED_ENV);
+
+  // 选中切换记录
+  circleHistory.on('click', (item) => {
+    const lastEnv = item.target.getAttribute('value');
+
+    if (!lastEnv) { return; }
+
     const arr = lastEnv.split('/');
     sendSelect({ name: arr[0], envId: arr[1] });
   });
@@ -798,6 +808,9 @@ function injectHTML() {
 
   genUserList();
   initCustomContext();
+
+  // 初始化切换记录二级选择框
+  initEnvHistoryDom();
 }
 
 function init() {

@@ -36,8 +36,12 @@ export default `<div id="w-nohost">
       当前环境
     </div>
     <div class="w-nohost-circle-items">
-      <div id="w-nohost-circle-last" class="w-nohost-circle-item">
-        上一环境
+      <div id="w-nohost-circle-history" class="w-nohost-circle-item w-nohost-has-second">
+        切换记录
+        <div class="w-nohost-second-content-wrap">
+          <div id="w-nohost-circle-history-list" class="w-nohost-second-content-content">
+          </div>
+        </div>
       </div>
       <div id="w-nohost-circle-default" class="w-nohost-circle-item">
         正式环境
@@ -51,10 +55,10 @@ export default `<div id="w-nohost">
       <div id="w-nohost-circle-open" class="w-nohost-circle-item">
         选择环境
       </div>
-      <div id="w-nohost-custom" class="w-nohost-circle-item">
+      <div id="w-nohost-custom" class="w-nohost-circle-item w-nohost-has-second">
         自定义菜单
-        <div id="w-nohost-custom-context-wrap">
-          <div id="w-nohost-custom-context">
+        <div id="w-nohost-custom-context-wrap" class="w-nohost-second-content-wrap">
+          <div id="w-nohost-custom-context" class="w-nohost-second-content-content">
           </div>
         </div>
       </div>
