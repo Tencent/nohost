@@ -342,7 +342,7 @@ function sendSelect(data, callback) {
   // 每次环境切换，都推入历史记录中，包括选择默认环境
   // 并且排除正式环境
   if (data.name !== '~') {
-    setEnvHistory(`${data.name}/${data.envId || '默认环境'}`);
+    setEnvHistory(`${data.name}/${data.envName || '默认环境'}`);
   }
 
   selectModal.hide();
@@ -403,7 +403,8 @@ function handleChooseEnv(event) {
   const { target } = event;
   const name = target.getAttribute('data-user-name');
   const envId = target.getAttribute('data-env-id');
-  sendSelect({ name, envId });
+  const envName = target.getAttribute('data-env-name');
+  sendSelect({ name, envId, envName });
   return false;
 }
 
@@ -724,7 +725,7 @@ function injectHTML() {
 
     const arr = lastEnv.split('/');
     // 兼容选择了默认环境，这里envId依然上报空字段
-    sendSelect({ name: arr[0], envId: arr[1] === '默认环境' ? '' : arr[1] });
+    sendSelect({ name: arr[0], envId: arr[1] === '默认环境' ? '' : arr[1], envName: arr[1] });
   });
   circleDefault.on('click', () => {
     sendSelect({ name: '~' });
