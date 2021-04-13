@@ -1,18 +1,41 @@
 @import "~antd/dist/antd.less";
 @icon-url: "../../../../../src/iconfonts/iconfont";
 
-::-webkit-scrollbar{ width:10px; height:10px; }
-::-webkit-scrollbar-button{ width:10px;height:1px; }
-::-webkit-scrollbar-thumb{ background-clip:padding-box; background-color:rgba(0,0,0,.5); border-radius:8px; min-height: 30px;}
-::-webkit-scrollbar-thumb:hover{ background-clip:padding-box; background-color:rgba(0,0,0,.7); border-radius:8px;}
-::-webkit-scrollbar-track,::-webkit-scrollbar-thumb { border-left:2px solid transparent; border-right:2px solid transparent;}
-::-webkit-scrollbar-track:hover{ background-clip:padding-box; background-color:rgba(0,0,0,.15);}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-button {
+  width: 10px;
+  height: 1px;
+}
+::-webkit-scrollbar-thumb {
+  background-clip: padding-box;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+  min-height: 30px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-clip: padding-box;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-thumb {
+  border-left: 2px solid transparent;
+  border-right: 2px solid transparent;
+}
+::-webkit-scrollbar-track:hover {
+  background-clip: padding-box;
+  background-color: rgba(0, 0, 0, 0.15);
+}
 
 * {
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   background: #f8f9fa;
 }
@@ -50,6 +73,7 @@ html, body {
 .capture-win {
   display: block;
   width: 100%;
+  min-width: 1100px;
   border: none;
 }
 
