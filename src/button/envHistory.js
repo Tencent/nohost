@@ -36,7 +36,15 @@ export function getEnvHistory(check) {
  */
 export function setEnvHistory(newValue) {
   const envHistory = getEnvHistory();
-  const index = envHistory.indexOf(newValue);
+  let index = -1;
+
+  envHistory.some((item, idx) => {
+    if (item.envId === newValue.envId) {
+      index = idx;
+      return true;
+    }
+  });
+
   if (index > -1) {
     envHistory.splice(index, 1);
   }
@@ -64,11 +72,16 @@ export function initEnvHistoryDom() {
 
   const newList = document.createDocumentFragment();
 
-  envHistory.forEach(item => {
+  envHistory.forEach(({ name, envId, envName }) => {
     const div = document.createElement('div');
+
     div.className = 'w-nohost-second-item';
-    div.innerText = item;
-    div.setAttribute('value', item);
+    div.innerText = `${name}/${envName}`;
+
+    div.setAttribute('data-user-name', name);
+    div.setAttribute('data-env-id', envId);
+    div.setAttribute('data-env-name', envName);
+
 
     newList.appendChild(div);
   });
