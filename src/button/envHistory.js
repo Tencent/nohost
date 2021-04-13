@@ -16,7 +16,10 @@ export function getEnvHistory(check) {
 
   if (localValue[0] !== '[') {
     // 保存了一个上次环境的早期情况, 这里直接清空
-    localStorage.removeItem(LAST_SELECTED_ENV);
+    try {
+      localStorage.removeItem(LAST_SELECTED_ENV);
+    } catch (e) {}
+
     localValue = '';
   } else {
     localValue = safeParse(localValue);
