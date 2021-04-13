@@ -131,18 +131,20 @@ function clearTimer() {
   timer = null;
 }
 
-function inUserList(lastEnvStr) {
-  if (!newData || !lastEnvStr || typeof lastEnvStr !== 'string'
-    || !newData.userList || lastEnvStr.indexOf('/') < 0) {
+function inUserList(envObj) {
+  if (!newData || !envObj || typeof envObj !== 'object'
+    || !newData.userList || !envObj.envName) {
     return false;
   }
-  const lastEnvArr = lastEnvStr.split('/');
+
+  const { name, envName } = envObj;
+
   for (let i = 0; i < newData.userList.length; i++) {
     const user = newData.userList[i];
-    if (user.name === lastEnvArr[0]) {
+    if (user.name === name) {
       for (let j = 0; j < user.envList.length; j++) {
         const env = user.envList[j];
-        if (env.name === lastEnvArr[1]) {
+        if (env.name === envName) {
           return true;
         }
       }
@@ -342,7 +344,11 @@ function sendSelect(data, callback) {
   // 每次环境切换，都推入历史记录中，包括选择默认环境
   // 并且排除正式环境
   if (data.name !== '~') {
-    setEnvHistory(`${data.name}/${data.envName || '默认环境'}`);
+    setEnvHistory({
+      name: data.name,
+      envId: data.envId,
+      envName: data.envName,
+    });
   }
 
   selectModal.hide();
@@ -719,13 +725,14 @@ function injectHTML() {
 
   // 选中切换记录
   circleHistory.on('click', (item) => {
-    const lastEnv = item.target.getAttribute('value');
+    const name = item.target.getAttribute('data-user-name');
+    const envId = item.target.getAttribute('data-env-id');
+    const envName = item.target.getAttribute('data-env-name');
 
-    if (!lastEnv) { return; }
+    if (!name) { return; }
 
-    const arr = lastEnv.split('/');
     // 兼容选择了默认环境，这里envId依然上报空字段
-    sendSelect({ name: arr[0], envId: arr[1] === '默认环境' ? '' : arr[1], envName: arr[1] });
+    sendSelect({ name, envId, envName });
   });
   circleDefault.on('click', () => {
     sendSelect({ name: '~' });
