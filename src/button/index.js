@@ -131,28 +131,6 @@ function clearTimer() {
   timer = null;
 }
 
-function inUserList(envObj) {
-  if (!newData || !envObj || typeof envObj !== 'object'
-    || !newData.userList || !envObj.envName) {
-    return false;
-  }
-
-  const { name, envName } = envObj;
-
-  for (let i = 0; i < newData.userList.length; i++) {
-    const user = newData.userList[i];
-    if (user.name === name) {
-      for (let j = 0; j < user.envList.length; j++) {
-        const env = user.envList[j];
-        if (env.name === envName) {
-          return true;
-        }
-      }
-    }
-  }
-  return false;
-}
-
 function showEnv(username, envName) {
   if (inited || hideNohostBtn) {
     return;
@@ -164,18 +142,13 @@ function showEnv(username, envName) {
   circleEnv.text(curEnvName);
   circleEnv.attr('data-clipboard-text', `Nohost环境：${curEnvStr}`);
   $('#w-nohost-circle-copyUrl').attr('data-clipboard-text', getEnvLink());
-  const envHistory = getEnvHistory(inUserList);
+  const envHistory = getEnvHistory();
 
   if (envHistory.length > 0) {
     initEnvHistoryDom();
     circleHistory.show();
   } else {
     circleHistory.hide();
-  }
-  if (username) {
-    circleDefault.show();
-  } else {
-    circleDefault.hide();
   }
   inited = true;
 }
@@ -206,7 +179,7 @@ function filterEnvs(filterWord) {
       li.setAttribute('data-env-id', env.id);
       // 高亮选择的块
       if (curEnv && user.name === curEnv.name) {
-        // 选择的是默认环境
+        // 选择的是正式环境
         if (!curEnv.envName) {
           if (!env.id) {
             li.className = 'envSelected';
@@ -248,8 +221,8 @@ function genUserList() {
       showEnv('', '正式环境');
     } else if (curEnv && curEnv.name === user.name) {
       $(li).addClass('envSelected');
-      li.innerHTML = escape(`${user.name}(${curEnv.envName || '默认环境'})`);
-      showEnv(user.name, curEnv.envName || '默认环境');
+      li.innerHTML = escape(`${user.name}(${curEnv.envName || '正式环境'})`);
+      showEnv(user.name, curEnv.envName || '正式环境');
     }
     if (index !== 0) {
       $(li).addClass('liWithSub');
@@ -303,7 +276,7 @@ function genEnvList(user) {
     li.setAttribute('data-env-id', env.id);
     // 高亮选择的块
     if (curEnv && user.name === curEnv.name) {
-      // 选择的是默认环境
+      // 选择的是正式环境
       if (!curEnv.envName) {
         if (!env.id) {
           li.className = 'envSelected';
@@ -341,7 +314,7 @@ function handleClickModal(event) {
 function sendSelect(data, callback) {
   data = data || { name: '~' };
 
-  // 每次环境切换，都推入历史记录中，包括选择默认环境
+  // 每次环境切换，都推入历史记录中，包括选择正式环境
   // 并且排除正式环境
   if (data.name !== '~') {
     setEnvHistory({
@@ -731,7 +704,7 @@ function injectHTML() {
 
     if (!name) { return; }
 
-    // 兼容选择了默认环境，这里envId依然上报空字段
+    // 兼容选择了正式环境，这里envId依然上报空字段
     sendSelect({ name, envId, envName });
   });
   circleDefault.on('click', () => {

@@ -319,13 +319,13 @@ class Capture extends Component {
           };
         });
         // All 选项用于查看账号的所有请求
-        // 默认环境 用于查看账号默认环境的请求
-        // 默认环境一般可作为正式环境
+        // 正式环境 用于查看账号正式环境的请求
+        // 正式环境一般可作为正式环境
         children.unshift({
           label: 'All',
           value: '',
         }, {
-          label: '默认环境',
+          label: '正式环境',
           value: ' ',
         });
         return {

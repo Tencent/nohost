@@ -9,7 +9,7 @@ import { LAST_SELECTED_ENV, ENV_HISTORY } from './const';
 /**
  * 从缓存中获取切换记录
  */
-export function getEnvHistory(check) {
+export function getEnvHistory() {
   let localValue = getLocalStorage(LAST_SELECTED_ENV);
 
   if (!localValue) { return []; }
@@ -20,18 +20,10 @@ export function getEnvHistory(check) {
       localStorage.removeItem(LAST_SELECTED_ENV);
     } catch (e) {}
 
-    localValue = '';
-  } else {
-    localValue = safeParse(localValue);
+    return [];
   }
-
-  if (typeof check === 'function') {
-    localValue = localValue.filter((item) => {
-      return check(item);
-    });
-  }
-
-  return localValue || [];
+  localValue = safeParse(localValue) || [];
+  return localValue.filter(item => item.name);
 }
 
 /**

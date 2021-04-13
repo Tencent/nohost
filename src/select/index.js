@@ -51,7 +51,7 @@ function getEnvData(data) {
       const envList = user.envList.map((env) => {
         return Object.assign({}, env);
       });
-      envList.unshift({ id: '', name: '默认环境' });
+      envList.unshift({ id: '', name: '正式环境' });
       uList.push({
         name: user.name,
         envList,
@@ -143,9 +143,9 @@ function genUserList() {
       showCurEnvName(curEnvName);
     } else if (curEnv && name === user.name) {
       $(li).addClass('envSelected');
-      const html = escape(`${user.name} / ${envName || '默认环境'}`);
+      const html = escape(`${user.name} / ${envName || '正式环境'}`);
       li.innerHTML = `${userLink}${html}`;
-      curEnvName = escape(`当前环境：${user.name} / ${envName || '默认环境'}`);
+      curEnvName = escape(`当前环境：${user.name} / ${envName || '正式环境'}`);
       title.html(`${curEnvName}${capture}`);
       backBtn.attr('title', curEnvName);
       showCurEnvName(curEnvName);
@@ -203,7 +203,7 @@ function filterEnvs(filterWord) {
       li.setAttribute('data-env-id', env.id);
       // 高亮选择的块
       if (curEnv && user.name === curEnv.name) {
-        // 选择的是默认环境
+        // 选择的是正式环境
         if (!curEnv.envName) {
           if (!env.id) {
             li.className = 'envSelected';
@@ -233,7 +233,7 @@ function genEnvList(user) {
   const newList = document.createDocumentFragment();
   user.envList.forEach((env) => {
     const li = document.createElement('li');
-    let envName = env.name === '默认环境' ? '' : encodeURIComponent(env.name);
+    let envName = env.name === '正式环境' ? '' : encodeURIComponent(env.name);
     if (envName) {
       envName = `&env=${envName}`;
     }
@@ -246,7 +246,7 @@ function genEnvList(user) {
     li.setAttribute('data-env-id', env.id);
     // 高亮选择的块
     if (curEnv && user.name === curEnv.name) {
-      // 选择的是默认环境
+      // 选择的是正式环境
       if (!curEnv.envName) {
         if (!env.id) {
           li.className = 'envSelected';

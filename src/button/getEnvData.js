@@ -3,7 +3,7 @@ function getEnvData(data) {
   const userList = [{ name: '正式环境' }];
   list.forEach((user) => {
     if (user.active) {
-      user.envList.unshift({ id: '', name: '默认环境' });
+      user.envList.unshift({ id: '', name: '正式环境' });
       userList.push({
         name: user.name,
         envList: user.envList,
