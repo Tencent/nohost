@@ -380,6 +380,10 @@
   transform: translate(0, -100%) !important;
 }
 
+#w-nohost-circle-history .w-nohost-second-content-wrap {
+  transform: translate(0, -30px) !important;
+}
+
 .w-nohost-second-content-content {
   margin-left: 3px;
   min-width: 130px !important;
