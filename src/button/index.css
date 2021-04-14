@@ -220,11 +220,12 @@
   position: fixed !important;
   z-index: 999999999 !important;
   padding-right: 5px !important;
+  padding-top: 20px !important;
 }
 
 #w-nohost-circle-context {
   position: absolute !important;
-  top: 41px !important;
+  top: 61px !important;
   left: 41px !important;
   transform: translate(0, -100%) !important;
   font-size: 14px !important;
