@@ -6,6 +6,17 @@ import $ from 'jquery';
 import { safeParse, getLocalStorage, setLocalStorage } from './helper';
 import { LAST_SELECTED_ENV, ENV_HISTORY } from './const';
 
+const NAME_RE = /^[\w.-]{1,24}$/;
+
+function checkEnv(item) {
+  if (!item || !item.name || !NAME_RE.test(item.name)) {
+    return false;
+  }
+  item.envName = item.envName || '';
+  item.envId = item.envId || '';
+  return typeof item.envName === 'string' && typeof item.envId === 'string';
+}
+
 /**
  * 从缓存中获取切换记录
  */
@@ -23,7 +34,7 @@ export function getEnvHistory() {
     return [];
   }
   localValue = safeParse(localValue) || [];
-  return localValue.filter(item => item.name);
+  return localValue.filter(checkEnv);
 }
 
 /**
