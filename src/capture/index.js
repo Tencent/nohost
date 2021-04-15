@@ -375,7 +375,7 @@ class Capture extends Component {
         this.setState({ loadQRCodeError: true });
         return;
       }
-      const qrCode = `${URL_DIR}follow?followIp=${encodeURIComponent(data.clientIp)}`;
+      const qrCode = `${URL_DIR}follow?followId=${encodeURIComponent(data.clientId)}`;
       this.setState({ qrCode, followerIp: data.followerIp });
     });
   }
