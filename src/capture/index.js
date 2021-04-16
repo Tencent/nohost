@@ -100,7 +100,7 @@ const getUrl = (name, envName) => {
   }
   // whistle 支持通过 ip 过滤抓包数据
   // 如果 ip=self 表示直接使用当前客户端 ip 过滤
-  const viewOwn = getLocalStorage('viewOwn') ? 'self,clientId' : '';
+  const viewOwn = getLocalStorage('viewOwn') ? 'self' : '';
   const own = `?ip=${viewOwn}${envName ? `&ruleName=${encodeURIComponent(envName)}` : ''}`;
   let url = `account/${name}/index.html?${pageName}${own}`;
   if (envName) {
@@ -402,7 +402,7 @@ class Capture extends Component {
   viewOwn = (e) => {
     const { checked } = e.target;
     setLocalStorage('viewOwn', checked ? '1' : '');
-    const url = (this.state.url || '').replace(/\?ip=[^&]*/, checked ? '?ip=self,clientId' : '?ip=');
+    const url = (this.state.url || '').replace(/\?ip=[^&]*/, checked ? '?ip=self' : '?ip=');
     this.setState({
       url,
       viewOwn: checked,
