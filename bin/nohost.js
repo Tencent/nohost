@@ -30,7 +30,8 @@ function showStartupInfo(err, options, debugMode, restart) {
   }
   // 处理端口冲突错误
   if (/listen EADDRINUSE/.test(err)) {
-    error(`[!] Failed to bind proxy port ${options.port || pkg.port}: The port is already in use`);
+    options = util.formatOptions(options);
+    error(`[!] Failed to bind proxy port ${options.host ? `${options.host}:` : ''}${options.port || pkg.port}: The port is already in use`);
     info(`[i] Please check if nohost is already running, you can ${debugMode ? 'stop nohost with `nohost stop` first' : 'restart nohost with `nohost restart`'}`);
     info(`    or if another application is using the port, you can change the port with ${debugMode ? '`nohost run -p newPort`\n' : '`nohost start -p newPort`\n'}`);
   } else if (err.code === 'EACCES' || err.code === 'EPERM') {
