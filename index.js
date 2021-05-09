@@ -16,12 +16,21 @@ const initConfig = require('./lib/config');
 require('whistle/lib/util/patch');
 
 const PROD_RE = /(^|\|)prod(uction)?($|\|)/;
+const PURE_URL_RE = /^((?:https?:)?\/\/[\w.-]+[^?#]*)/;
+
 // 设置存储路径
 process.env.WHISTLE_PATH = process.env.NOHOST_PATH || getWhistlePath();
 fse.ensureDirSync(process.env.WHISTLE_PATH); // eslint-disable-line
 
 
-function getErrorStack(err) {
+const getPureUrl = (url) => {
+  if (!url || !PURE_URL_RE.test(url)) {
+    return;
+  }
+  return RegExp.$1.replace(/\/+$/, '');
+};
+
+const getErrorStack = (err) => {
   if (!err) {
     return '';
   }
@@ -36,7 +45,7 @@ function getErrorStack(err) {
     `Date: ${new Date().toLocaleString()}`,
     stack];
   return result.join('\r\n');
-}
+};
 
 const handleUncaughtException = (err) => {
   if (!err || err.code !== 'ERR_IPC_CHANNEL_CLOSED') {
@@ -64,6 +73,7 @@ module.exports = (options, cb) => {
       process.env.PFORK_MODE = 'bind';
     }
   }
+  options.redirect = getPureUrl(options.redirect);
   initConfig(options);
   require('./lib')(options, cb); // eslint-disable-line
 };
