@@ -1,12 +1,14 @@
 <script>
   var w2 = window.whistleBridge;
   var showModal = w2.showModal;
-  var baseUrl = window.parent.location.href.replace(/\/nohost_share\/.*$/, '')
-    .replace(/[?#].*$/, '').replace(/\/[^/]*$/, '');
+  var baseUrl = window.parent.location.href
+    .replace(/\/nohost_share\/.*$/, "")
+    .replace(/[?#].*$/, "")
+    .replace(/\/[^/]*$/, "");
   var codeList = [];
 
   for (var c1 = 0; c1 < 10; c1++) {
-    codeList.push(c1 + '');
+    codeList.push(c1 + "");
   }
 
   for (var c2 = 97; c2 <= 122; ++c2) {
@@ -20,7 +22,7 @@
     try {
       list = JSON.parse(list);
       if (Array.isArray(list)) {
-        return list.filter(function (item) {
+        return list.filter(function(item) {
           return item && item.name && item.date;
         });
       }
@@ -28,9 +30,9 @@
     return [];
   }
 
-  function saveExportList(name, date, username, code, env)  {
+  function saveExportList(name, date, username, code, env, route) {
     var list = getExportList();
-    list.push({ name, date, username, code, env });
+    list.push({ name, date, username, code, env, route });
     if (list.length > 100) {
       list = list.slice(-30);
     }
@@ -41,83 +43,127 @@
   function createTable(list) {
     var highlight = list;
     list = list || getExportList();
-    var len = (Date.now() + '').length;
-    list = list.reverse().map(function(item, i) {
-      var username = item.username;
-      var code = item.code;
-      username = username ? '&username=' + encodeURIComponent(username) : '';
-      var url = baseUrl + '/nohost_share/' + '?name=' + encodeURIComponent(item.name)
-        + '&date=' + encodeURIComponent(item.date) + username + (code ? '&encrypted=1' : '');
-      var date = new Date(parseInt(item.name.substring(0, len), 10)).toLocaleString();
-      return '<tr' + (!i && highlight ? ' style="font-weight: bold;"' : '') + '><th>' + (i + 1)
-        + '</th><td>' + date + '</td><td style="overflow: hidden"><a style="font-size: 13px;" href="' + url + '" target="_blank">'
-          + url + '</a>' + (code ? '<div>提取码：' + code + '</div>' : '')
-            + '</td><td><a href="javascript:;" class="w-copy-text-with-tips" data-clipboard-text="'
-              + url + '">复制链接</a>' + (code ? '<br/><a href="javascript:;" class="w-copy-text-with-tips" data-clipboard-text="'
-                + code + '">复制提取码</a>' : '') + '</td>';
-    }).join('');
+    var len = (Date.now() + "").length;
+    list = list
+      .reverse()
+      .map(function(item, i) {
+        var username = item.username;
+        var code = item.code;
+        var route = item.route || "";
+        if (route) {
+          route = "&route=" + encodeURIComponent(route);
+        }
+        username = username ? "&username=" + encodeURIComponent(username) : "";
+        var url =
+          baseUrl +
+          "/nohost_share/" +
+          "?name=" +
+          encodeURIComponent(item.name) +
+          "&date=" +
+          encodeURIComponent(item.date) +
+          username +
+          (code ? "&encrypted=1" : "") +
+          route;
+        var date = new Date(
+          parseInt(item.name.substring(0, len), 10)
+        ).toLocaleString();
+        return (
+          "<tr" +
+          (!i && highlight ? ' style="font-weight: bold;"' : "") +
+          "><th>" +
+          (i + 1) +
+          "</th><td>" +
+          date +
+          '</td><td style="overflow: hidden"><a style="font-size: 13px;" href="' +
+          url +
+          '" target="_blank">' +
+          url +
+          "</a>" +
+          (code ? "<div>提取码：" + code + "</div>" : "") +
+          '</td><td><a href="javascript:;" class="w-copy-text-with-tips" data-clipboard-text="' +
+          url +
+          '">复制链接</a>' +
+          (code
+            ? '<br/><a href="javascript:;" class="w-copy-text-with-tips" data-clipboard-text="' +
+              code +
+              '">复制提取码</a>'
+            : "") +
+          "</td>"
+        );
+      })
+      .join("");
     if (!list) {
       list = '<tr><td colspan="4" style="text-align: center;">Empty</td></tr>';
     }
-    var head = '<thead><th style="width: 60px">#</th><th style="width: 180px">Date</th><th>URL</th><th style="width: 120px">Operation</th></thead>';
-    return '<table class="table">' + head + '<tbody><tr>' + list + '</tbody></table>';
+    var head =
+      '<thead><th style="width: 60px">#</th><th style="width: 180px">Date</th><th>URL</th><th style="width: 120px">Operation</th></thead>';
+    return (
+      '<table class="table">' + head + "<tbody><tr>" + list + "</tbody></table>"
+    );
   }
 
   function showFeeds(list) {
     w2.showModal({
-      width: 1100,
-      title: '抓包分享记录',
+      width: 1200,
+      title: "抓包分享记录",
       body: createTable(list)
     });
   }
 
   function getEnvName(item) {
     var headers = item && item.req && item.req.headers;
-    return headers && headers['x-whistle-nohost-env'];
+    return headers && headers["x-whistle-nohost-env"];
   }
 
   function exportSessions(options, code) {
     var selectedList = options.selectedList;
     if (!selectedList.length) {
-      selectedList = [ options.activeItem ];
+      selectedList = [options.activeItem];
     }
-    var name = Date.now() + '' + Math.floor(Math.random() * 10000);
-    w2.request({
-      url: baseUrl + '/export_sessions',
-      crossDomain: true,
-      type: 'post',
-      data: {
-        code: code || '',
-        name: name,
-        sessions: JSON.stringify(selectedList)
+    var name = Date.now() + "" + Math.floor(Math.random() * 10000);
+    w2.request(
+      {
+        url: baseUrl + "/export_sessions",
+        crossDomain: true,
+        type: "post",
+        data: {
+          code: code || "",
+          name: name,
+          sessions: JSON.stringify(selectedList)
+        }
+      },
+      function(data) {
+        if (!data) {
+          return w2.toast.error("分享失败，请稍后再试！");
+        }
+        var env = getEnvName(selectedList[0]);
+        showFeeds(
+          saveExportList(name, data.date, data.username, code, env, data.route)
+        );
       }
-    }, function(data) {
-      if (!data) {
-        return w2.toast.error('分享失败，请稍后再试！');
-      }
-      var env = getEnvName(selectedList[0]);
-      showFeeds(saveExportList(name, data.date, data.username, code, env));
-    });
+    );
   }
   w2.addNetworkListener(function(options) {
-    if (options.name === '【分享】生成链接') {
+    if (options.name === "【分享】生成链接") {
       w2.showModal({
-      width: 320,
-      body: '<p style="font-size: 18px; text-align: center;">是否设置提取码？</p><span style="color: #666;">设置提取码后，用户只有输入提取码才能查看。</span><button type="button" class="close" data-dismiss="modal" style="position: absolute; top: 3px; right: 5px;"><span aria-hidden="true">&times;</span></button>',
-      footer: '<button type="button" onclick="exportWithCode()" class="btn btn-primary" data-dismiss="modal"><span class="glyphicon glyphicon-lock" style="margin-right: 3px;"></span>设置提取码</button><button type="button"  onclick="exportWithoutCode()" class="btn btn-default" data-dismiss="modal">不设置</button>',
-      methods: {
-        exportWithoutCode: function() {
-          exportSessions(options);
-        },
-        exportWithCode: function() {
-          var code = [];
-          for (var i = 0; i < 4; i++) {
-            code[i] = codeList[Math.floor(Math.random() * 100000) % codeLen];
+        width: 320,
+        body:
+          '<p style="font-size: 18px; text-align: center;">是否设置提取码？</p><span style="color: #666;">设置提取码后，用户只有输入提取码才能查看。</span><button type="button" class="close" data-dismiss="modal" style="position: absolute; top: 3px; right: 5px;"><span aria-hidden="true">&times;</span></button>',
+        footer:
+          '<button type="button" onclick="exportWithCode()" class="btn btn-primary" data-dismiss="modal"><span class="glyphicon glyphicon-lock" style="margin-right: 3px;"></span>设置提取码</button><button type="button"  onclick="exportWithoutCode()" class="btn btn-default" data-dismiss="modal">不设置</button>',
+        methods: {
+          exportWithoutCode: function() {
+            exportSessions(options);
+          },
+          exportWithCode: function() {
+            var code = [];
+            for (var i = 0; i < 4; i++) {
+              code[i] = codeList[Math.floor(Math.random() * 100000) % codeLen];
+            }
+            exportSessions(options, code.join(""));
           }
-          exportSessions(options, code.join(''));
         }
-      }
-    });
+      });
     } else {
       showFeeds();
     }
