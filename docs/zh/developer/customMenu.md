@@ -58,7 +58,7 @@ type nohostContextMenuExtensions = MenuItem[];
     ke.qq.com htmlAppend://{whistle.xxx/ext-menu.html}
 
     ``` ext-menu.html
-    <script src="/...whistle-path.5b6af7b9884e1165...///whistle.xxx/path/to/menus.js"></script>
+    <script src="/.whistle-path.5b6af7b9884e1165/whistle.xxx/path/to/menus.js"></script>
     ```
     ````
     `/...whistle-path.5b6af7b9884e1165.../` 是Whistle内部路径，要修改的是后面/whistle.xxx/path/to/menus.js的部分

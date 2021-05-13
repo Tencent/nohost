@@ -81,7 +81,7 @@ function getEnvLink() {
 
 function getData() {
   $.ajax({
-    url: '/...whistle-path.5b6af7b9884e1165...///whistle.nohost/cgi-bin/list',
+    url: '/.whistle-path.5b6af7b9884e1165/whistle.nohost/cgi-bin/list',
     type: 'json',
     method: 'get',
     cache: false,
@@ -339,7 +339,7 @@ function sendSelect(data, callback) {
     });
   };
   $.ajax({
-    url: '/...whistle-path.5b6af7b9884e1165...///whistle.nohost/cgi-bin/select',
+    url: '/.whistle-path.5b6af7b9884e1165/whistle.nohost/cgi-bin/select',
     data: {
       name: data.name,
       envId: data.envId,
