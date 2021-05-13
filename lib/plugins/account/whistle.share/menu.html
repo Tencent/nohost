@@ -123,7 +123,7 @@
     var name = Date.now() + "" + Math.floor(Math.random() * 10000);
     w2.request(
       {
-        url: baseUrl + "/export_sessions",
+        url: baseUrl + "/export_sessions?route=!required!",
         crossDomain: true,
         type: "post",
         data: {
