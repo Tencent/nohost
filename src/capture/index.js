@@ -11,7 +11,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { parse } from 'query-string';
 import ClipboardJS from 'clipboard';
-import { Cascader, Button, Modal, Checkbox, Input, Icon, message } from 'antd';
+import { Cascader, Button, Modal, Checkbox, Input, Icon, message, Tooltip } from 'antd';
 import QRCode from '../components/qrCode';
 import { getAllAccounts, getFollower, unfollow } from '../admin/cgi';
 import '../base.less';
@@ -462,6 +462,9 @@ class Capture extends Component {
         qrcodeElem = <QRCode size="340" value={qrCode} />;
       }
     }
+
+    const displayValue = value ? value.join('/') : '正式环境';
+
     return !isHeadless && !options ? null : (
       <div className="container fill vbox">
         <div
@@ -497,7 +500,9 @@ class Capture extends Component {
             placeholder="选择抓包环境"
             showSearch
           />
-          <Icon type="copy" data-clipboard-text={value ? value.join('/') : '正式环境'} className="n-copy-btn n-copy-env" title="点击复制环境名称" />
+          <Tooltip overlayClassName="env-tips" placement="bottom" title={<p>点击复制：<br />{displayValue}</p>}>
+            <Icon type="copy" data-clipboard-text={displayValue} className="n-copy-btn n-copy-env" />
+          </Tooltip>
           <span className="view-self-only">
             <Checkbox onChange={this.viewOwn} checked={viewOwn}>
               只看本机请求
