@@ -49,7 +49,7 @@
   vertical-align: text-top;
   margin-left: 8px;
 }
-.view-self-only .ant-checkbox-wrapper>span {
+.view-self-only .ant-checkbox-wrapper > span {
   padding-right: 0;
 }
 
@@ -127,7 +127,7 @@
 }
 
 .n-padding-0-dialog {
-  top: 50px!important;
+  top: 50px !important;
 }
 .n-padding-0-dialog .ant-modal-body {
   padding: 0;
@@ -139,7 +139,7 @@
   position: relative;
 }
 .n-create-test-env-dialog {
-  top: 50px!important;
+  top: 50px !important;
 }
 .n-create-test-env-dialog .ant-modal-body {
   padding: 10px;
@@ -169,7 +169,7 @@ body fieldset {
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 0 0 10px;
-  margin-top: 15px; 
+  margin-top: 15px;
 }
 
 body legend {
@@ -225,4 +225,8 @@ body legend {
   float: right;
   height: 26px;
   margin-top: 4px;
+}
+
+.env-tips {
+  max-width: 470px;
 }
