@@ -44,3 +44,4 @@ test
 /docs
 /deploy.sh
 /.*
+/commitlint.config.js
