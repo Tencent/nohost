@@ -46,7 +46,7 @@ exports.install = (cmd, argv) => {
   }
   plugins.unshift('install');
   args.push('-g', '--prefix', prefix);
-  spawn(process.platform === 'win32' ? 'npm.cmd' : cmd, plugins.concat(args), { stdio: 'inherit' });
+  spawn(`${cmd}${process.platform === 'win32' ? '.cmd' : ''}`, plugins.concat(args), { stdio: 'inherit' });
 };
 
 const removeDir = (dir) => {
