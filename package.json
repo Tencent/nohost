@@ -1,6 +1,6 @@
 {
   "name": "@nohost/server",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "description": "Multi-user & multi-env web debugging proxy based on whistle",
   "main": "index.js",
   "bin": {
@@ -125,6 +125,6 @@
     "simpleproto": "^1.1.0",
     "socketx": "^1.1.0",
     "starting": "^7.0.1",
-    "whistle": "^2.7.2"
+    "whistle": "^2.7.3"
   }
 }
