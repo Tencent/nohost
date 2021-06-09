@@ -7,6 +7,7 @@
 
 import React, { Component } from 'react';
 import { Icon, Button, message } from 'antd';
+
 import { getActiveTabFromHash, setActiveHash, evalJson } from '../util';
 import {
   getSettings,
@@ -18,6 +19,7 @@ import {
   setEntryPatterns,
 } from '../cgi';
 import TextAreaPanel from '../../components/textareaPanel';
+import WhistleEditor from '../../components/whistleEditor';
 import Tabs from '../../components/tab';
 import './index.css';
 
@@ -28,6 +30,7 @@ const DEFAULT_RULES_TITLE = <strong><Icon type="file" /> 环境默认规则</str
 const SPECIAL_RULES_TITLE = <strong><Icon type="file-text" /> 特殊环境默认规则</strong>;
 const TPL_TITLE = <strong><Icon type="code" /> 规则模板</strong>;
 const DATA_TITLE = <strong><Icon type="database" /> 模板配置</strong>;
+
 /**
  * 配置菜单对应的内容
  * 1. 入口配置
@@ -177,7 +180,6 @@ class Config extends Component {
     return false;
   }
 
-
   render() {
     const { hide = false } = this.props;
     const {
@@ -231,7 +233,7 @@ class Config extends Component {
             tabKey="accountRules"
           >
             <div className="p-mid-con">
-              <TextAreaPanel
+              <WhistleEditor
                 title={ACCOUNT_RULES_TITLE}
                 value={accountRules}
                 handleSave={this.setAccountRules}
@@ -240,7 +242,8 @@ class Config extends Component {
                   this.accountRulesPanel = ref;
                 }}
               />
-              <TextAreaPanel
+
+              <WhistleEditor
                 title={DEFAULT_RULES_TITLE}
                 value={defaultRules}
                 handleSave={this.setDefaultRules}
@@ -249,7 +252,8 @@ class Config extends Component {
                   this.defaultRulesPanel = ref;
                 }}
               />
-              <TextAreaPanel
+
+              <WhistleEditor
                 title={SPECIAL_RULES_TITLE}
                 value={testRules}
                 handleSave={this.setTestRules}

@@ -71,14 +71,9 @@ table {
   margin-right: 5px;
 }
 
-.nohost-user-notice {
-  display: flex;
-}
-
 .nohost-user-notice-content {
   overflow: hidden;
-  flex: 1;
-  margin-left: 10px;
+  margin-left: 20px;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
