@@ -15,13 +15,13 @@ class UserTable extends Component {
       ),
     },
     {
-      width: '20%',
+      width: '30%',
       title: '姓名',
       key: 'name',
       dataIndex: 'name',
     },
     {
-      width: '30%',
+      width: '60%',
       title: '操作',
       key: 'action',
       render: (text, user) => (
@@ -29,19 +29,9 @@ class UserTable extends Component {
         <span className="nohost-user-operation">
           <a style={{ marginRight: 20 }} href={`data.html?name=${user.name}`} target="_blank">抓包配置</a>
           <a style={{ marginRight: 20 }} data-action="modify">修改密码</a>
-          <a style={{color: 'red'}} data-action="delete">删除</a>
-        </span>
-        /* eslint-enable */
-      ),
-    },
-    {
-      width: '40%',
-      title: '通知',
-      key: 'notice',
-      render: (text, user) => (
-        /* eslint-disable*/
-        <span className="nohost-user-operation nohost-user-notice">
-          <a data-action="noticeAdd"> { user.notice ? '修改' : '新增'}</a>
+          <a style={{color: 'red', marginRight: 20 }} data-action="delete">删除</a>
+
+          <a data-action="noticeAdd"> { user.notice ? '修改' : '新增'}通知</a>
           <span title={user.notice} className="nohost-user-notice-content" data-action="noticeAdd">{ user.notice }</span>
         </span>
         /* eslint-enable */
