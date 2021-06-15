@@ -14,11 +14,12 @@
 }
 .p-tab-ctn {
   width: 100%;
+  overflow-x: hidden;
 }
 .p-ctn-item {
   padding-right: 255px;
 }
-.p-tab i{
+.p-tab i {
   margin-right: 10px;
 }
 .p-tab-active {
