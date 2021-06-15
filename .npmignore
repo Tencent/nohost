@@ -45,3 +45,4 @@ test
 /deploy.sh
 /.*
 /commitlint.config.js
+/CHANGELOG.md
