@@ -68,6 +68,7 @@ class WhistleEditor extends Component {
         <Editor
           value={value}
           theme="default"
+          fontSize="14"
           onChange={this.handleChange}
           className="n-editor"
           mode="rules"
