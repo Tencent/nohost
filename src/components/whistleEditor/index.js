@@ -69,7 +69,7 @@ class WhistleEditor extends Component {
           value={value}
           theme="default"
           onChange={this.handleChange}
-          className="w-editor"
+          className="n-editor"
           mode="rules"
         />
       </Panel>
