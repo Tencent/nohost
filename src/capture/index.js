@@ -492,8 +492,8 @@ class Capture extends Component {
         {/* 顶部操作栏，headless 默认隐藏 */}
         <div className="action-bar" style={{ display: isHeadless ? 'none' : 'block' }}>
           <History
-            cascaderValue={value}
-            changeRules={this.changeRules}
+            data={value}
+            onChange={this.changeRules}
           />
           <Cascader
             onChange={this.onChange}

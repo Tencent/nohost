@@ -3,10 +3,7 @@ import { Icon, Menu, Dropdown } from 'antd';
 import RulesHistory from './helper';
 import './index.css';
 
-const HistoryHelper = new RulesHistory({
-  key: 'rulesHistory',
-  maxLength: 5,
-});
+const historyHelper = new RulesHistory();
 
 let isSkipRecord = false;
 
@@ -18,7 +15,7 @@ class History extends Component {
 
   // whistle 规则切换时触发
   rulesActiveChange = (envName, name) => {
-    const { cascaderValue } = this.props;
+    const { data } = this.props;
 
     // 回退历史记录，也会触发规则切换回调，这里不做记录
     if (isSkipRecord) {
@@ -27,11 +24,11 @@ class History extends Component {
     }
 
     if (!Array.isArray(name)) {
-      name = cascaderValue[0];
+      name = data[0];
     }
     const val = `${name}/${envName}`;
 
-    HistoryHelper.set(val);
+    historyHelper.add(val);
   };
 
   changeRules = target => {
@@ -43,11 +40,11 @@ class History extends Component {
 
     isSkipRecord = true;
 
-    this.props.changeRules(name, envName);
+    this.props.onChange(name, envName);
   };
 
   ruleHistoryBack = () => {
-    const latest = HistoryHelper.back();
+    const latest = historyHelper.back();
     if (!latest) {
       return;
     }
@@ -57,12 +54,12 @@ class History extends Component {
 
   onHandleMenuClick = item => {
     const val = item.key;
-    HistoryHelper.set(val);
+    historyHelper.add(val);
     this.changeRules(val);
   };
 
   renderHistoryMenu = () => {
-    const history = HistoryHelper.get();
+    const history = historyHelper.get();
     const menuItems = history.map((item) => (
       <Menu.Item key={item} onClick={this.onHandleMenuClick}>
         {item}
