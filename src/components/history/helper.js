@@ -1,12 +1,12 @@
 import { setLocalStorage, getLocalStorage, safeParse } from '../../capture/utils';
 
 export default class RulesHistory {
-  constructor(params = {}) {
-    this.key = params.key || 'rulesHistory';
-    this.maxLength = params.maxLength || 5;
+  constructor() {
+    this.key = 'rulesHistory';
+    this.maxLength = 5;
   }
 
-  set(newValue) {
+  add(newValue) {
     const history = this.get();
     const index = history.indexOf(newValue);
 
@@ -25,10 +25,6 @@ export default class RulesHistory {
 
   get() {
     const local = getLocalStorage(this.key);
-
-    if (!local) {
-      return [];
-    }
 
     return safeParse(local) || [];
   }
