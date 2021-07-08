@@ -13,7 +13,9 @@ import { parse } from 'query-string';
 import ClipboardJS from 'clipboard';
 import { Cascader, Button, Modal, Checkbox, Input, Icon, message, Tooltip } from 'antd';
 import QRCode from '../components/qrCode';
+import History from '../components/history';
 import { getAllAccounts, getFollower, unfollow } from '../admin/cgi';
+import { setLocalStorage, getLocalStorage } from './utils';
 import '../base.less';
 import './index.css';
 
@@ -34,18 +36,6 @@ if (['network', 'rules', 'values', 'plugins'].indexOf(tab) !== -1) {
 // iframe 切换页面时的回调
 window.onWhistlePageChange = name => {
   pageName = `#${name}`;
-};
-// localStorage
-const setLocalStorage = (key, value) => {
-  try {
-    localStorage[key] = value;
-  } catch (e) {}
-};
-// localStorage
-const getLocalStorage = (key) => {
-  try {
-    return localStorage[key];
-  } catch (e) {}
 };
 // 获取抓包url
 // 打开该 url 可以选择好指定环境并切换到选中到环境
@@ -223,6 +213,14 @@ class Capture extends Component {
       result = formatEnvValue(...localEnv) || result;
     } catch (e) {}
     return result;
+  }
+
+  changeRules = (name, envName) => {
+    this.setState({
+      value: [name, envName],
+      url: getUrl(name, envName),
+      notice: envNoticeMap[name],
+    });
   }
 
   // 自动补全功能
@@ -493,6 +491,10 @@ class Capture extends Component {
         </div>
         {/* 顶部操作栏，headless 默认隐藏 */}
         <div className="action-bar" style={{ display: isHeadless ? 'none' : 'block' }}>
+          <History
+            cascaderValue={value}
+            changeRules={this.changeRules}
+          />
           <Cascader
             onChange={this.onChange}
             options={options}

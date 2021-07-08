@@ -89,7 +89,6 @@ export function initEnvHistoryDom() {
     div.setAttribute('data-env-id', envId);
     div.setAttribute('data-env-name', envName);
 
-
     newList.appendChild(div);
   });
 
