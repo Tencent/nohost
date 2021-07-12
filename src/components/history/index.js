@@ -8,7 +8,12 @@ const historyHelper = new RulesHistory();
 let isSkipRecord = false;
 
 class History extends Component {
+  state = {
+    disabled: true,
+  }
+
   componentDidMount() {
+    this.checkDisabled();
     // iframe 规则切换回调
     window.onWhistleRulesActiveChange = this.rulesActiveChange;
   }
@@ -29,14 +34,13 @@ class History extends Component {
     const val = `${name}/${envName}`;
 
     historyHelper.add(val);
+    this.checkDisabled();
   };
 
   changeRules = target => {
     const targetArr = target.split('/');
     const name = targetArr[0];
-    let envName = targetArr.slice(1).join('');
-
-    envName = envName === 'Default' ? '' : envName;
+    const envName = targetArr.slice(1).join('');
 
     isSkipRecord = true;
 
@@ -69,9 +73,20 @@ class History extends Component {
     return <Menu>{menuItems}</Menu>;
   };
 
+  checkDisabled = () => {
+    const history = historyHelper.get();
+    const disabled = history.length <= 1;
+
+    this.setState({
+      disabled,
+    });
+  }
+
   render() {
+    const { disabled } = this.state;
+
     return (
-      <Dropdown overlay={this.renderHistoryMenu} trigger={['hover']} overlayClassName="history-dropdown">
+      <Dropdown disabled={disabled} overlay={this.renderHistoryMenu} trigger={['hover']} overlayClassName="history-dropdown">
         <a className="history" onClick={this.ruleHistoryBack}>
           <Icon width="40" height="40" type="arrow-left" />
         </a>
