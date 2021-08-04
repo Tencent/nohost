@@ -15,6 +15,13 @@ class WhistleEditor extends Component {
     };
   }
 
+  componentDidMount() {
+    // 监听编辑器keydonw事件
+    this.editor.editorRef.addEventListener('keydown', (e) => {
+      this.handleSave(e);
+    });
+  }
+
   handleChange = (e) => {
     const value = e.getValue();
     const { maxLength } = this.props;
@@ -72,6 +79,9 @@ class WhistleEditor extends Component {
           onChange={this.handleChange}
           className="n-editor"
           mode="rules"
+          ref={ref => {
+            this.editor = ref;
+          }}
         />
       </Panel>
     );
