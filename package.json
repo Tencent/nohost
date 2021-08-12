@@ -127,6 +127,7 @@
     "socketx": "^1.1.0",
     "starting": "^7.0.1",
     "whistle": "^2.7.13",
+    "whistle.inspect": "^2.2.1",
     "whistle.script": "^1.1.0"
   }
 }
