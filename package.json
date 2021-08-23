@@ -128,7 +128,7 @@
     "starting": "^7.0.1",
     "whistle": "^2.7.16",
     "whistle.inspect": "^2.2.1",
-    "whistle.script": "^1.1.0",
+    "whistle.script": "^1.2.0",
     "whistle.vase": "^2.1.0"
   }
 }
