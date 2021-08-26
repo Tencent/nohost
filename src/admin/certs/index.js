@@ -174,7 +174,7 @@ class Certs extends Component {
       }
       const suffix = RegExp.$1;
       name = name.slice(0, -4);
-      if (!name || /[^\w*.-]/.test(name)) {
+      if (!name || /[^\w*.()-]/.test(name)) {
         message.error('证书名称存在非法字符！');
         return;
       }
@@ -200,6 +200,7 @@ class Certs extends Component {
   handleChange = () => {
     const input = document.getElementById('upload-input');
     const files = this.formatFiles(input.files);
+    input.value = '';
     if (!files) {
       return;
     }
@@ -221,7 +222,6 @@ class Certs extends Component {
     }, () => {
       message.error('上传失败，请稍后重试！');
     });
-    input.value = '';
   };
 
   render() {
