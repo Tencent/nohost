@@ -1,4 +1,3 @@
-* htmlAppend://{whistle.nohost/inject.html} enable://safeHtml
 
 ``` whistle.nohost/inject.html
 
@@ -20,5 +19,11 @@
       head.appendChild(script);
     }
   })();
+</script>
+```
+
+``` whistle.nohost/none.html
+<script>
+  window.__whistle_nohost_from_imweb_is_inited__ = true;
 </script>
 ```
