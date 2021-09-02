@@ -65,7 +65,8 @@
 
 #w-nohost-list {
   box-sizing: border-box !important;
-  width: 300px !important;
+  max-width: 420px !important;
+  width: 88% !important;
   margin-left: auto !important;
   margin-right: auto !important;
 }
