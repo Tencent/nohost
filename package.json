@@ -129,6 +129,6 @@
     "whistle": "^2.7.23",
     "whistle.inspect": "^2.2.2",
     "whistle.script": "^1.2.0",
-    "whistle.vase": "^2.1.0"
+    "whistle.vase": "^2.1.2"
   }
 }
