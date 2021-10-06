@@ -6,16 +6,16 @@
  * nohost-环境配置与抓包调试平台 is licensed under the MIT License except for the third-party components listed below.
  */
 
+// 避免第三方模块没处理好异常导致程序crash
+require('whistle/lib/util/patch');
 const fse = require('fs-extra');
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
 const { getWhistlePath } = require('whistle/lib/config');
 const pkg = require('./package.json');
 const initConfig = require('./lib/config');
-// 避免第三方模块没处理好异常导致程序crash
-require('whistle/lib/util/patch');
 
-const PROD_RE = /(^|\|)prod(uction)?($|\|)/;
 const PURE_URL_RE = /^((?:https?:)?\/\/[\w.-]+[^?#]*)/;
 
 // 设置存储路径
@@ -66,12 +66,18 @@ module.exports = (options, cb) => {
   } else if (!options) {
     options = {};
   }
-  if (options.debugMode) {
-    if (PROD_RE.test(options.mode)) {
+  if (options.debugMode && typeof options.mode === 'string') {
+    const mode = options.mode.trim().split(/\s*[|,&]\s*/);
+    if (mode.includes('prod') || mode.includes('production')) {
       options.debugMode = false;
     } else {
       process.env.PFORK_MODE = 'bind';
     }
+  }
+  if (/^\d+$/.test(options.cluster)) {
+    options.cluster = parseInt(options.cluster, 10);
+  } else if (options.cluster) {
+    options.cluster = os.cpus().length;
   }
   options.redirect = getPureUrl(options.redirect);
   initConfig(options);

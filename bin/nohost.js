@@ -129,7 +129,10 @@ if (/^([a-z]{1,2})?uni(nstall)?$/.test(cmd)) {
     .option('-a, --account <account>', 'set the account for installing the plugin (all accounts by default)', String, undefined)
     .option('-b, --baseDir <dir>', 'set the configured storage root path', String, undefined)
     .option('-s, --storage <host:port>', 'set the host:port of server to save the request data', String, undefined)
-    .option('-M, --mode [mode]', 'set the starting mode (as: prod)', String, undefined);
+    .option('-M, --mode [mode]', 'set the starting mode (as: prod)', String, undefined)
+    .option('-r, --shadowRules [shadowRules]', 'set shadow (default) rules', String, undefined)
+    .option('--config [config]', 'set whistle startup config from a local file', String, undefined)
+    .option('--cluster [workers]', 'start the proxy cluster', String, undefined);
   if (argv.indexOf('--redirect') !== -1) {
     program.option('--redirect <redirect>', 'redirect sedlect.html & data.html & share.html to new url', String, undefined);
   }
