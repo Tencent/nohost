@@ -43,7 +43,9 @@ function showStartupInfo(err, options, debugMode, restart) {
 }
 // 设置默认启动参数
 program.setConfig({
-  main: path.join(__dirname, '../index.js'),
+  main(options) {
+    return `${path.join(__dirname, '../index.js')}${options.cluster ? '#cluster#' : ''}`;
+  },
   name: 'nohost',
   version: pkg.version,
   runCallback(err, options) {
