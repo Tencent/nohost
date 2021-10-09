@@ -66,8 +66,8 @@ module.exports = (options, cb) => {
   } else if (!options) {
     options = {};
   }
-  if (options.debugMode && typeof options.mode === 'string') {
-    const mode = options.mode.trim().split(/\s*[|,&]\s*/);
+  if (options.debugMode) {
+    const mode = typeof options.mode === 'string' ? options.mode.trim().split(/\s*[|,&]\s*/) : [];
     if (mode.includes('prod') || mode.includes('production')) {
       options.debugMode = false;
     } else {
