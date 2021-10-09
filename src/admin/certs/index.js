@@ -144,7 +144,7 @@ class Certs extends Component {
   updateCertsInfo = () => {
     getCertsInfo((data) => {
       if (!data) {
-        return message.error('证书加载失败，请求稍后重试!');
+        return message.error('证书加载失败，请稍后重试!');
       }
       this.setState(parseCerts(data));
     });
