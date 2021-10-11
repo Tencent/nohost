@@ -140,6 +140,7 @@ function showEnv(username, envName) {
   showSuccessToast(curEnvName, TOAST_DURATION);
   topBtn.attr('title', curEnvName);
   circleEnv.text(curEnvName);
+  circleIcon.text(envName);
   circleEnv.attr('data-clipboard-text', `Nohost环境：${curEnvStr}`);
   $('#w-nohost-circle-copyUrl').attr('data-clipboard-text', getEnvLink());
   const envHistory = getEnvHistory();

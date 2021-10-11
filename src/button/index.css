@@ -278,10 +278,13 @@
   background-color: #5bc0de !important;
   background-color: rgba(91, 192, 222, 0.3) !important;
   color: #008cba !important;
-  font-size: 20px !important;
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: 12px !important;
   display: flex !important;
   align-items: center !important;
-  justify-content: center !important;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .w-nohost-loading-circle {
