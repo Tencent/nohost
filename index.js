@@ -12,6 +12,7 @@ const fse = require('fs-extra');
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
+const qs = require('querystring');
 const { getWhistlePath } = require('whistle/lib/config');
 const pkg = require('./package.json');
 const initConfig = require('./lib/config');
@@ -59,6 +60,24 @@ const handleUncaughtException = (err) => {
 process.on('unhandledRejection', handleUncaughtException);
 process.on('uncaughtException', handleUncaughtException);
 
+const parseCluster = ({ cluster }) => {
+  if (!cluster) {
+    return;
+  }
+  if (/^\d+$/.test(cluster)) {
+    return { workers: parseInt(cluster, 10) };
+  }
+  if (typeof cluster !== 'string') {
+    return { workers: os.cpus().length };
+  }
+  const { workers, plugins } = qs.parse(cluster);
+  const result = { workers: workers > 0 ? parseInt(workers, 10) : os.cpus().length };
+  if (plugins && typeof plugins === 'string') {
+    result.plugins = plugins.split(',').map((plugin) => path.resolve(plugin));
+  }
+  return result;
+};
+
 module.exports = (options, cb) => {
   if (typeof options === 'function') {
     cb = options;
@@ -74,10 +93,10 @@ module.exports = (options, cb) => {
       process.env.PFORK_MODE = 'bind';
     }
   }
-  if (/^\d+$/.test(options.cluster)) {
-    options.cluster = parseInt(options.cluster, 10);
-  } else if (options.cluster) {
-    options.cluster = os.cpus().length;
+  const clusterOpts = parseCluster(options);
+  if (clusterOpts) {
+    options.cluster = clusterOpts.workers;
+    options.pluginPaths = clusterOpts.plugins;
   }
   options.redirect = getPureUrl(options.redirect);
   initConfig(options);
