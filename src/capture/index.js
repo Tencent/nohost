@@ -448,7 +448,7 @@ class Capture extends Component {
       if (followerIp) {
         qrcodeElem = (
           <div className="n-qrcode-warning">
-            <p>本机已关联IP: <strong>{followerIp}</strong></p>
+            <p>本机已关联IP(ClientId): <strong>{followerIp}</strong></p>
             <p>重新扫描会解除上述关系</p>
             <Button onClick={this.confirmQRCode} type="primary">我知道了</Button>
             <p className="n-unfollow">
