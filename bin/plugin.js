@@ -51,7 +51,7 @@ exports.install = (cmd, argv) => {
 
 const removeDir = (dir) => {
   if (fs.existsSync(dir)) { // eslint-disable-line
-    fse.emptyDirSync(dir); // eslint-disable-line
+    fse.removeSync(dir); // eslint-disable-line
   }
 };
 
