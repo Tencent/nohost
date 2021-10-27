@@ -17,7 +17,7 @@ const getAccount = (argv) => {
     return;
   }
   const account = argv[index + 1];
-  argv.splice(index, 1);
+  argv.splice(index, 2);
   return ACCOUNT_RE.test(account) ? account : null;
 };
 
