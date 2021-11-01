@@ -85,6 +85,9 @@ module.exports = (options, cb) => {
   } else if (!options) {
     options = {};
   }
+  if (options.__maxHttpHeaderSize > 0) {
+    process.env.PFORK_MAX_HTTP_HEADER_SIZE = options.__maxHttpHeaderSize;
+  }
   if (options.debugMode) {
     const mode = typeof options.mode === 'string' ? options.mode.trim().split(/\s*[|,&]\s*/) : [];
     if (mode.includes('prod') || mode.includes('production')) {
