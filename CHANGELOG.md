@@ -1,3 +1,6 @@
+# v1.0.1
+1. fix: `--max-http-header-size` 不生效问题
+
 # v1.0.0
 1. feat: 完整支持隧道代理请求，包括 UI 请求
 2. fix: uninstall 插件无法清理干净的问题
