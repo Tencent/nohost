@@ -18,11 +18,17 @@ const pkg = require('./package.json');
 const initConfig = require('./lib/config');
 
 const PURE_URL_RE = /^((?:https?:)?\/\/[\w.-]+[^?#]*)/;
+const NOHOST_PATH = process.env.NOHOST_PATH || path.join(os.homedir(), '.NohostAppData');
 
 // 设置存储路径
-process.env.WHISTLE_PATH = process.env.NOHOST_PATH || getWhistlePath();
+process.env.NOHOST_PATH = NOHOST_PATH;
+process.env.WHISTLE_PATH = NOHOST_PATH;
 fse.ensureDirSync(process.env.WHISTLE_PATH); // eslint-disable-line
 
+const whistlePath = getWhistlePath();
+if (fs.existsSync(whistlePath) && !fs.existsSync(path.join(NOHOST_PATH, '.whistle'))) { // eslint-disable-line
+  fse.copySync(whistlePath, NOHOST_PATH); // eslint-disable-line
+}
 
 const getPureUrl = (url) => {
   if (!url || !PURE_URL_RE.test(url)) {
