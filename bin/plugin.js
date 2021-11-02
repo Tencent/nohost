@@ -21,7 +21,7 @@ const getAccount = (argv) => {
   return ACCOUNT_RE.test(account) ? account : null;
 };
 
-const parseArgv = (argv) => {
+const parseArgv = (argv, prefix) => {
   const account = getAccount(argv);
   const args = [];
   const plugins = argv.filter((name) => {
@@ -32,15 +32,15 @@ const parseArgv = (argv) => {
     return false;
   });
   return {
-    prefix: account ? path.join(PLUGINS_DIR, account) : PLUGINS_DIR,
+    prefix: prefix || (account ? path.join(PLUGINS_DIR, account) : PLUGINS_DIR),
     account,
     plugins,
     args,
   };
 };
 
-exports.install = (cmd, argv) => {
-  const { prefix, plugins, args } = parseArgv(argv);
+exports.install = (cmd, argv, pluginsPath) => {
+  const { prefix, plugins, args } = parseArgv(argv, pluginsPath);
   if (!plugins.length) {
     return;
   }
@@ -55,20 +55,20 @@ const removeDir = (dir) => {
   }
 };
 
-exports.uninstall = (argv) => {
-  const { account, plugins } = parseArgv(argv);
+exports.uninstall = (argv, pluginsPath) => {
+  const { account, plugins } = parseArgv(argv, pluginsPath);
   if (!plugins.length) {
     return;
   }
-  if (account) {
+  if (!pluginsPath && account) {
     plugins.forEach((name) => {
       removeDir(path.join(PLUGINS_DIR, account, 'node_modules', name));
       removeDir(path.join(PLUGINS_DIR, account, 'lib/node_modules', name));
     });
   } else {
     plugins.forEach((name) => {
-      removeDir(path.join(PLUGINS_DIR, 'node_modules', name));
-      removeDir(path.join(PLUGINS_DIR, 'lib/node_modules', name));
+      removeDir(path.join(pluginsPath || PLUGINS_DIR, 'node_modules', name));
+      removeDir(path.join(pluginsPath || PLUGINS_DIR, 'lib/node_modules', name));
     });
   }
 };

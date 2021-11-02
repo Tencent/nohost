@@ -13,16 +13,16 @@ const program = require('starting');
 const path = require('path');
 const os = require('os');
 const fs = require('fs');
-const w2 = require('whistle/bin/plugin');
 const pkg = require('../package.json');
 const util = require('./util');
 const plugin = require('./plugin');
 
 const { showUsage, error, warn, info } = util;
 const { readConfig, getDefaultDir } = program.cli;
-const STARTING_DATA_DIR = path.join(os.homedir() || '~', '.NohostAppData');
+const NOHOST_PATH = path.join(os.homedir() || '~', '.NohostAppData');
+const PLUGINS_PATH = path.join(NOHOST_PATH, 'custom_plugins');
 
-process.env.STARTING_DATA_DIR = STARTING_DATA_DIR;
+process.env.STARTING_DATA_DIR = NOHOST_PATH;
 
 function showStartupInfo(err, options, debugMode, restart) {
   if (!err || err === true) {
@@ -57,7 +57,7 @@ function checkVersion(ver) {
 program.setConfig({
   main(options) {
     const mainFile = `${path.join(__dirname, '../index.js')}${options.cluster ? '#cluster#' : ''}`;
-    if (!fs.existsSync(STARTING_DATA_DIR)) { // eslint-disable-line
+    if (!fs.existsSync(NOHOST_PATH)) { // eslint-disable-line
       const { pid, version } = readConfig(mainFile, getDefaultDir());
       if (pid && checkVersion(version)) {
         try {
@@ -123,7 +123,7 @@ const isGlobal = (params) => {
 if (/^([a-z]{1,2})?uni(nstall)?$/.test(cmd)) {
   argv = Array.prototype.slice.call(argv, 3);
   if (isGlobal(argv)) {
-    w2.uninstall(argv);
+    plugin.uninstall(argv, PLUGINS_PATH);
   } else {
     plugin.uninstall(argv);
   }
@@ -131,7 +131,7 @@ if (/^([a-z]{1,2})?uni(nstall)?$/.test(cmd)) {
   cmd = `${RegExp.$1 || ''}npm`;
   argv = Array.prototype.slice.call(argv, 3);
   if (isGlobal(argv)) {
-    w2.install(cmd, argv);
+    plugin.install(cmd, argv, PLUGINS_PATH);
   } else {
     plugin.install(cmd, argv);
   }
