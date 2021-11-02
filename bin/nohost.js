@@ -12,17 +12,17 @@
 const program = require('starting');
 const path = require('path');
 const os = require('os');
+const fs = require('fs');
 const w2 = require('whistle/bin/plugin');
 const pkg = require('../package.json');
 const util = require('./util');
 const plugin = require('./plugin');
 
-const { showUsage } = util;
-const { error } = util;
-const { warn } = util;
-const { info } = util;
+const { showUsage, error, warn, info } = util;
+const { readConfig, getDefaultDir } = program.cli;
+const STARTING_DATA_DIR = path.join(os.homedir() || '~', '.NohostAppData');
 
-process.env.STARTING_DATA_DIR = path.join(os.homedir() || '~', '.NohostAppData');
+process.env.STARTING_DATA_DIR = STARTING_DATA_DIR;
 
 function showStartupInfo(err, options, debugMode, restart) {
   if (!err || err === true) {
@@ -41,10 +41,31 @@ function showStartupInfo(err, options, debugMode, restart) {
 
   error(err.stack ? `Date: ${new Date().toLocaleString()}\n${err.stack}` : err);
 }
+
+function checkVersion(ver) {
+  if (!ver || typeof ver !== 'string') {
+    return;
+  }
+  const list = ver.split('.');
+  if (list[0] > 1 || list[0] === '0') {
+    return true;
+  }
+  return ver === '1.0.0' || ver === '1.0.1';
+}
+
 // 设置默认启动参数
 program.setConfig({
   main(options) {
-    return `${path.join(__dirname, '../index.js')}${options.cluster ? '#cluster#' : ''}`;
+    const mainFile = `${path.join(__dirname, '../index.js')}${options.cluster ? '#cluster#' : ''}`;
+    if (!fs.existsSync(STARTING_DATA_DIR)) { // eslint-disable-line
+      const { pid, version } = readConfig(mainFile, getDefaultDir());
+      if (pid && checkVersion(version)) {
+        try {
+          process.kill(pid);
+        } catch (e) {}
+      }
+    }
+    return mainFile;
   },
   name: 'nohost',
   version: pkg.version,
