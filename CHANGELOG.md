@@ -1,3 +1,6 @@
+# v1.1.0
+1. refactor: 更换配置默认存储目录，与 Whistle 的默认目录分开
+
 # v1.0.1
 1. fix: `--max-http-header-size` 不生效问题
 
