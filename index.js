@@ -17,6 +17,8 @@ const { getWhistlePath } = require('whistle/lib/config');
 const pkg = require('./package.json');
 const initConfig = require('./lib/config');
 
+delete process.env.WHISTLE_PATH;
+
 const PURE_URL_RE = /^((?:https?:)?\/\/[\w.-]+[^?#]*)/;
 const DEFAULT_PATH = path.join(os.homedir(), '.NohostAppData');
 const NOHOST_PATH = process.env.NOHOST_PATH || DEFAULT_PATH;
