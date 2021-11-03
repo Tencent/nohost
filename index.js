@@ -18,7 +18,8 @@ const pkg = require('./package.json');
 const initConfig = require('./lib/config');
 
 const PURE_URL_RE = /^((?:https?:)?\/\/[\w.-]+[^?#]*)/;
-const NOHOST_PATH = process.env.NOHOST_PATH || path.join(os.homedir(), '.NohostAppData');
+const DEFAULT_PATH = path.join(os.homedir(), '.NohostAppData');
+const NOHOST_PATH = process.env.NOHOST_PATH || DEFAULT_PATH;
 const whistlePath = getWhistlePath();
 
 const existsWhistle = dir => fs.existsSync(path.join(dir, '.whistle')); // eslint-disable-line
@@ -26,8 +27,8 @@ const existsWhistle = dir => fs.existsSync(path.join(dir, '.whistle')); // eslin
 // 设置存储路径
 process.env.NOHOST_PATH = NOHOST_PATH;
 process.env.WHISTLE_PATH = NOHOST_PATH;
-fse.ensureDirSync(process.env.WHISTLE_PATH); // eslint-disable-line
-if (existsWhistle(whistlePath) && !existsWhistle(NOHOST_PATH)) {
+fse.ensureDirSync(NOHOST_PATH); // eslint-disable-line
+if (NOHOST_PATH === DEFAULT_PATH && existsWhistle(whistlePath) && !existsWhistle(NOHOST_PATH)) {
   fse.copySync(whistlePath, NOHOST_PATH); // eslint-disable-line
 }
 
