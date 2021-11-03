@@ -23,7 +23,6 @@ const { readConfig, getDefaultDir } = program.cli;
 const NOHOST_PATH = path.join(os.homedir() || '~', '.NohostAppData');
 
 process.env.STARTING_DATA_DIR = NOHOST_PATH;
-process.env.WHISTLE_PATH = process.env.NOHOST_PATH || NOHOST_PATH;
 
 function showStartupInfo(err, options, debugMode, restart) {
   if (!err || err === true) {
@@ -113,6 +112,11 @@ const removeItem = (list, name) => {
   }
 };
 
+const loadPluginMgr = () => {
+  process.env.WHISTLE_PATH = process.env.NOHOST_PATH || NOHOST_PATH;
+  return loadModule('whistle/bin/plugin');
+};
+
 const isGlobal = (params) => {
   if (params.indexOf('-g') !== -1 || params.indexOf('--global') !== -1) {
     removeItem(params, '-g');
@@ -124,7 +128,7 @@ const isGlobal = (params) => {
 if (/^([a-z]{1,2})?uni(nstall)?$/.test(cmd)) {
   argv = Array.prototype.slice.call(argv, 3);
   if (isGlobal(argv)) {
-    loadModule('whistle/bin/plugin').uninstall(argv);
+    loadPluginMgr().uninstall(argv);
   } else {
     plugin.uninstall(argv);
   }
@@ -132,7 +136,7 @@ if (/^([a-z]{1,2})?uni(nstall)?$/.test(cmd)) {
   cmd = `${RegExp.$1 || ''}npm`;
   argv = Array.prototype.slice.call(argv, 3);
   if (isGlobal(argv)) {
-    loadModule('whistle/bin/plugin').install(cmd, argv);
+    loadPluginMgr().install(cmd, argv);
   } else {
     plugin.install(cmd, argv);
   }
