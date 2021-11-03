@@ -12,7 +12,6 @@
 const program = require('starting');
 const path = require('path');
 const os = require('os');
-const fs = require('fs');
 const pkg = require('../package.json');
 const util = require('./util');
 const plugin = require('./plugin');
@@ -57,13 +56,11 @@ function checkVersion(ver) {
 program.setConfig({
   main(options) {
     const mainFile = `${path.join(__dirname, '../index.js')}${options.cluster ? '#cluster#' : ''}`;
-    if (!fs.existsSync(path.join(NOHOST_PATH, '.startingAppData'))) { // eslint-disable-line
-      const { pid, version } = readConfig(mainFile, getDefaultDir());
-      if (pid && checkVersion(version)) {
-        try {
-          process.kill(pid);
-        } catch (e) {}
-      }
+    const { pid, version } = readConfig(mainFile, getDefaultDir());
+    if (pid && checkVersion(version)) {
+      try {
+        process.kill(pid);
+      } catch (e) {}
     }
     return mainFile;
   },
