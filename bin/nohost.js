@@ -13,6 +13,7 @@ const program = require('starting');
 const path = require('path');
 const os = require('os');
 const fs = require('fs');
+const w2 = require('whistle/bin/plugin');
 const pkg = require('../package.json');
 const util = require('./util');
 const plugin = require('./plugin');
@@ -20,9 +21,9 @@ const plugin = require('./plugin');
 const { showUsage, error, warn, info } = util;
 const { readConfig, getDefaultDir } = program.cli;
 const NOHOST_PATH = path.join(os.homedir() || '~', '.NohostAppData');
-const PLUGINS_PATH = path.join(NOHOST_PATH, 'custom_plugins');
 
 process.env.STARTING_DATA_DIR = NOHOST_PATH;
+process.env.WHISTLE_PATH = process.env.NOHOST_PATH || NOHOST_PATH;
 
 function showStartupInfo(err, options, debugMode, restart) {
   if (!err || err === true) {
@@ -123,7 +124,7 @@ const isGlobal = (params) => {
 if (/^([a-z]{1,2})?uni(nstall)?$/.test(cmd)) {
   argv = Array.prototype.slice.call(argv, 3);
   if (isGlobal(argv)) {
-    plugin.uninstall(argv, PLUGINS_PATH);
+    w2.uninstall(argv);
   } else {
     plugin.uninstall(argv);
   }
@@ -131,7 +132,7 @@ if (/^([a-z]{1,2})?uni(nstall)?$/.test(cmd)) {
   cmd = `${RegExp.$1 || ''}npm`;
   argv = Array.prototype.slice.call(argv, 3);
   if (isGlobal(argv)) {
-    plugin.install(cmd, argv, PLUGINS_PATH);
+    w2.install(cmd, argv);
   } else {
     plugin.install(cmd, argv);
   }
