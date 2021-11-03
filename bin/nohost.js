@@ -58,7 +58,7 @@ function checkVersion(ver) {
 program.setConfig({
   main(options) {
     const mainFile = `${path.join(__dirname, '../index.js')}${options.cluster ? '#cluster#' : ''}`;
-    if (!fs.existsSync(NOHOST_PATH)) { // eslint-disable-line
+    if (!fs.existsSync(path.join(NOHOST_PATH, '.startingAppData'))) { // eslint-disable-line
       const { pid, version } = readConfig(mainFile, getDefaultDir());
       if (pid && checkVersion(version)) {
         try {
