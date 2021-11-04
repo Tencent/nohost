@@ -32,7 +32,7 @@ const parseArgv = (argv) => {
     return false;
   });
   return {
-    prefix: (account ? path.join(PLUGINS_DIR, account) : PLUGINS_DIR),
+    prefix: account ? path.join(PLUGINS_DIR, account) : PLUGINS_DIR,
     account,
     plugins,
     args,
