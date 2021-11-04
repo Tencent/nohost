@@ -24,15 +24,25 @@ const DEFAULT_PATH = path.join(os.homedir(), '.NohostAppData');
 const NOHOST_PATH = process.env.NOHOST_PATH || DEFAULT_PATH;
 const WHISTLE_PATH = path.join(NOHOST_PATH, '.WhistleAppData');
 const whistlePath = getWhistlePath();
+const OLD_DATA_DIR = path.join(whistlePath, '.whistle');
+const CUR_DATA_DIR = path.join(WHISTLE_PATH, '.whistle');
+const OLD_CERT_DIR = path.join(whistlePath, 'custom_certs');
+const CUR_CERT_DIR = path.join(WHISTLE_PATH, 'custom_certs');
 
-const existsWhistle = dir => fs.existsSync(path.join(dir, '.whistle')); // eslint-disable-line
+/* eslint-disable no-sync */
+
 
 // 设置存储路径
 process.env.NOHOST_PATH = NOHOST_PATH;
 process.env.WHISTLE_PATH = WHISTLE_PATH;
-fse.ensureDirSync(WHISTLE_PATH); // eslint-disable-line
-if (NOHOST_PATH === DEFAULT_PATH && existsWhistle(whistlePath) && !existsWhistle(WHISTLE_PATH)) {
-  fse.copySync(whistlePath, WHISTLE_PATH); // eslint-disable-line
+fse.ensureDirSync(WHISTLE_PATH);
+if (NOHOST_PATH === DEFAULT_PATH) {
+  if (fs.existsSync(OLD_DATA_DIR) && !fs.existsSync(CUR_DATA_DIR)) {
+    fse.copySync(OLD_DATA_DIR, CUR_DATA_DIR);
+  }
+  if (fs.existsSync(OLD_CERT_DIR) && !fs.existsSync(CUR_CERT_DIR)) {
+    fse.copySync(OLD_CERT_DIR, CUR_CERT_DIR);
+  }
 }
 
 const getPureUrl = (url) => {
