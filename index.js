@@ -17,33 +17,12 @@ const { getWhistlePath } = require('whistle/lib/config');
 const pkg = require('./package.json');
 const initConfig = require('./lib/config');
 
-delete process.env.WHISTLE_PATH;
-
 const PURE_URL_RE = /^((?:https?:)?\/\/[\w.-]+[^?#]*)/;
-const DEFAULT_PATH = path.join(os.homedir(), '.NohostAppData');
-const NOHOST_PATH = process.env.NOHOST_PATH || DEFAULT_PATH;
-const WHISTLE_PATH = path.join(NOHOST_PATH, '.WhistleAppData');
-const whistlePath = getWhistlePath();
-const OLD_DATA_DIR = path.join(whistlePath, '.whistle');
-const CUR_DATA_DIR = path.join(WHISTLE_PATH, '.whistle');
-const OLD_CERT_DIR = path.join(whistlePath, 'custom_certs');
-const CUR_CERT_DIR = path.join(WHISTLE_PATH, 'custom_certs');
-
-/* eslint-disable no-sync */
-
 
 // 设置存储路径
-process.env.NOHOST_PATH = NOHOST_PATH;
-process.env.WHISTLE_PATH = WHISTLE_PATH;
-fse.ensureDirSync(WHISTLE_PATH);
-if (NOHOST_PATH === DEFAULT_PATH) {
-  if (fs.existsSync(OLD_DATA_DIR) && !fs.existsSync(CUR_DATA_DIR)) {
-    fse.copySync(OLD_DATA_DIR, CUR_DATA_DIR);
-  }
-  if (fs.existsSync(OLD_CERT_DIR) && !fs.existsSync(CUR_CERT_DIR)) {
-    fse.copySync(OLD_CERT_DIR, CUR_CERT_DIR);
-  }
-}
+process.env.WHISTLE_PATH = process.env.NOHOST_PATH || getWhistlePath();
+fse.ensureDirSync(process.env.WHISTLE_PATH); // eslint-disable-line
+
 
 const getPureUrl = (url) => {
   if (!url || !PURE_URL_RE.test(url)) {

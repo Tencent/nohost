@@ -12,16 +12,15 @@
 const program = require('starting');
 const path = require('path');
 const os = require('os');
+const w2 = require('whistle/bin/plugin');
 const pkg = require('../package.json');
 const util = require('./util');
 const plugin = require('./plugin');
 
-const loadModule = require;
 const { showUsage, error, warn, info } = util;
 const { readConfig, getDefaultDir } = program.cli;
-const NOHOST_PATH = path.join(os.homedir() || '~', '.NohostAppData');
 
-process.env.STARTING_DATA_DIR = NOHOST_PATH;
+process.env.STARTING_DATA_DIR = path.join(os.homedir() || '~', '.NohostAppData');
 
 function showStartupInfo(err, options, debugMode, restart) {
   if (!err || err === true) {
@@ -40,7 +39,6 @@ function showStartupInfo(err, options, debugMode, restart) {
 
   error(err.stack ? `Date: ${new Date().toLocaleString()}\n${err.stack}` : err);
 }
-
 function checkVersion(ver) {
   if (!ver || typeof ver !== 'string') {
     return;
@@ -109,11 +107,6 @@ const removeItem = (list, name) => {
   }
 };
 
-const loadPluginMgr = () => {
-  process.env.WHISTLE_PATH = process.env.NOHOST_PATH || NOHOST_PATH;
-  return loadModule('whistle/bin/plugin');
-};
-
 const isGlobal = (params) => {
   if (params.indexOf('-g') !== -1 || params.indexOf('--global') !== -1) {
     removeItem(params, '-g');
@@ -125,7 +118,7 @@ const isGlobal = (params) => {
 if (/^([a-z]{1,2})?uni(nstall)?$/.test(cmd)) {
   argv = Array.prototype.slice.call(argv, 3);
   if (isGlobal(argv)) {
-    loadPluginMgr().uninstall(argv);
+    w2.uninstall(argv);
   } else {
     plugin.uninstall(argv);
   }
@@ -133,7 +126,7 @@ if (/^([a-z]{1,2})?uni(nstall)?$/.test(cmd)) {
   cmd = `${RegExp.$1 || ''}npm`;
   argv = Array.prototype.slice.call(argv, 3);
   if (isGlobal(argv)) {
-    loadPluginMgr().install(cmd, argv);
+    w2.install(cmd, argv);
   } else {
     plugin.install(cmd, argv);
   }
