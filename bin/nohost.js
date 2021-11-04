@@ -18,7 +18,7 @@ const util = require('./util');
 const plugin = require('./plugin');
 
 const { showUsage, error, warn, info } = util;
-const { readConfig, getDefaultDir } = program.cli;
+const { readConfig, removeConfig, getDefaultDir } = program.cli;
 
 process.env.STARTING_DATA_DIR = path.join(os.homedir() || '~', '.NohostAppData');
 
@@ -54,11 +54,13 @@ function checkVersion(ver) {
 program.setConfig({
   main(options) {
     const mainFile = `${path.join(__dirname, '../index.js')}${options.cluster ? '#cluster#' : ''}`;
-    const { pid, version } = readConfig(mainFile, getDefaultDir());
+    const dataDir = getDefaultDir();
+    const { pid, version } = readConfig(mainFile, dataDir);
     if (pid && checkVersion(version)) {
       try {
         process.kill(pid);
       } catch (e) {}
+      removeConfig(mainFile, dataDir);
     }
     return mainFile;
   },
