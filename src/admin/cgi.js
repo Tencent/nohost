@@ -83,13 +83,13 @@ const {
     type: 'post',
   },
   uploadCerts: {
-    url: 'main/cgi-bin/upload-certs',
+    url: 'cgi-bin/certs/upload?dataType=parsed',
     contentType: 'application/json;charset=utf8',
     type: 'post',
   },
   getCertsInfo: 'cgi-bin/get-custom-certs-info',
   removeCert: {
-    url: 'main/cgi-bin/remove-cert',
+    url: '/cgi-bin/certs/remove?dataType=parsed',
     contentType: 'application/json;charset=utf8',
     type: 'post',
   },
