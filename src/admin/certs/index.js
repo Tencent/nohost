@@ -18,19 +18,15 @@ function readFile(file) {
 
 function parseCerts(data) {
   const files = {};
-  let invalidList;
   Object.keys(data).forEach((domain) => {
     const cert = data[domain];
     const startDate = new Date(cert.notBefore);
     const endDate = new Date(cert.notAfter);
     let status = '✓';
     const now = Date.now();
-    let isInvalid;
     if (startDate.getTime() > now) {
-      isInvalid = true;
       status = 'Invalid';
     } else if (endDate.getTime() < now) {
-      isInvalid = true;
       status = 'Expired';
     }
     const { filename } = cert;
@@ -43,26 +39,20 @@ function parseCerts(data) {
         domain: [cert.domain],
         validity: `${startDate.toLocaleString()} ~ ${endDate.toLocaleString()}`,
         status,
-        isInvalid,
       };
       files[filename] = item;
-      if (isInvalid) {
-        invalidList = invalidList || [];
-        invalidList.push(filename);
-      }
     } else {
       item.domain.push(cert.domain);
     }
   });
   return {
     data: Object.keys(files).sort((a, b) => {
-      return files[a].mtime > files[b].mtime ? -1 : 1;
+      return files[a].mtime > files[b].mtime ? 1 : -1;
     }).map(file => {
       file = files[file];
       file.domain = file.domain.join(', ');
       return file;
     }),
-    invalidList,
   };
 }
 
@@ -129,19 +119,6 @@ class Certs extends Component {
 
 
   componentDidMount() {
-    this.updateCertsInfo();
-  }
-
-  removeCert = (filename) => {
-    removeCert(JSON.stringify({ filename }), (data) => {
-      if (!data) {
-        return message.error('操作异常，请稍后重试！');
-      }
-      this.updateCertsInfo();
-    });
-  }
-
-  updateCertsInfo = () => {
     getCertsInfo((data) => {
       if (!data) {
         return message.error('证书加载失败，请稍后重试!');
@@ -150,12 +127,12 @@ class Certs extends Component {
     });
   }
 
-  clearAllInvalidCerts = () => {
-    removeCert(JSON.stringify({ filename: this.state.invalidList }), (data) => {
+  removeCert = (filename) => {
+    removeCert(JSON.stringify({ filename }), (data) => {
       if (!data) {
         return message.error('操作异常，请稍后重试！');
       }
-      this.updateCertsInfo();
+      this.setState(parseCerts(data));
     });
   }
 
@@ -212,12 +189,10 @@ class Certs extends Component {
 
     Promise.all(pendingList).then(() => {
       uploadCerts(JSON.stringify(files), (data) => {
-        if (data.ec === 0) {
-          message.success('上传成功');
-          this.updateCertsInfo();
-        } else {
-          message.error('上传失败，请稍后重试！');
+        if (!data) {
+          return message.error('上传失败，请稍后重试！');
         }
+        this.setState(parseCerts(data));
       });
     }, () => {
       message.error('上传失败，请稍后重试！');
@@ -230,16 +205,6 @@ class Certs extends Component {
     return (
       <div className={`fill vbox p-certs${hide ? ' p-hide' : ''}`}>
         <div className="p-action-bar p-certs-bar">
-          {
-            this.state.invalidList ? (
-              <Popconfirm
-                title="确定清除所有不可用证书？"
-                onConfirm={this.clearAllInvalidCerts}
-              >
-                <Button type="danger" className="p-clear-valid-certs">一键清除不可用证书</Button>
-              </Popconfirm>
-            ) : null
-          }
           <div className="upload-wrapper">
             <input id="upload-input" type="file" accept=".crt,.key" multiple="multiple" onChange={this.handleChange} />
             <Button className="upload-btn" type="primary"><Icon type="upload" />上传证书</Button>
