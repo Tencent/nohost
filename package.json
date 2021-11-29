@@ -1,6 +1,6 @@
 {
   "name": "@nohost/server",
-  "version": "1.2.1",
+  "version": "1.2.2-beta",
   "description": "Multi-user & multi-env web debugging proxy based on whistle",
   "main": "index.js",
   "bin": {
@@ -106,7 +106,7 @@
     "whistle-editor": "^0.2.5"
   },
   "dependencies": {
-    "@nohost/router": "^0.9.0",
+    "@nohost/router": "^1.0.0",
     "async-limiter": "^2.0.0",
     "basic-auth": "^2.0.1",
     "colors": "^1.4.0",
