@@ -1,3 +1,7 @@
+# v1.2.2
+1. refactor: 使用 `@nohost/router` 代替 `@nohost/connect`，更新 Whistle 依赖
+2. style: 添加上次证书成功提示
+
 # v1.2.1
 1. refactor: 上传证书无需重启服务
 
