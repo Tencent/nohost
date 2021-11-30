@@ -193,6 +193,7 @@ class Certs extends Component {
           return message.error('上传失败，请稍后重试！');
         }
         this.setState(parseCerts(data));
+        message.success('证书上传成功。');
       });
     }, () => {
       message.error('上传失败，请稍后重试！');
