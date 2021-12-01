@@ -13,6 +13,10 @@
     "Hiragino Sans GB W3", "WenQuanYi Micro Hei", sans-serif;
 }
 
+.w-nohost-modal * {
+  box-sizing: border-box !important;
+}
+
 #w-nohost-operations,
 #w-nohost-custom-menu {
   max-height: 80%;
