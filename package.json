@@ -1,6 +1,6 @@
 {
   "name": "@nohost/server",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Multi-user & multi-env web debugging proxy based on whistle",
   "main": "index.js",
   "bin": {
