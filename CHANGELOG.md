@@ -1,3 +1,7 @@
+# v1.2.4
+# v1.2.3
+1. refactor: 减少本地 Whistle 配置的干扰
+
 # v1.2.2
 1. refactor: 使用 `@nohost/router` 代替 `@nohost/connect`，更新 Whistle 依赖
 2. style: 添加上次证书成功提示
