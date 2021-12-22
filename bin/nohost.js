@@ -152,7 +152,9 @@ if (/^([a-z]{1,2})?uni(nstall)?$/.test(cmd)) {
     .option('-M, --mode [mode]', 'set the starting mode (as: prod)', String, undefined)
     .option('-r, --shadowRules [shadowRules]', 'set shadow (default) rules', String, undefined)
     .option('--config [config]', 'set whistle startup config from a local file', String, undefined)
-    .option('--cluster [workers]', 'start the proxy cluster', String, undefined);
+    .option('--cluster [workers]', 'start the proxy cluster', String, undefined)
+    .option('--dnsServer [dnsServer]', 'set custom dns servers', String, undefined);
+
   if (argv.indexOf('--redirect') !== -1) {
     program.option('--redirect <redirect>', 'redirect sedlect.html & data.html & share.html to new url', String, undefined);
   }
