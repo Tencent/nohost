@@ -18,7 +18,7 @@
 
 例如：可以设置 10.222.2.200 的域名为 imwebtest.test.com，这样就可以直接访问[http://imwebtest.test.com:8080/](http://imwebtest.test.com:8080/)去选择环境了。
 
-**注意：设置的域名 DNS 一定要指向该IP，否则可能出现不可用状态。**
+**注意：设置的域名 DNS 一定要指向该IP，否则可能出现不可用状态，<del>`imwebtest.test.com`</del> 只是示例域名不要直接使用。**
 
 
 ## Auth Key
