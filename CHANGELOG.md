@@ -1,3 +1,7 @@
+# v1.2.5
+1. feat: 支持通过命令参数 `--dnsServer` 自定义 dns 服务，参见：https://github.com/Tencent/nohost/issues/100
+2. feat: 支持通过命令行 `--globalPluginPath` 和 `--accountPluginPath` 分别设置全局插件和账号插件，参见：https://github.com/Tencent/nohost/issues/101
+
 # v1.2.4
 # v1.2.3
 1. refactor: 减少本地 Whistle 配置的干扰
