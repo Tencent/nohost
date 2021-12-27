@@ -151,12 +151,17 @@ if (/^([a-z]{1,2})?uni(nstall)?$/.test(cmd)) {
     .option('-s, --storage <host:port>', 'set the host:port of server to save the request data', String, undefined)
     .option('-M, --mode [mode]', 'set the starting mode (as: prod)', String, undefined)
     .option('-r, --shadowRules [shadowRules]', 'set shadow (default) rules', String, undefined)
+    .option('--globalPluginsPath [globalPluginsPath]', 'set the custom global plugins path', String, undefined)
+    .option('--accountPluginsPath [accountPluginsPath]', 'set the custom account[worker] plugins path', String, undefined)
     .option('--config [config]', 'set whistle startup config from a local file', String, undefined)
     .option('--cluster [workers]', 'start the proxy cluster', String, undefined)
     .option('--dnsServer [dnsServer]', 'set custom dns servers', String, undefined);
 
   if (argv.indexOf('--redirect') !== -1) {
     program.option('--redirect <redirect>', 'redirect sedlect.html & data.html & share.html to new url', String, undefined);
+  }
+  if (argv.indexOf('--workerPluginsPath') !== -1) {
+    program.option('--workerPluginsPath <workerPluginsPath>', 'set the custom account[worker] plugins path', String, undefined);
   }
   program.parse(argv);
 }
