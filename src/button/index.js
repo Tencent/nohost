@@ -631,7 +631,7 @@ function initCustomContext() {
 }
 
 function injectHTML() {
-  if ($('#w-nohost').length !== 0) {
+  if (!document.body || $('#w-nohost').length !== 0) {
     return;
   }
   const nohost = $(tpl);
