@@ -1,4 +1,4 @@
-# v1.2.6
+# v1.3.0
 1. fix: https://github.com/Tencent/nohost/pull/105
 
 # v1.2.5
