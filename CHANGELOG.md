@@ -1,3 +1,6 @@
+# v1.3.0
+1. fix: https://github.com/Tencent/nohost/pull/105
+
 # v1.2.5
 1. feat: 支持设置多个插件路径
 
