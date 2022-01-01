@@ -1,3 +1,6 @@
+# v1.3.1
+1. refactor: update whistle.script
+
 # v1.3.0
 1. fix: https://github.com/Tencent/nohost/pull/105
 
