@@ -1,3 +1,6 @@
+
+# v1.3.2
+1. refactor: update whistle
 # v1.3.1
 1. refactor: update whistle.script
 
