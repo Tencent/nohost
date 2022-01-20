@@ -20,7 +20,8 @@ const initConfig = require('./lib/config');
 const PURE_URL_RE = /^((?:https?:)?\/\/[\w.-]+[^?#]*)/;
 
 // 设置存储路径
-process.env.WHISTLE_PATH = process.env.NOHOST_PATH || getWhistlePath();
+const WHISTLE_PATH = process.env.NOHOST_PATH || getWhistlePath();
+process.env.WHISTLE_PATH = WHISTLE_PATH;
 fse.ensureDirSync(process.env.WHISTLE_PATH); // eslint-disable-line
 
 
@@ -51,7 +52,7 @@ const getErrorStack = (err) => {
 const handleUncaughtException = (err) => {
   if (!err || err.code !== 'ERR_IPC_CHANNEL_CLOSED') {
     const stack = getErrorStack(err);
-    fs.writeFileSync(path.join(process.cwd(), 'nohost.log'), `\r\n${stack}\r\n`, { flag: 'a' }); // eslint-disable-line
+    fs.writeFileSync(path.join(WHISTLE_PATH, 'nohost.log'), `\r\n${stack}\r\n`, { flag: 'a' }); // eslint-disable-line
     console.error(stack); // eslint-disable-line
   }
   process.exit(1);
