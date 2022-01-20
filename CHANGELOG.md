@@ -1,4 +1,7 @@
 
+# v1.3.3
+1. refactor: 调整日志默认输出文件为 `~/.WhistleAppData/nohost.log`
+
 # v1.3.2
 1. refactor: update whistle
 # v1.3.1
