@@ -1,3 +1,5 @@
+# v1.3.4
+1. refactor: 请求域名优先使用 `x-whistle-real-host`
 
 # v1.3.3
 1. refactor: 调整日志默认输出文件为 `~/.WhistleAppData/nohost.log`
