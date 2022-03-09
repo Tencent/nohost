@@ -117,15 +117,14 @@ const isGlobal = (params) => {
   }
 };
 
-const parseArgv = () => {
+const parseArgv = (isG) => {
   const { account, args, plugins } = plugin.parseArgv(argv);
-  const isG = isGlobal(argv);
   const baseDir = w2.getWhistlePath();
   let dir;
   if (isG) {
     dir = path.join(baseDir, 'nohost_plugins/main_plugins');
   } else {
-    dir = path.join(baseDir, `nohost_plugins/${account ? 'account' : 'worker'}_plugins`);
+    dir = path.join(baseDir, `nohost_plugins/${account ? 'account' : 'worker'}_plugins/${account || ''}`);
   }
   return [`--dir=${dir}`].concat(plugins).concat(args);
 };
@@ -133,14 +132,15 @@ const parseArgv = () => {
 // 处理非 starting 内置的命令
 if (/^([a-z]{1,2})?uni(nstall)?$/.test(cmd)) {
   argv = Array.prototype.slice.call(argv, 3);
-  if (!isGlobal(argv)) {
-    plugin.uninstall(argv);
+  const isG = isGlobal(argv);
+  if (!isG) {
+    plugin.uninstall(argv.slice());
   }
-  w2.uninstall(parseArgv());
+  w2.uninstall(parseArgv(isG));
 } else if (/^([a-z]{1,2})?i(nstall)?$/.test(cmd)) {
   cmd = `${RegExp.$1 || ''}npm`;
   argv = Array.prototype.slice.call(argv, 3);
-  w2.install(cmd, parseArgv());
+  w2.install(cmd, parseArgv(isGlobal(argv)));
 } else {
   let index = argv.lastIndexOf('-n');
   if (index === -1) {
