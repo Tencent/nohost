@@ -116,22 +116,31 @@ const isGlobal = (params) => {
     return true;
   }
 };
+
+const parseArgv = () => {
+  const { account, args, plugins } = plugin.parseArgv(argv);
+  const isG = isGlobal(argv);
+  const baseDir = w2.getWhistlePath();
+  let dir;
+  if (isG) {
+    dir = path.join(baseDir, 'nohost_plugins/main_plugins');
+  } else {
+    dir = path.join(baseDir, `nohost_plugins/${account ? 'account' : 'worker'}_plugins`);
+  }
+  return [`--dir=${dir}`].concat(plugins).concat(args);
+};
+
 // 处理非 starting 内置的命令
 if (/^([a-z]{1,2})?uni(nstall)?$/.test(cmd)) {
   argv = Array.prototype.slice.call(argv, 3);
-  if (isGlobal(argv)) {
-    w2.uninstall(argv);
-  } else {
+  if (!isGlobal(argv)) {
     plugin.uninstall(argv);
   }
+  w2.uninstall(parseArgv());
 } else if (/^([a-z]{1,2})?i(nstall)?$/.test(cmd)) {
   cmd = `${RegExp.$1 || ''}npm`;
   argv = Array.prototype.slice.call(argv, 3);
-  if (isGlobal(argv)) {
-    w2.install(cmd, argv);
-  } else {
-    plugin.install(cmd, argv);
-  }
+  w2.install(cmd, parseArgv());
 } else {
   let index = argv.lastIndexOf('-n');
   if (index === -1) {

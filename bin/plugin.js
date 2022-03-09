@@ -1,6 +1,5 @@
 const path = require('path');
 const os = require('os');
-const { spawn } = require('child_process');
 const fs = require('fs');
 const fse = require('fs-extra');
 
@@ -12,6 +11,9 @@ const getAccount = (argv) => {
   let index = argv.indexOf('-a');
   if (index === -1) {
     index = argv.indexOf('--account');
+    if (index === -1) {
+      index = argv.indexOf('-w');
+    }
   }
   if (index === -1) {
     return;
@@ -32,22 +34,13 @@ const parseArgv = (argv) => {
     return false;
   });
   return {
-    prefix: account ? path.join(PLUGINS_DIR, account) : PLUGINS_DIR,
     account,
     plugins,
     args,
   };
 };
 
-exports.install = (cmd, argv) => {
-  const { prefix, plugins, args } = parseArgv(argv);
-  if (!plugins.length) {
-    return;
-  }
-  plugins.unshift('install');
-  args.push('-g', '--prefix', prefix);
-  spawn(`${cmd}${process.platform === 'win32' ? '.cmd' : ''}`, plugins.concat(args), { stdio: 'inherit' });
-};
+exports.parseArgv = parseArgv;
 
 const removeDir = (dir) => {
   if (fs.existsSync(dir)) { // eslint-disable-line
