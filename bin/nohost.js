@@ -52,8 +52,8 @@ function checkVersion(ver) {
 
 // 设置默认启动参数
 program.setConfig({
-  main(options) {
-    const mainFile = `${path.join(__dirname, '../index.js')}${options.cluster ? '#cluster#' : ''}`;
+  main() {
+    const mainFile = path.join(__dirname, '../index.js');
     const dataDir = getDefaultDir();
     const { pid, version } = readConfig(mainFile, dataDir);
     if (pid && checkVersion(version)) {
@@ -163,7 +163,6 @@ if (/^([a-z]{1,2})?uni(nstall)?$/.test(cmd)) {
     .option('--globalPluginPath [globalPluginPath]', 'set the custom global plugin path (separated by comma)', String, undefined)
     .option('--accountPluginPath [accountPluginPath]', 'set the custom account[worker] plugin path (separated by comma)', String, undefined)
     .option('--config [config]', 'set whistle startup config from a local file', String, undefined)
-    .option('--cluster [workers]', 'start the proxy cluster', String, undefined)
     .option('--dnsServer [dnsServer]', 'set custom dns servers', String, undefined);
 
   if (argv.indexOf('--redirect') !== -1) {
