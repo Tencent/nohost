@@ -8,19 +8,20 @@ const WHISTLE_PLUGIN_RE = /^(@[\w-]+\/)?whistle\.[a-z\d_-]+$/;
 const ACCOUNT_RE = /^[\w.-]{1,24}$/;
 
 const getAccount = (argv) => {
-  let index = argv.indexOf('-a');
-  if (index === -1) {
-    index = argv.indexOf('--account');
-    if (index === -1) {
-      index = argv.indexOf('-w');
+  let account;
+  for (let i = 0, len = argv.length; i < len; i++) {
+    const arg = argv[i];
+    if (['-a', '-w', '--account'].indexOf(arg) !== -1) {
+      account = argv[i + 1];
+      argv.splice(i, 2);
+      break;
+    }
+    if (/^--account=/.test(arg)) {
+      account = arg.substring(10);
+      break;
     }
   }
-  if (index === -1) {
-    return;
-  }
-  const account = argv[index + 1];
-  argv.splice(index, 2);
-  return ACCOUNT_RE.test(account) ? account : null;
+  return account && ACCOUNT_RE.test(account) ? account : null;
 };
 
 const parseArgv = (argv) => {
