@@ -24,6 +24,7 @@ const getAccount = (argv) => {
 };
 
 const parseArgv = (argv) => {
+  argv = argv.slice();
   const account = getAccount(argv);
   const args = [];
   const plugins = argv.filter((name) => {
