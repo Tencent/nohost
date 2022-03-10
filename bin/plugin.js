@@ -18,6 +18,7 @@ const getAccount = (argv) => {
     }
     if (/^--account=/.test(arg)) {
       account = arg.substring(10);
+      argv.splice(i, 1);
       break;
     }
   }
