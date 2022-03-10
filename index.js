@@ -100,7 +100,7 @@ module.exports = (options, cb) => {
   const clusterOpts = parseCluster(options);
   if (clusterOpts) {
     options.cluster = clusterOpts.workers;
-    options.pluginPaths = clusterOpts.plugins;
+    options.pluginsPath = clusterOpts.plugins;
   }
   options.redirect = getPureUrl(options.redirect);
   initConfig(options);
