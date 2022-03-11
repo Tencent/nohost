@@ -26,16 +26,26 @@ const URL_DIR = href.replace(/[^/]+([?#].*)?$/, '');
 const REDIRECT_URL = `${URL_DIR.replace(/:\d+/, '')}redirect`;
 const isHeadless = /^\$\d+$/.test(query.name);
 const { tab, filter } = query;
+const hash = window.location.hash ? window.location.hash.slice(1) : '';
 let pageName;
-// 通过请求参数获取当前显示的页面
-if (['network', 'rules', 'values', 'plugins'].indexOf(tab) !== -1) {
+
+/**
+ * 通过请求参数获取当前显示的页面
+ */
+// 检查 hash 是否存在且正确
+if (['network', 'rules', 'values', 'plugins'].indexOf(hash) !== -1) {
+  pageName = `#${hash}`;
+} else if (['network', 'rules', 'values', 'plugins'].indexOf(tab) !== -1) {
   pageName = `#${tab}`;
 } else {
   pageName = (query.name && !query.env) ? '#rules' : '#network';
 }
+window.location.hash = pageName;
 // iframe 切换页面时的回调
-window.onWhistlePageChange = name => {
-  pageName = `#${name}`;
+window.onload = () => {
+  window.onWhistlePageChange = name => {
+    window.location.hash = `#${name}`;
+  };
 };
 // 获取抓包url
 // 打开该 url 可以选择好指定环境并切换到选中到环境
