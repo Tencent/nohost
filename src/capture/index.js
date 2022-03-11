@@ -19,23 +19,41 @@ import { setLocalStorage, getLocalStorage } from './utils';
 import '../base.less';
 import './index.css';
 
-const { search, href } = window.location;
+const { search, hash, href } = window.location;
 const query = parse(search);
 const PREFIX_LEN = 'x-nohost-'.length;
 const URL_DIR = href.replace(/[^/]+([?#].*)?$/, '');
 const REDIRECT_URL = `${URL_DIR.replace(/:\d+/, '')}redirect`;
 const isHeadless = /^\$\d+$/.test(query.name);
 const { tab, filter } = query;
-let pageName;
+const getTabName = (name) => {
+  if (['network', 'rules', 'values', 'plugins'].indexOf(name) !== -1) {
+    return name;
+  }
+};
+let pageName = getTabName(hash.substring(1));
 // 通过请求参数获取当前显示的页面
-if (['network', 'rules', 'values', 'plugins'].indexOf(tab) !== -1) {
+if (pageName) {
+  pageName = `#${pageName}`;
+} else if (getTabName(tab)) {
   pageName = `#${tab}`;
 } else {
   pageName = (query.name && !query.env) ? '#rules' : '#network';
 }
 // iframe 切换页面时的回调
 window.onWhistlePageChange = name => {
-  pageName = `#${name}`;
+  const curPage = `#${name}`;
+  if (pageName === curPage) {
+    return;
+  }
+  pageName = curPage;
+  window.location.hash = name;
+  try {
+    const onChange = window.parent.onNohostPageChange;
+    if (typeof onChange === 'function') {
+      onChange(name);
+    }
+  } catch (e) {}
 };
 // 获取抓包url
 // 打开该 url 可以选择好指定环境并切换到选中到环境
