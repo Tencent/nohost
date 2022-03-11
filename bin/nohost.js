@@ -52,8 +52,8 @@ function checkVersion(ver) {
 
 // 设置默认启动参数
 program.setConfig({
-  main(options) {
-    const mainFile = `${path.join(__dirname, '../index.js')}${options.cluster ? '#cluster#' : ''}`;
+  main() {
+    const mainFile = path.join(__dirname, '../index.js');
     const dataDir = getDefaultDir();
     const { pid, version } = readConfig(mainFile, dataDir);
     if (pid && checkVersion(version)) {
@@ -116,22 +116,31 @@ const isGlobal = (params) => {
     return true;
   }
 };
+
+const parseArgv = (isG) => {
+  const { account, args, plugins } = plugin.parseArgv(argv);
+  const baseDir = w2.getWhistlePath();
+  let dir;
+  if (isG) {
+    dir = path.join(baseDir, 'nohost_plugins/main_plugins');
+  } else {
+    dir = path.join(baseDir, `nohost_plugins/${account ? 'account' : 'worker'}_plugins/${account || ''}`);
+  }
+  return [`--dir=${dir}`].concat(plugins).concat(args);
+};
+
 // 处理非 starting 内置的命令
 if (/^([a-z]{1,2})?uni(nstall)?$/.test(cmd)) {
   argv = Array.prototype.slice.call(argv, 3);
-  if (isGlobal(argv)) {
-    w2.uninstall(argv);
-  } else {
-    plugin.uninstall(argv);
+  const isG = isGlobal(argv);
+  if (!isG) {
+    plugin.uninstall(argv.slice());
   }
+  w2.uninstall(parseArgv(isG));
 } else if (/^([a-z]{1,2})?i(nstall)?$/.test(cmd)) {
   cmd = `${RegExp.$1 || ''}npm`;
   argv = Array.prototype.slice.call(argv, 3);
-  if (isGlobal(argv)) {
-    w2.install(cmd, argv);
-  } else {
-    plugin.install(cmd, argv);
-  }
+  w2.install(cmd, parseArgv(isGlobal(argv)));
 } else {
   let index = argv.lastIndexOf('-n');
   if (index === -1) {
@@ -154,7 +163,6 @@ if (/^([a-z]{1,2})?uni(nstall)?$/.test(cmd)) {
     .option('--globalPluginPath [globalPluginPath]', 'set the custom global plugin path (separated by comma)', String, undefined)
     .option('--accountPluginPath [accountPluginPath]', 'set the custom account[worker] plugin path (separated by comma)', String, undefined)
     .option('--config [config]', 'set whistle startup config from a local file', String, undefined)
-    .option('--cluster [workers]', 'start the proxy cluster', String, undefined)
     .option('--dnsServer [dnsServer]', 'set custom dns servers', String, undefined);
 
   if (argv.indexOf('--redirect') !== -1) {
