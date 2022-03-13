@@ -1,6 +1,5 @@
 const path = require('path');
 const os = require('os');
-const { spawn } = require('child_process');
 const fs = require('fs');
 const fse = require('fs-extra');
 
@@ -9,19 +8,25 @@ const WHISTLE_PLUGIN_RE = /^(@[\w-]+\/)?whistle\.[a-z\d_-]+$/;
 const ACCOUNT_RE = /^[\w.-]{1,24}$/;
 
 const getAccount = (argv) => {
-  let index = argv.indexOf('-a');
-  if (index === -1) {
-    index = argv.indexOf('--account');
+  let account;
+  for (let i = 0, len = argv.length; i < len; i++) {
+    const arg = argv[i];
+    if (['-a', '-w', '--account'].indexOf(arg) !== -1) {
+      account = argv[i + 1];
+      argv.splice(i, 2);
+      break;
+    }
+    if (/^--account=/.test(arg)) {
+      account = arg.substring(10);
+      argv.splice(i, 1);
+      break;
+    }
   }
-  if (index === -1) {
-    return;
-  }
-  const account = argv[index + 1];
-  argv.splice(index, 2);
-  return ACCOUNT_RE.test(account) ? account : null;
+  return account && ACCOUNT_RE.test(account) ? account : null;
 };
 
 const parseArgv = (argv) => {
+  argv = argv.slice();
   const account = getAccount(argv);
   const args = [];
   const plugins = argv.filter((name) => {
@@ -32,22 +37,13 @@ const parseArgv = (argv) => {
     return false;
   });
   return {
-    prefix: account ? path.join(PLUGINS_DIR, account) : PLUGINS_DIR,
     account,
     plugins,
     args,
   };
 };
 
-exports.install = (cmd, argv) => {
-  const { prefix, plugins, args } = parseArgv(argv);
-  if (!plugins.length) {
-    return;
-  }
-  plugins.unshift('install');
-  args.push('-g', '--prefix', prefix);
-  spawn(`${cmd}${process.platform === 'win32' ? '.cmd' : ''}`, plugins.concat(args), { stdio: 'inherit' });
-};
+exports.parseArgv = parseArgv;
 
 const removeDir = (dir) => {
   if (fs.existsSync(dir)) { // eslint-disable-line
