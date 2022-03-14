@@ -1,3 +1,6 @@
+# 1.3.8
+1. feat: 优化 nohost 插件安装目录
+
 # v1.3.4
 1. refactor: 请求域名优先使用 `x-whistle-real-host`
 
