@@ -10,7 +10,7 @@
     window.__whistle_nohost_from_imweb_is_inited__ = true;
     var head = document.head || document.getElementsByTagName('head')[0] || document.documentElement;
     var script = document.createElement('script');
-    script.async = true;
+    script.defer = true;
     script.charset = 'utf8';
     script.src = '/.whistle-path.5b6af7b9884e1165/whistle.nohost/button.js';
     if (head.firstChild) {
