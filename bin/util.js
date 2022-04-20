@@ -28,7 +28,7 @@ function getIpList() {
   const ifaces = os.networkInterfaces();
   Object.keys(ifaces).forEach((ifname) => {
     ifaces[ifname].forEach((iface) => {
-      if (iface.family === 'IPv4') {
+      if (iface.family === 'IPv4' || iface.family === 4) {
         ipList.push(iface.address);
       }
     });
