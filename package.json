@@ -13,8 +13,8 @@
   },
   "port": 8080,
   "scripts": {
-    "lint": "eslint *.js lib test src bin",
-    "lintfix": "eslint --fix *.js lib test src bin",
+    "lint": "eslint *.js lib test src bin packages",
+    "lintfix": "eslint --fix *.js lib test src bin packages",
     "dev": "rimraf public && webpack --config ./src/config/webpack.dev.js -w",
     "dist": "rimraf public && webpack --config ./src/config/webpack.prod.js",
     "server": "node bin/nohost run -b dev",
