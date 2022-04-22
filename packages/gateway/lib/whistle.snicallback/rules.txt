@@ -1,0 +1,2 @@
+
+* sniCallback://snicallback enable://capture
