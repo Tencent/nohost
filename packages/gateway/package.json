@@ -9,7 +9,7 @@
   "registry": "https://registry.npmjs.org/@nohost/gateway",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nohosts/gateway.git"
+    "url": "git+https://github.com/Tencent/nohost.git"
   },
   "keywords": [
     "whistle",
@@ -19,9 +19,9 @@
   "author": "avwu <avwu@qq.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/nohosts/gateway/issues"
+    "url": "https://github.com/Tencent/nohost/issues"
   },
-  "homepage": "https://github.com/nohosts/gateway#readme",
+  "homepage": "https://github.com/Tencent/nohost#readme",
   "dependencies": {
     "@nohost/router": "^1.1.0",
     "whistle": "^2.9.10"
