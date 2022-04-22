@@ -22,13 +22,6 @@
     "url": "https://github.com/nohosts/gateway/issues"
   },
   "homepage": "https://github.com/nohosts/gateway#readme",
-  "devDependencies": {
-    "koa": "^2.13.4",
-    "koa-bodyparser": "^4.3.0",
-    "koa-onerror": "^4.1.0",
-    "koa-router": "^10.1.1",
-    "koa-static": "^5.0.0"
-  },
   "dependencies": {
     "@nohost/router": "^1.1.0",
     "whistle": "^2.9.10"
