@@ -1,5 +1,4 @@
 const os = require('os');
-const net = require('net');
 
 const LOCALHOST = '127.0.0.1';
 let addressList = [];
@@ -12,19 +11,14 @@ let serverIp;
     const list = interfaces[name];
     if (Array.isArray(list)) {
       list.forEach((info) => {
-        if (!info.internal && (info.family === 'IPv4' || info.family === 4)) {
+        if (!info.internal && info.family === 'IPv4') {
           serverIp = info.address;
         }
         addressList.push(info.address.toLowerCase());
       });
-      // 支持多网卡时，以环境变量指定 serverIp
-      const envServerIp = process.env.NOHOST_SERVER_IP;
-      if (net.isIP(envServerIp) && addressList.includes(envServerIp)) {
-        serverIp = envServerIp;
-      }
     }
   });
-  setTimeout(updateSystyemInfo, 30000);
+  setTimeout(updateSystyemInfo, 30000).unref();
 }());
 
 exports.getAddressList = () => addressList;

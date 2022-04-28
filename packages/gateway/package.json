@@ -1,0 +1,32 @@
+{
+  "name": "@nohost/gateway",
+  "version": "1.0.0",
+  "description": "Nohost cluster gateway",
+  "scripts": {
+    "lint": "eslint *.js lib test",
+    "lintfix": "eslint --fix *.js lib test"
+  },
+  "registry": "https://registry.npmjs.org/@nohost/gateway",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tencent/nohost.git"
+  },
+  "keywords": [
+    "whistle",
+    "nohost",
+    "cluster"
+  ],
+  "author": "avwu <avwu@qq.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Tencent/nohost/issues"
+  },
+  "homepage": "https://github.com/Tencent/nohost#readme",
+  "dependencies": {
+    "@nohost/router": "^1.1.0",
+    "whistle": "^2.9.10"
+  },
+  "engines": {
+    "node": ">= 14"
+  }
+}

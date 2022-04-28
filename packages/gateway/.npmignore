@@ -38,12 +38,9 @@ jspm_packages
 
 # test
 test
+jest
 
-# source
-/src
-/docs
-/deploy.sh
+# Hidden file
 /.*
-/commitlint.config.js
-/CHANGELOG.md
-/packages
+/jest.*
+
