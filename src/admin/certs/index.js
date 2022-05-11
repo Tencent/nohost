@@ -6,6 +6,10 @@ import { uploadCerts, getCertsInfo, removeCert } from '../cgi';
 const HIGHLIGHT = { color: 'red', fontWeight: 'bold' };
 const OK_STYLE = { color: '#5bbd72', fontSize: '22px', fontWeight: 'bold', overflow: 'hide', lineHeight: '18px' };
 
+function getCertName(cert) {
+  return `${cert.filename}.${cert.type || 'crt'}`;
+}
+
 function readFile(file) {
   return new Promise((resolve) => {
     const reader = new FileReader();
@@ -29,12 +33,13 @@ function parseCerts(data) {
     } else if (endDate.getTime() < now) {
       status = 'Expired';
     }
-    const { filename } = cert;
+    const { filename, type } = cert;
     let item = files[filename];
     if (!item) {
       item = {
         key: filename,
         filename,
+        type,
         mtime: cert.mtime,
         domain: [cert.domain],
         validity: `${startDate.toLocaleString()} ~ ${endDate.toLocaleString()}`,
@@ -69,7 +74,7 @@ class Certs extends Component {
         key: 'filename',
         width: 270,
         render: (_, record) => {
-          return <span style={record.status !== '✓' ? HIGHLIGHT : null}>{record.filename}</span>;
+          return <span style={record.status !== '✓' ? HIGHLIGHT : null}>{getCertName(record)}</span>;
         },
       },
       {
@@ -106,8 +111,8 @@ class Certs extends Component {
         render: (_, record) => {
           return (
             <Popconfirm
-              title={`确定删除证书 "${record.filename}" ？`}
-              onConfirm={() => this.removeCert(record.filename)}
+              title={`确定删除证书 "${getCertName(record)}" ？`}
+              onConfirm={() => this.removeCert(record)}
             >
               <a>删除</a>
             </Popconfirm>
@@ -127,8 +132,11 @@ class Certs extends Component {
     });
   }
 
-  removeCert = (filename) => {
-    removeCert(JSON.stringify({ filename }), (data) => {
+  removeCert = (cert) => {
+    removeCert(JSON.stringify({
+      filename: cert.filename,
+      type: cert.type,
+    }), (data) => {
       if (!data) {
         return message.error('操作异常，请稍后重试！');
       }
@@ -145,11 +153,11 @@ class Certs extends Component {
         return;
       }
       let { name } = cert;
-      if (!/\.(crt|key)/.test(name)) {
-        message.error('只支持 .key 或 .crt 后缀的文件！');
+      if (!/\.(crt|cer|pem|key)/.test(name)) {
+        message.error('只支持 .key 或 .crt 或 .cer 或 .pem 后缀的文件！');
         return;
       }
-      const suffix = RegExp.$1;
+      const type = RegExp.$1;
       name = name.slice(0, -4);
       if (!name || /[^\w*.()-]/.test(name)) {
         message.error('证书名称存在非法字符！');
@@ -157,7 +165,10 @@ class Certs extends Component {
       }
       certs = certs || {};
       const pair = certs[name] || [];
-      pair[suffix === 'key' ? 0 : 1] = cert;
+      pair[type === 'key' ? 0 : 1] = cert;
+      if (type !== 'key') {
+        pair.type = type;
+      }
       certs[name] = pair;
     }
     if (!certs) {
@@ -182,7 +193,9 @@ class Certs extends Component {
       return;
     }
     const pendingList = Object.keys(files).map((name) => {
-      return Promise.all(files[name].map(readFile)).then((result) => {
+      const cert = files[name];
+      return Promise.all(cert.map(readFile)).then((result) => {
+        result[2] = cert.type;
         files[name] = result;
       });
     });
@@ -207,7 +220,7 @@ class Certs extends Component {
       <div className={`fill vbox p-certs${hide ? ' p-hide' : ''}`}>
         <div className="p-action-bar p-certs-bar">
           <div className="upload-wrapper">
-            <input id="upload-input" type="file" accept=".crt,.key" multiple="multiple" onChange={this.handleChange} />
+            <input id="upload-input" type="file" accept=".crt,.cer,.pem,.key" multiple="multiple" onChange={this.handleChange} />
             <Button className="upload-btn" type="primary"><Icon type="upload" />上传证书</Button>
           </div>
         </div>
