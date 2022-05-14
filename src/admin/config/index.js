@@ -27,7 +27,7 @@ const { TabPane } = Tabs;
 const WHITE_REQ_TITLE = <strong><Icon type="filter" /> 入口配置</strong>;
 const ACCOUNT_RULES_TITLE = <strong><Icon type="user" /> 账号默认规则</strong>;
 const DEFAULT_RULES_TITLE = <strong><Icon type="file" /> 环境默认规则</strong>;
-const SPECIAL_RULES_TITLE = <strong><Icon type="file-text" /> 特殊环境默认规则</strong>;
+const SPECIAL_RULES_TITLE = <strong><Icon type="file-text" /> 专属环境默认规则</strong>;
 const TPL_TITLE = <strong><Icon type="code" /> 规则模板</strong>;
 const DATA_TITLE = <strong><Icon type="database" /> 模板配置</strong>;
 
@@ -85,7 +85,7 @@ class Config extends Component {
     });
   }
 
-  // 特殊环境默认
+  // 专属环境默认
   setTestRules = (e, value) => {
     setTestRules({ testRules: value }, (data) => {
       if (!data) {
