@@ -52,13 +52,22 @@ class WhistleEditor extends Component {
   }
 
   render() {
-    const { buttons, title } = this.props;
+    const { buttons, title, settingsBtn, onClickSettings } = this.props;
     const { value, isSaveBtnDisabled } = this.state;
 
     return (
       <Panel>
         <div className="p-action-bar">
           {title}
+          {settingsBtn ? (
+            <Button
+              size="small"
+              className="n-editor-settings-btn"
+              onClick={onClickSettings}
+            >
+              {settingsBtn}
+            </Button>
+          ) : null}
           {
             buttons
               ? [...buttons]

@@ -1,3 +1,12 @@
 .p-config {
   padding-bottom: 30px;
 }
+
+.n-editor-dialog .ant-modal-body {
+  padding: 20px;
+}
+
+.n-editor-dialog-footer {
+  text-align: right;
+  margin-top: 20px;
+}

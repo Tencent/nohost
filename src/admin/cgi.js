@@ -29,6 +29,7 @@ const {
   removeCert,
   enableGuest,
   getVersion,
+  setSpecPattern,
 } = createCgi({
   loadAllAccounts: {
     url: 'cgi-bin/list?parsed=1&notice=1',
@@ -58,6 +59,10 @@ const {
   },
   setAccountRules: {
     url: 'cgi-bin/admin/set-account-rules',
+    type: 'post',
+  },
+  setSpecPattern: {
+    url: 'cgi-bin/admin/set-spec-pattern',
     type: 'post',
   },
   setAuthKey: {
@@ -190,4 +195,5 @@ export {
   removeCert,
   enableGuest,
   getVersion,
+  setSpecPattern,
 };
