@@ -41,7 +41,7 @@ class WhistleEditor extends Component {
   }
 
   handleSave = (e) => {
-    if (isPressEnter(e)) {
+    if (isPressEnter(e) && !this.state.isSaveBtnDisabled) {
       this.props.handleSave(e, this.state.value);
     }
   }
