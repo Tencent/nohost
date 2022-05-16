@@ -24,6 +24,7 @@ import WhistleEditor from '../../components/whistleEditor';
 import Tabs from '../../components/tab';
 import './index.css';
 
+const DEFAULT_RE = '/^\\s*([\\w-]{1,64}:?|[\\w.-]{1,64}:)\\s+([\\w.:/-]*[\\w-])\\s*$/m';
 const REG_EXP_RE = /^\s*\/(.+)\/([ium]{0,3})\s*$/;
 const { TabPane } = Tabs;
 const WHITE_REQ_TITLE = <strong><Icon type="filter" /> 入口配置</strong>;
@@ -166,7 +167,12 @@ class Config extends Component {
   }
 
   onSpecPatternChange = (e) => {
-    this.setState({ specPattern: e.target.value, hasChanged: true });
+    const specPattern = e.target.value.replace(/^\s+/, '');
+    const state = { specPattern };
+    if (specPattern !== this.state.specPattern) {
+      state.hasChanged = true;
+    }
+    this.setState(state);
   }
 
   handleSave = () => {
@@ -174,7 +180,8 @@ class Config extends Component {
       return;
     }
     this._pendingSpecPattern = true;
-    setSpecPattern({ specPattern: this.state.specPattern }, (data) => {
+    const specPattern = this.state.specPattern.trim();
+    setSpecPattern({ specPattern }, (data) => {
       this._pendingSpecPattern = false;
       if (!data) {
         message.error('操作失败，请稍后重试！');
@@ -347,7 +354,7 @@ class Config extends Component {
           </TabPane>
         </Tabs>
         <Modal
-          title="专属于规则匹配以下正则的环境："
+          title="规则内容匹配以下正则即为专属环境"
           visible={visible}
           className="n-editor-dialog"
           onCancel={this.handleCancel}
@@ -359,8 +366,9 @@ class Config extends Component {
             style={{ fontSize: 12 }}
             maxLength={256}
             value={specPattern}
-            placeholder="输入正则表达式，默认 /^\s*([\w-]{1,64}:?|[\w.-]{1,64}:)(?:\s+([\w.:/-]*[\w-]))?\s*$/m"
+            placeholder="输入匹配环境规则（不含注释）的正则表达式"
           />
+          <div className="n-editor-default-pattern">默认值为 <em>{DEFAULT_RE}</em></div>
           <div className="n-editor-dialog-footer">
             <Button
               onClick={this.handleSave}

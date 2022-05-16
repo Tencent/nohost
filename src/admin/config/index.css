@@ -10,3 +10,17 @@
   text-align: right;
   margin-top: 20px;
 }
+
+.n-editor-default-pattern {
+  margin-top: 10px;
+  font-size: 12px;
+}
+
+.n-editor-default-pattern em {
+  font-style: normal;
+  font-weight: 500;
+  display: inline-block;
+  background: #f0f0f0;
+  padding: 3px 10px;
+  border-radius: 8px;
+}
