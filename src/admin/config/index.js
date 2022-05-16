@@ -25,7 +25,7 @@ import Tabs from '../../components/tab';
 import './index.css';
 
 const DEFAULT_RE = '/^\\s*([\\w-]{1,64}:?|[\\w.-]{1,64}:)\\s+([\\w.:/-]*[\\w-])\\s*$/m';
-const REG_EXP_RE = /^\s*\/(.+)\/([ium]{0,3})\s*$/;
+const REG_EXP_RE = /^\s*\+?\/(.+)\/([ium]{0,3})\s*$/;
 const { TabPane } = Tabs;
 const WHITE_REQ_TITLE = <strong><Icon type="filter" /> 入口配置</strong>;
 const ACCOUNT_RULES_TITLE = <strong><Icon type="user" /> 账号默认规则</strong>;
