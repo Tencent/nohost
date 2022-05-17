@@ -6,7 +6,7 @@
 */
 
 import React, { Component } from 'react';
-import { Icon, Button, message } from 'antd';
+import { Icon, Button, Modal, message, Input } from 'antd';
 
 import { getActiveTabFromHash, setActiveHash, evalJson } from '../util';
 import {
@@ -17,12 +17,15 @@ import {
   setDefaultRules,
   setRulesTpl,
   setEntryPatterns,
+  setSpecPattern,
 } from '../cgi';
 import TextAreaPanel from '../../components/textareaPanel';
 import WhistleEditor from '../../components/whistleEditor';
 import Tabs from '../../components/tab';
 import './index.css';
 
+const DEFAULT_RE = '/^\\s*([\\w-]{1,64}:?|[\\w.-]{1,64}:)\\s+([\\w.:/-]*[\\w-])\\s*$/m';
+const REG_EXP_RE = /^\s*\+?\/(.+)\/([ium]{0,3})\s*$/;
 const { TabPane } = Tabs;
 const WHITE_REQ_TITLE = <strong><Icon type="filter" /> 入口配置</strong>;
 const ACCOUNT_RULES_TITLE = <strong><Icon type="user" /> 账号默认规则</strong>;
@@ -45,6 +48,7 @@ class Config extends Component {
     this.state = {
       activeKey: getActiveTabFromHash('administrator'),
       jsonDataDisabled: true,
+      specPattern: props.specPattern || '',
     };
   }
 
@@ -154,6 +158,40 @@ class Config extends Component {
     });
   }
 
+  editSpecSettings = () => {
+    this.setState({ visible: true });
+  }
+
+  handleCancel = () => {
+    this.setState({ visible: false });
+  }
+
+  onSpecPatternChange = (e) => {
+    const specPattern = e.target.value.replace(/^\s+/, '');
+    const state = { specPattern };
+    if (specPattern !== this.state.specPattern) {
+      state.hasChanged = true;
+    }
+    this.setState(state);
+  }
+
+  handleSave = () => {
+    if (this._pendingSpecPattern) {
+      return;
+    }
+    this._pendingSpecPattern = true;
+    const specPattern = this.state.specPattern.trim();
+    setSpecPattern({ specPattern }, (data) => {
+      this._pendingSpecPattern = false;
+      if (!data) {
+        message.error('操作失败，请稍后重试！');
+        return;
+      }
+      message.success('设置成功！');
+      this.setState({ visible: false, hasChanged: false });
+    });
+  }
+
   // 格式化 json 数据
   formatJsonData = () => {
     let { jsonData } = this.state;
@@ -192,6 +230,9 @@ class Config extends Component {
       accountRules,
       defaultRules,
       testRules,
+      visible,
+      specPattern,
+      hasChanged,
     } = this.state;
 
     if (ec !== 0) {
@@ -258,6 +299,8 @@ class Config extends Component {
                 value={testRules}
                 handleSave={this.setTestRules}
                 maxLength="5120"
+                settingsBtn="设置匹配条件"
+                onClickSettings={this.editSpecSettings}
                 ref={ref => {
                   this.testRulesPanel = ref;
                 }}
@@ -310,6 +353,33 @@ class Config extends Component {
             </div>
           </TabPane>
         </Tabs>
+        <Modal
+          title="规则内容匹配以下正则即为专属环境"
+          visible={visible}
+          className="n-editor-dialog"
+          onCancel={this.handleCancel}
+          width={530}
+          footer={null}
+        >
+          <Input
+            onChange={this.onSpecPatternChange}
+            style={{ fontSize: 12 }}
+            maxLength={256}
+            value={specPattern}
+            placeholder="输入匹配环境规则（不含注释）的正则表达式"
+          />
+          <div className="n-editor-default-pattern">默认值为 <em>{DEFAULT_RE}</em></div>
+          <div className="n-editor-dialog-footer">
+            <Button
+              onClick={this.handleSave}
+              type="primary"
+              style={{ marginRight: 20 }}
+              disabled={!hasChanged || (!!specPattern.trim() && !REG_EXP_RE.test(specPattern))}
+            >保存
+            </Button>
+            <Button onClick={this.handleCancel}>关闭</Button>
+          </div>
+        </Modal>
       </div>
     );
   }
