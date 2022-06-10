@@ -15,7 +15,7 @@ const { getWhistlePath } = require('whistle/lib/config');
 const pkg = require('./package.json');
 const initConfig = require('./lib/config');
 
-const PURE_URL_RE = /^(!?(?:https?:)?\/\/[\w.-]+[^?#]*)/;
+const PURE_URL_RE = /^(#?(?:https?:)?\/\/[\w.-]+[^?#]*)/;
 
 // 设置存储路径
 const WHISTLE_PATH = process.env.NOHOST_PATH || getWhistlePath();
@@ -78,7 +78,7 @@ module.exports = (options, cb) => {
     }
   }
   const redirect = getPureUrl(options.redirect);
-  if (redirect && redirect[0] === '!') {
+  if (redirect && redirect[0] === '#') {
     options.redirect = redirect.substring(1);
     options.deprecated = true;
   } else {
