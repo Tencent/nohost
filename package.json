@@ -103,7 +103,7 @@
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10",
     "webpack-merge": "^4.2.2",
-    "whistle-editor": "^0.2.5"
+    "whistle-editor": "^0.2.9"
   },
   "dependencies": {
     "@nohost/router": "^1.1.0",
