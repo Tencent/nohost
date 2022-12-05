@@ -7,12 +7,15 @@
  * All Tencent Modifications are Copyright (C) THL A29 Limited.
  * nohost-环境配置与抓包调试平台 is licensed under the MIT License except for the third-party components listed below.
  */
+const w2 = require('whistle/bin/plugin');
+
+const WHISTLE_PATH = process.env.NOHOST_PATH || w2.getWhistlePath();
+process.env.WHISTLE_PATH = WHISTLE_PATH;
 
 /* eslint no-console: "off" */
 const program = require('starting');
 const path = require('path');
 const os = require('os');
-const w2 = require('whistle/bin/plugin');
 const pkg = require('../package.json');
 const util = require('./util');
 const plugin = require('./plugin');
