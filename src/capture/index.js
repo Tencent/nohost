@@ -583,7 +583,7 @@ class Capture extends Component {
         >
           <Input
             className="n-test-url"
-            maxLength={512}
+            maxLength={1024}
             value={testUrl}
             placeholder="请输入页面的URL"
             onChange={this.onTestUrlChange}

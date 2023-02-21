@@ -24,6 +24,7 @@ import WhistleEditor from '../../components/whistleEditor';
 import Tabs from '../../components/tab';
 import './index.css';
 
+const MAX_TEXT_LEN = 1512 * 10;
 const DEFAULT_RE = '/^\\s*([\\w-]{1,64}:?|[\\w.-]{1,64}:)\\s+([\\w.:/-]*[\\w-])\\s*$/m';
 const REG_EXP_RE = /^\s*\+?\/(.+)\/([ium]{0,3})\s*$/;
 const { TabPane } = Tabs;
@@ -256,7 +257,7 @@ class Config extends Component {
                 title={WHITE_REQ_TITLE}
                 value={entryPatterns}
                 handleSave={this.setEntryPatterns}
-                maxLength="5120"
+                maxLength={MAX_TEXT_LEN}
                 ref={ref => {
                   this.entryPatternsPanel = ref;
                 }}
@@ -278,7 +279,7 @@ class Config extends Component {
                 title={ACCOUNT_RULES_TITLE}
                 value={accountRules}
                 handleSave={this.setAccountRules}
-                maxLength="5120"
+                maxLength={MAX_TEXT_LEN}
                 ref={ref => {
                   this.accountRulesPanel = ref;
                 }}
@@ -288,7 +289,7 @@ class Config extends Component {
                 title={DEFAULT_RULES_TITLE}
                 value={defaultRules}
                 handleSave={this.setDefaultRules}
-                maxLength="5120"
+                maxLength={MAX_TEXT_LEN}
                 ref={ref => {
                   this.defaultRulesPanel = ref;
                 }}
@@ -298,7 +299,7 @@ class Config extends Component {
                 title={SPECIAL_RULES_TITLE}
                 value={testRules}
                 handleSave={this.setTestRules}
-                maxLength="5120"
+                maxLength={MAX_TEXT_LEN}
                 settingsBtn="设置匹配条件"
                 onClickSettings={this.editSpecSettings}
                 ref={ref => {
@@ -322,7 +323,7 @@ class Config extends Component {
                 title={TPL_TITLE}
                 value={rulesTpl}
                 handleSave={this.setRulesTpl}
-                maxLength="3072"
+                maxLength={MAX_TEXT_LEN}
                 ref={ref => {
                   this.rulesTplPanel = ref;
                 }}
@@ -345,7 +346,7 @@ class Config extends Component {
                 value={jsonData}
                 handleChange={this.onJsonDataChange}
                 handleSave={this.setJsonData}
-                maxLength="3072"
+                maxLength={MAX_TEXT_LEN}
                 buttons={[
                   <Button key="save" type="primary" onClick={this.setJsonData} disabled={jsonDataDisabled}><Icon type="save" />保存</Button>]
                 }
