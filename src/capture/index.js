@@ -23,7 +23,7 @@ const { search, hash, href } = window.location;
 const query = parse(search);
 const PREFIX_LEN = 'x-nohost-'.length;
 const URL_DIR = href.replace(/[^/]+([?#].*)?$/, '');
-const REDIRECT_URL = `${URL_DIR.replace(/:\d+/, '')}redirect`;
+const REDIRECT_URL = `${URL_DIR}redirect`;
 const isHeadless = /^\$\d+$/.test(query.name);
 const { tab, filter } = query;
 const getTabName = (name) => {
