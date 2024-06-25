@@ -10,9 +10,18 @@
     window.__whistle_nohost_from_imweb_is_inited__ = true;
     var head = document.head || document.getElementsByTagName('head')[0] || document.documentElement;
     var script = document.createElement('script');
+    var prefixPath = window.__WHISTLE_PATH_PREFIX__;
+    if (/^\/[\w.\/-]+$/.test(prefixPath) && prefixPath.length <= 128) {
+      var len = prefixPath.length - 1;
+      if (prefixPath[len] === '/') {
+        prefixPath = prefixPath.substring(0, len);
+      }
+    } else {
+      prefixPath = '';
+    }
     script.defer = true;
     script.charset = 'utf8';
-    script.src = '/.whistle-path.5b6af7b9884e1165/whistle.nohost/button.js';
+    script.src = prefixPath + '/.whistle-path.5b6af7b9884e1165/whistle.nohost/button.js';
     if (head.firstChild) {
       head.insertBefore(script, head.firstChild);
     } else {

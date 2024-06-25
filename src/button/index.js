@@ -79,9 +79,26 @@ function getEnvLink() {
   return link;
 }
 
+let prefixPath;
+function getPathPrefix() {
+  if (prefixPath) {
+    return prefixPath;
+  }
+  prefixPath = window.__WHISTLE_PATH_PREFIX__;
+  if (/^\/[\w./-]+$/.test(prefixPath) && prefixPath.length <= 128) {
+    const len = prefixPath.length - 1;
+    if (prefixPath[len] === '/') {
+      prefixPath = prefixPath.substring(0, len);
+    }
+  } else {
+    prefixPath = '';
+  }
+  return prefixPath;
+}
+
 function getData() {
   $.ajax({
-    url: '/.whistle-path.5b6af7b9884e1165/whistle.nohost/cgi-bin/list',
+    url: `${getPathPrefix()}/.whistle-path.5b6af7b9884e1165/whistle.nohost/cgi-bin/list`,
     type: 'json',
     method: 'get',
     cache: false,
@@ -340,7 +357,7 @@ function sendSelect(data, callback) {
     });
   };
   $.ajax({
-    url: '/.whistle-path.5b6af7b9884e1165/whistle.nohost/cgi-bin/select',
+    url: `${getPathPrefix()}/.whistle-path.5b6af7b9884e1165/whistle.nohost/cgi-bin/select`,
     data: {
       name: data.name,
       envId: data.envId,
