@@ -7,12 +7,14 @@ import { getString } from './util';
 import '../base.less';
 
 const ACCESS_CODE_RE = /^[a-z\d]{4}$/i;
-const { name: n, date: d, username: u, encrypted } = parse(window.location.search);
+const { name: n, date: d, username: u, encrypted, route: r } = parse(window.location.search);
 const name = getString(n);
 const date = getString(d);
 const username = getString(u);
+const route = getString(r);
 
 const clearNetwork = name ? '&clearNetwork=true' : '';
+const routeQuery = route ? `&route=${route}` : '';
 
 class Network extends React.Component {
   constructor(props) {
@@ -108,7 +110,7 @@ class Network extends React.Component {
             />
           </Modal>
         ) : null}
-        <iframe title="network" className="fill capture-win" src={`network/#network?ip=self${clearNetwork}`} />
+        <iframe title="network" className="fill capture-win" src={`network/#network?ip=self${clearNetwork}${routeQuery}`} />
       </div>
     );
   }
